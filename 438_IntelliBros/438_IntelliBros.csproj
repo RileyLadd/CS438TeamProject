@@ -89,5 +89,14 @@
   <ItemGroup>
     <None Include="rat.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="trash 1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="trash 2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="trash 3.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

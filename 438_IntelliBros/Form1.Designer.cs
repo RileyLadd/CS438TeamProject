@@ -247,7 +247,6 @@
             this.b6_1 = new System.Windows.Forms.Button();
             this.b9_1 = new System.Windows.Forms.Button();
             this.b8_1 = new System.Windows.Forms.Button();
-            this.b5_1 = new System.Windows.Forms.Button();
             this.b4_1 = new System.Windows.Forms.Button();
             this.b3_1 = new System.Windows.Forms.Button();
             this.b2_1 = new System.Windows.Forms.Button();
@@ -263,11 +262,12 @@
             this.b9_0 = new System.Windows.Forms.Button();
             this.b8_0 = new System.Windows.Forms.Button();
             this.b5_0 = new System.Windows.Forms.Button();
-            this.b4_0 = new System.Windows.Forms.Button();
             this.b3_0 = new System.Windows.Forms.Button();
             this.b2_0 = new System.Windows.Forms.Button();
             this.b1_0 = new System.Windows.Forms.Button();
+            this.b4_0 = new System.Windows.Forms.Button();
             this.b0_0 = new System.Windows.Forms.Button();
+            this.b5_1 = new System.Windows.Forms.Button();
             this.b0_12 = new System.Windows.Forms.Button();
             this.b0_13 = new System.Windows.Forms.Button();
             this.groupBox_E1.SuspendLayout();
@@ -2648,6 +2648,7 @@
             // b6_2
             // 
             this.b6_2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b6_2.BackgroundImage = global::_438_IntelliBros.Properties.Resources.trash_3;
             this.b6_2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b6_2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b6_2.Location = new System.Drawing.Point(835, 341);
@@ -2861,18 +2862,6 @@
             this.b8_1.TabIndex = 211;
             this.b8_1.UseVisualStyleBackColor = false;
             // 
-            // b5_1
-            // 
-            this.b5_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b5_1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.b5_1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b5_1.Location = new System.Drawing.Point(783, 289);
-            this.b5_1.Margin = new System.Windows.Forms.Padding(1);
-            this.b5_1.Name = "b5_1";
-            this.b5_1.Size = new System.Drawing.Size(50, 50);
-            this.b5_1.TabIndex = 210;
-            this.b5_1.UseVisualStyleBackColor = false;
-            // 
             // b4_1
             // 
             this.b4_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -3053,18 +3042,6 @@
             this.b5_0.TabIndex = 225;
             this.b5_0.UseVisualStyleBackColor = false;
             // 
-            // b4_0
-            // 
-            this.b4_0.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b4_0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.b4_0.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b4_0.Location = new System.Drawing.Point(731, 237);
-            this.b4_0.Margin = new System.Windows.Forms.Padding(1);
-            this.b4_0.Name = "b4_0";
-            this.b4_0.Size = new System.Drawing.Size(50, 50);
-            this.b4_0.TabIndex = 224;
-            this.b4_0.UseVisualStyleBackColor = false;
-            // 
             // b3_0
             // 
             this.b3_0.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -3101,6 +3078,19 @@
             this.b1_0.TabIndex = 221;
             this.b1_0.UseVisualStyleBackColor = false;
             // 
+            // b4_0
+            // 
+            this.b4_0.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b4_0.BackgroundImage = global::_438_IntelliBros.Properties.Resources.trash_1;
+            this.b4_0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.b4_0.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b4_0.Location = new System.Drawing.Point(731, 237);
+            this.b4_0.Margin = new System.Windows.Forms.Padding(1);
+            this.b4_0.Name = "b4_0";
+            this.b4_0.Size = new System.Drawing.Size(50, 50);
+            this.b4_0.TabIndex = 224;
+            this.b4_0.UseVisualStyleBackColor = false;
+            // 
             // b0_0
             // 
             this.b0_0.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -3114,6 +3104,19 @@
             this.b0_0.TabIndex = 220;
             this.b0_0.UseVisualStyleBackColor = false;
             this.b0_0.Click += new System.EventHandler(this.b0_0_Click);
+            // 
+            // b5_1
+            // 
+            this.b5_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b5_1.BackgroundImage = global::_438_IntelliBros.Properties.Resources.trash_2;
+            this.b5_1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.b5_1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b5_1.Location = new System.Drawing.Point(783, 289);
+            this.b5_1.Margin = new System.Windows.Forms.Padding(1);
+            this.b5_1.Name = "b5_1";
+            this.b5_1.Size = new System.Drawing.Size(50, 50);
+            this.b5_1.TabIndex = 210;
+            this.b5_1.UseVisualStyleBackColor = false;
             // 
             // b0_12
             // 
