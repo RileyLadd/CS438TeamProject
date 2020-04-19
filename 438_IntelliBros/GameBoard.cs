@@ -258,29 +258,1138 @@ namespace _438_IntelliBros
             
         }
 
+        
+
+        
+
+        
+
         private void b0_0_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button86_Click(object sender, EventArgs e)
+        private void b0_1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button29_Click(object sender, EventArgs e)
+        private void b0_2_Click(object sender, EventArgs e)
         {
 
         }
 
+        private void b0_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b0_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_11_Click(object sender, EventArgs e)
+        {
+
+        }
         private void b1_12_Click(object sender, EventArgs e)
         {
-            
+
             b1_12.Text = "HI!";
             b1_12.BackColor = Color.White;
             //b0_12.BackgroundImage = ImageList.ImageCollection
             b2_12.BackgroundImage = imageList1.Images[0];
-            spaces[0,0].BackColor = Color.White;
+            spaces[0, 0].BackColor = Color.White;
+        }
+
+        private void b1_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b1_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b2_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b3_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b4_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button86_Click(object sender, EventArgs e) //wrong title?
+        {
+
+        }
+
+        private void b5_10_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void button29_Click(object sender, EventArgs e) //wrong title?
+        {
+
+        }
+
+        private void b5_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b5_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b6_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b7_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b8_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b9_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b10_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b11_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b12_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b13_14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_0_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void b14_14_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
