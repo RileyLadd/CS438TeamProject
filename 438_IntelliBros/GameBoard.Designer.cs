@@ -272,6 +272,8 @@
             this.b0_12 = new System.Windows.Forms.Button();
             this.b0_13 = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.p2icon = new System.Windows.Forms.Button();
+            this.p1icon = new System.Windows.Forms.Button();
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -318,6 +320,7 @@
             // 
             // groupBox_E1
             // 
+            this.groupBox_E1.Controls.Add(this.p1icon);
             this.groupBox_E1.Controls.Add(this.E1_Closest);
             this.groupBox_E1.Controls.Add(this.E1_ShortestDist);
             this.groupBox_E1.Controls.Add(this.E1_User);
@@ -349,7 +352,7 @@
             // 
             // E1_User
             // 
-            this.E1_User.Location = new System.Drawing.Point(346, 59);
+            this.E1_User.Location = new System.Drawing.Point(207, 59);
             this.E1_User.Name = "E1_User";
             this.E1_User.Size = new System.Drawing.Size(179, 37);
             this.E1_User.TabIndex = 0;
@@ -358,6 +361,7 @@
             // 
             // groupBox_E2
             // 
+            this.groupBox_E2.Controls.Add(this.p2icon);
             this.groupBox_E2.Controls.Add(this.E2_Closest);
             this.groupBox_E2.Controls.Add(this.E2_ShortestDist);
             this.groupBox_E2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -416,6 +420,7 @@
             this.button_Start.TabIndex = 7;
             this.button_Start.Text = "Start";
             this.button_Start.UseVisualStyleBackColor = true;
+            this.button_Start.Click += new System.EventHandler(this.button_Start_Click);
             // 
             // button_Reset
             // 
@@ -426,6 +431,7 @@
             this.button_Reset.TabIndex = 8;
             this.button_Reset.Text = "Reset";
             this.button_Reset.UseVisualStyleBackColor = true;
+            this.button_Reset.Click += new System.EventHandler(this.button_Reset_Click);
             // 
             // b0_14
             // 
@@ -681,7 +687,6 @@
             this.b1_12.Name = "b1_12";
             this.b1_12.Size = new System.Drawing.Size(50, 50);
             this.b1_12.TabIndex = 28;
-            this.b1_12.Text = "Click here";
             this.b1_12.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.b1_12.UseVisualStyleBackColor = false;
             this.b1_12.Click += new System.EventHandler(this.b1_12_Click);
@@ -3345,7 +3350,6 @@
             // b0_12
             // 
             this.b0_12.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b0_12.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p2;
             this.b0_12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b0_12.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b0_12.Location = new System.Drawing.Point(1355, 29);
@@ -3359,7 +3363,6 @@
             // b0_13
             // 
             this.b0_13.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b0_13.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p1;
             this.b0_13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b0_13.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b0_13.Location = new System.Drawing.Point(1407, 29);
@@ -3380,6 +3383,29 @@
             this.imageList1.Images.SetKeyName(3, "trash 1.png");
             this.imageList1.Images.SetKeyName(4, "trash 2.png");
             this.imageList1.Images.SetKeyName(5, "trash 3.png");
+            // 
+            // p2icon
+            // 
+            this.p2icon.BackColor = System.Drawing.Color.White;
+            this.p2icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p2;
+            this.p2icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.p2icon.Location = new System.Drawing.Point(470, 83);
+            this.p2icon.Name = "p2icon";
+            this.p2icon.Size = new System.Drawing.Size(75, 75);
+            this.p2icon.TabIndex = 236;
+            this.p2icon.UseVisualStyleBackColor = false;
+            // 
+            // p1icon
+            // 
+            this.p1icon.BackColor = System.Drawing.Color.White;
+            this.p1icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p1;
+            this.p1icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.p1icon.Location = new System.Drawing.Point(470, 89);
+            this.p1icon.Name = "p1icon";
+            this.p1icon.Size = new System.Drawing.Size(75, 75);
+            this.p1icon.TabIndex = 235;
+            this.p1icon.UseVisualStyleBackColor = false;
+            this.p1icon.Click += new System.EventHandler(this.button1_Click);
             // 
             // GameBoard
             // 
@@ -3882,6 +3908,8 @@
         private System.Windows.Forms.Button b1_0;
         private System.Windows.Forms.Button b0_0;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.Button p2icon;
+        private System.Windows.Forms.Button p1icon;
     }
 }
 
