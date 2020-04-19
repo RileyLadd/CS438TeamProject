@@ -1,6 +1,6 @@
 ﻿namespace _438_IntelliBros
 {
-    partial class Form1
+    partial class GameBoard
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameBoard));
             this.label_TimeLimit = new System.Windows.Forms.Label();
             this.label_Timer = new System.Windows.Forms.Label();
             this.button_IncTimer = new System.Windows.Forms.Button();
@@ -270,6 +271,7 @@
             this.b5_1 = new System.Windows.Forms.Button();
             this.b0_12 = new System.Windows.Forms.Button();
             this.b0_13 = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -655,13 +657,16 @@
             // 
             this.b1_12.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b1_12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.b1_12.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b1_12.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.b1_12.Location = new System.Drawing.Point(1355, 81);
             this.b1_12.Margin = new System.Windows.Forms.Padding(1);
             this.b1_12.Name = "b1_12";
             this.b1_12.Size = new System.Drawing.Size(50, 50);
             this.b1_12.TabIndex = 28;
+            this.b1_12.Text = "Click here";
+            this.b1_12.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             this.b1_12.UseVisualStyleBackColor = false;
+            this.b1_12.Click += new System.EventHandler(this.b1_12_Click);
             // 
             // b3_11
             // 
@@ -3144,7 +3149,18 @@
             this.b0_13.TabIndex = 12;
             this.b0_13.UseVisualStyleBackColor = false;
             // 
-            // Form1
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "p1.png");
+            this.imageList1.Images.SetKeyName(1, "p2.png");
+            this.imageList1.Images.SetKeyName(2, "rat.png");
+            this.imageList1.Images.SetKeyName(3, "trash 1.png");
+            this.imageList1.Images.SetKeyName(4, "trash 2.png");
+            this.imageList1.Images.SetKeyName(5, "trash 3.png");
+            // 
+            // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -3386,7 +3402,7 @@
             this.Controls.Add(this.label_Timer);
             this.Controls.Add(this.label_TimeLimit);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "GameBoard";
             this.Text = "Cat Cleaners";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.groupBox_E1.ResumeLayout(false);
@@ -3413,6 +3429,11 @@
         private System.Windows.Forms.Button button_Forward;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_Reset;
+
+        // Code from Riley //  Saturday, April 18, 7pm
+
+        
+
         private System.Windows.Forms.Button b0_14;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button b1_14;
@@ -3639,6 +3660,7 @@
         private System.Windows.Forms.Button b2_0;
         private System.Windows.Forms.Button b1_0;
         private System.Windows.Forms.Button b0_0;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 
