@@ -35,10 +35,12 @@
             this.button_IncTimer = new System.Windows.Forms.Button();
             this.buttonDecTimer = new System.Windows.Forms.Button();
             this.groupBox_E1 = new System.Windows.Forms.GroupBox();
+            this.p1icon = new System.Windows.Forms.Button();
             this.E1_Closest = new System.Windows.Forms.Button();
             this.E1_ShortestDist = new System.Windows.Forms.Button();
             this.E1_User = new System.Windows.Forms.Button();
             this.groupBox_E2 = new System.Windows.Forms.GroupBox();
+            this.p2icon = new System.Windows.Forms.Button();
             this.E2_Closest = new System.Windows.Forms.Button();
             this.E2_ShortestDist = new System.Windows.Forms.Button();
             this.button_Backward = new System.Windows.Forms.Button();
@@ -272,8 +274,16 @@
             this.b0_12 = new System.Windows.Forms.Button();
             this.b0_13 = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.p2icon = new System.Windows.Forms.Button();
-            this.p1icon = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.p1points_label = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.p1capacity_label = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.p2capacity_label = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.p2points_label = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -320,6 +330,11 @@
             // 
             // groupBox_E1
             // 
+            this.groupBox_E1.Controls.Add(this.label5);
+            this.groupBox_E1.Controls.Add(this.p1capacity_label);
+            this.groupBox_E1.Controls.Add(this.label3);
+            this.groupBox_E1.Controls.Add(this.p1points_label);
+            this.groupBox_E1.Controls.Add(this.label1);
             this.groupBox_E1.Controls.Add(this.p1icon);
             this.groupBox_E1.Controls.Add(this.E1_Closest);
             this.groupBox_E1.Controls.Add(this.E1_ShortestDist);
@@ -327,10 +342,22 @@
             this.groupBox_E1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_E1.Location = new System.Drawing.Point(12, 93);
             this.groupBox_E1.Name = "groupBox_E1";
-            this.groupBox_E1.Size = new System.Drawing.Size(551, 230);
+            this.groupBox_E1.Size = new System.Drawing.Size(687, 230);
             this.groupBox_E1.TabIndex = 4;
             this.groupBox_E1.TabStop = false;
             this.groupBox_E1.Text = "Entity 1:";
+            // 
+            // p1icon
+            // 
+            this.p1icon.BackColor = System.Drawing.Color.White;
+            this.p1icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p1;
+            this.p1icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.p1icon.Location = new System.Drawing.Point(417, 92);
+            this.p1icon.Name = "p1icon";
+            this.p1icon.Size = new System.Drawing.Size(75, 75);
+            this.p1icon.TabIndex = 235;
+            this.p1icon.UseVisualStyleBackColor = false;
+            this.p1icon.Click += new System.EventHandler(this.button1_Click);
             // 
             // E1_Closest
             // 
@@ -361,17 +388,33 @@
             // 
             // groupBox_E2
             // 
+            this.groupBox_E2.Controls.Add(this.label2);
             this.groupBox_E2.Controls.Add(this.p2icon);
+            this.groupBox_E2.Controls.Add(this.p2capacity_label);
             this.groupBox_E2.Controls.Add(this.E2_Closest);
+            this.groupBox_E2.Controls.Add(this.label6);
+            this.groupBox_E2.Controls.Add(this.p2points_label);
             this.groupBox_E2.Controls.Add(this.E2_ShortestDist);
+            this.groupBox_E2.Controls.Add(this.label8);
             this.groupBox_E2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_E2.Location = new System.Drawing.Point(12, 329);
             this.groupBox_E2.Name = "groupBox_E2";
-            this.groupBox_E2.Size = new System.Drawing.Size(551, 230);
+            this.groupBox_E2.Size = new System.Drawing.Size(687, 230);
             this.groupBox_E2.TabIndex = 5;
             this.groupBox_E2.TabStop = false;
             this.groupBox_E2.Text = "Entity 2:";
             this.groupBox_E2.Enter += new System.EventHandler(this.groupBox_E2_Enter);
+            // 
+            // p2icon
+            // 
+            this.p2icon.BackColor = System.Drawing.Color.White;
+            this.p2icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p2;
+            this.p2icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.p2icon.Location = new System.Drawing.Point(417, 77);
+            this.p2icon.Name = "p2icon";
+            this.p2icon.Size = new System.Drawing.Size(75, 75);
+            this.p2icon.TabIndex = 236;
+            this.p2icon.UseVisualStyleBackColor = false;
             // 
             // E2_Closest
             // 
@@ -2331,7 +2374,7 @@
             // 
             // b2_5
             // 
-            this.b2_5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.b2_5.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b2_5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b2_5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b2_5.Location = new System.Drawing.Point(991, 133);
@@ -2839,7 +2882,6 @@
             // b6_2
             // 
             this.b6_2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b6_2.BackgroundImage = global::_438_IntelliBros.Properties.Resources.trash_3;
             this.b6_2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b6_2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b6_2.Location = new System.Drawing.Point(835, 341);
@@ -3308,7 +3350,6 @@
             // b4_0
             // 
             this.b4_0.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b4_0.BackgroundImage = global::_438_IntelliBros.Properties.Resources.trash_1;
             this.b4_0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b4_0.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b4_0.Location = new System.Drawing.Point(731, 237);
@@ -3322,7 +3363,6 @@
             // b0_0
             // 
             this.b0_0.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b0_0.BackgroundImage = global::_438_IntelliBros.Properties.Resources.rat;
             this.b0_0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b0_0.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b0_0.Location = new System.Drawing.Point(731, 29);
@@ -3336,7 +3376,6 @@
             // b5_1
             // 
             this.b5_1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b5_1.BackgroundImage = global::_438_IntelliBros.Properties.Resources.trash_2;
             this.b5_1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.b5_1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.b5_1.Location = new System.Drawing.Point(783, 289);
@@ -3384,28 +3423,105 @@
             this.imageList1.Images.SetKeyName(4, "trash 2.png");
             this.imageList1.Images.SetKeyName(5, "trash 3.png");
             // 
-            // p2icon
+            // label1
             // 
-            this.p2icon.BackColor = System.Drawing.Color.White;
-            this.p2icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p2;
-            this.p2icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.p2icon.Location = new System.Drawing.Point(470, 83);
-            this.p2icon.Name = "p2icon";
-            this.p2icon.Size = new System.Drawing.Size(75, 75);
-            this.p2icon.TabIndex = 236;
-            this.p2icon.UseVisualStyleBackColor = false;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(555, 40);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 29);
+            this.label1.TabIndex = 236;
+            this.label1.Text = "Points:";
             // 
-            // p1icon
+            // p1points_label
             // 
-            this.p1icon.BackColor = System.Drawing.Color.White;
-            this.p1icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p1;
-            this.p1icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.p1icon.Location = new System.Drawing.Point(470, 89);
-            this.p1icon.Name = "p1icon";
-            this.p1icon.Size = new System.Drawing.Size(75, 75);
-            this.p1icon.TabIndex = 235;
-            this.p1icon.UseVisualStyleBackColor = false;
-            this.p1icon.Click += new System.EventHandler(this.button1_Click);
+            this.p1points_label.AutoSize = true;
+            this.p1points_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.p1points_label.Location = new System.Drawing.Point(587, 72);
+            this.p1points_label.Name = "p1points_label";
+            this.p1points_label.Size = new System.Drawing.Size(20, 24);
+            this.p1points_label.TabIndex = 237;
+            this.p1points_label.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(508, 118);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(173, 29);
+            this.label3.TabIndex = 238;
+            this.label3.Text = "Bag Capacity:";
+            // 
+            // p1capacity_label
+            // 
+            this.p1capacity_label.AutoSize = true;
+            this.p1capacity_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.p1capacity_label.Location = new System.Drawing.Point(587, 155);
+            this.p1capacity_label.Name = "p1capacity_label";
+            this.p1capacity_label.Size = new System.Drawing.Size(20, 24);
+            this.p1capacity_label.TabIndex = 239;
+            this.p1capacity_label.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(557, 179);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 16);
+            this.label5.TabIndex = 240;
+            this.label5.Text = "(out of 200)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(557, 184);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 16);
+            this.label2.TabIndex = 245;
+            this.label2.Text = "(out of 200)";
+            // 
+            // p2capacity_label
+            // 
+            this.p2capacity_label.AutoSize = true;
+            this.p2capacity_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.p2capacity_label.Location = new System.Drawing.Point(587, 160);
+            this.p2capacity_label.Name = "p2capacity_label";
+            this.p2capacity_label.Size = new System.Drawing.Size(20, 24);
+            this.p2capacity_label.TabIndex = 244;
+            this.p2capacity_label.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(508, 123);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(173, 29);
+            this.label6.TabIndex = 243;
+            this.label6.Text = "Bag Capacity:";
+            // 
+            // p2points_label
+            // 
+            this.p2points_label.AutoSize = true;
+            this.p2points_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.p2points_label.Location = new System.Drawing.Point(587, 77);
+            this.p2points_label.Name = "p2points_label";
+            this.p2points_label.Size = new System.Drawing.Size(20, 24);
+            this.p2points_label.TabIndex = 242;
+            this.p2points_label.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(555, 45);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(93, 29);
+            this.label8.TabIndex = 241;
+            this.label8.Text = "Points:";
             // 
             // GameBoard
             // 
@@ -3653,7 +3769,9 @@
             this.Text = "Cat Cleaners";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.groupBox_E1.ResumeLayout(false);
+            this.groupBox_E1.PerformLayout();
             this.groupBox_E2.ResumeLayout(false);
+            this.groupBox_E2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3910,6 +4028,16 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button p2icon;
         private System.Windows.Forms.Button p1icon;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label p1points_label;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label p1capacity_label;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label p2capacity_label;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label p2points_label;
+        private System.Windows.Forms.Label label8;
     }
 }
 
