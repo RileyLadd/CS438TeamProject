@@ -21,7 +21,51 @@ namespace _438_IntelliBros
                 row = col = -1;
                 score = capacity = 0;
             }
+
+            public void addSmall()
+            {
+                score += SMALL_TRASH_POINT_VAL;
+            }
+
+            public void addMed()
+            {
+                score += MEDIUM_TRASH_POINT_VAL;
+            }
+
+            public void addLarge()
+            {
+                score += LARGE_TRASH_POINT_VAL;
+            }
+
+            public void checkCapacity(int type) //small / med / large
+            {
+                int addingCap;
+                switch(type)
+                {
+                    case 1:
+                        addingCap = SMALL_TRASH_CAPACITY_VAL;
+                        break;
+                    case 2:
+                        addingCap = MEDIUM_TRASH_CAPACITY_VAL;
+                        break;
+                    case 3:
+                        addingCap = LARGE_TRASH_CAPACITY_VAL;
+                        break;
+                    default:
+                        addingCap = 0;
+                        break;
+                }
+                if (capacity + addingCap > MAX_CAPACITY)
+                { // check to verify that player still has capacity space
+                    MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
+                }
+                else
+                {
+                    capacity += addingCap;
+                }
+            }
         }
+
         Player P1 = new Player();
         Player P2 = new Player();
         //change the starting positions
@@ -125,56 +169,25 @@ namespace _438_IntelliBros
 
         public void makeMove(int newRow, int newCol)
         {
-            if (currentTurn == 1)
+            if (currentTurn == 1)   //P1
             {
                 if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
                 {
-                    spaces[newRow, newCol].BackgroundImage = null;
-                    spaces[newRow, newCol].Tag = "";
-                    P1.score += SMALL_TRASH_POINT_VAL;
-                    p1points_label.Text = P1.score.ToString();
-                    if (P1.capacity + SMALL_TRASH_CAPACITY_VAL > MAX_CAPACITY)
-                    { // check to verify that player still has capacity space
-                        MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
-                    }
-                    else
-                    {
-                        P1.capacity += SMALL_TRASH_CAPACITY_VAL;
-                        p1capacity_label.Text = P1.capacity.ToString();
-                    }
+                    P1.addSmall();
+                    P1.checkCapacity(1);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
                 {
-                    spaces[newRow, newCol].BackgroundImage = null;
-                    spaces[newRow, newCol].Tag = "";
-                    P1.score += MEDIUM_TRASH_POINT_VAL;
-                    p1points_label.Text = P1.score.ToString();
-                    if (P1.capacity + MEDIUM_TRASH_CAPACITY_VAL > MAX_CAPACITY)
-                    { // check to verify that player still has capacity space
-                        MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
-                    }
-                    else
-                    {
-                        P1.capacity += MEDIUM_TRASH_CAPACITY_VAL;
-                        p1capacity_label.Text = P1.capacity.ToString();
-                    }
+                    P1.addMed();
+                    P1.checkCapacity(2);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
                 {
-                    spaces[newRow, newCol].BackgroundImage = null;
-                    spaces[newRow, newCol].Tag = "";
-                    P1.score += LARGE_TRASH_POINT_VAL;
-                    p1points_label.Text = P1.score.ToString();
-                    if (P1.capacity + LARGE_TRASH_CAPACITY_VAL > MAX_CAPACITY)
-                    { // check to verify that player still has capacity space
-                        MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
-                    }
-                    else
-                    {
-                        P1.capacity += LARGE_TRASH_CAPACITY_VAL;
-                        p1capacity_label.Text = P1.capacity.ToString();
-                    }
+                    P1.addLarge();
+                    P1.checkCapacity(3);
                 }
+                p1points_label.Text = P1.score.ToString();
+                p1capacity_label.Text = P1.capacity.ToString();
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[0];
                 spaces[P1.row, P1.col].BackgroundImage = null;
                 P1.row = newRow;
@@ -184,52 +197,21 @@ namespace _438_IntelliBros
             {
                 if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
                 {
-                    spaces[newRow, newCol].BackgroundImage = null;
-                    spaces[newRow, newCol].Tag = "";
-                    P2.score += SMALL_TRASH_POINT_VAL;
-                    p2points_label.Text = P2.score.ToString();
-                    if (P2.capacity + SMALL_TRASH_CAPACITY_VAL > MAX_CAPACITY)
-                    { // check to verify that player still has capacity space
-                        MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
-                    }
-                    else
-                    {
-                        P2.capacity += SMALL_TRASH_CAPACITY_VAL;
-                        p2capacity_label.Text = P2.capacity.ToString();
-                    }
+                    P2.addSmall();
+                    P2.checkCapacity(1);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
                 {
-                    spaces[newRow, newCol].BackgroundImage = null;
-                    spaces[newRow, newCol].Tag = "";
-                    P2.score += MEDIUM_TRASH_POINT_VAL;
-                    p2points_label.Text = P2.score.ToString();
-                    if (P2.capacity + MEDIUM_TRASH_CAPACITY_VAL > MAX_CAPACITY)
-                    { // check to verify that player still has capacity space
-                        MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
-                    }
-                    else
-                    {
-                        P2.capacity += MEDIUM_TRASH_CAPACITY_VAL;
-                        p2capacity_label.Text = P2.capacity.ToString();
-                    }
+                    P2.addMed();
+                    P2.checkCapacity(2);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
                 {
-                    spaces[newRow, newCol].BackgroundImage = null;
-                    spaces[newRow, newCol].Tag = "";
-                    P2.score += LARGE_TRASH_POINT_VAL;
-                    p2points_label.Text = P2.score.ToString();
-                    if (P2.capacity + LARGE_TRASH_CAPACITY_VAL > MAX_CAPACITY)
-                    { // check to verify that player still has capacity space
-                        MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
-                    }
-                    else
-                    {
-                        P2.capacity += LARGE_TRASH_CAPACITY_VAL;
-                        p2capacity_label.Text = P2.capacity.ToString();
-                    }
+                    P2.addLarge();
+                    P2.checkCapacity(3);
                 }
+                p2points_label.Text = P2.score.ToString();
+                p2capacity_label.Text = P2.capacity.ToString();
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[1];
                 spaces[P2.row, P2.col].BackgroundImage = null;
                 P2.row = newRow;
@@ -242,15 +224,13 @@ namespace _438_IntelliBros
             if (currentTurn == 1)
             {
                 currentTurn = 2;
-                p2icon.BackColor = Color.LightGreen;
-                p1icon.BackColor = Color.Gray;
             }
             else
             {
                 currentTurn = 1;
-                p1icon.BackColor = Color.LightGreen;
-                p2icon.BackColor = Color.Gray;
             }
+            p2icon.BackColor = Color.LightGreen;
+            p1icon.BackColor = Color.Gray;
         }
 
         public bool verifyMove(int newRow, int newCol) // verifies that the move to the passed-in row and col
