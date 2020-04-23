@@ -59,6 +59,7 @@ namespace _438_IntelliBros
                     //731, 29 is location of the first button
                     tempButton.Location = new Point(731 + (row * BUTTON_SIZE), 29 + (col * BUTTON_SIZE));
                     tempButton.AutoSize = false;
+                    tempButton.BackgroundImageLayout = ImageLayout.Stretch;
                     tempButton.Click += button_Click;
 
                     spaces[row, col] = tempButton;
@@ -301,8 +302,8 @@ namespace _438_IntelliBros
         {
             if (P1.row != -1 || P1.col != -1 || P2.row != -1 || P2.col != -1) { clearBoard(); }
 
-            spaces[p1_start_row, p1_start_col].Image = imageList1.Images[0]; // place Player 1 on the board
-            spaces[p2_start_row, p1_start_col].Image = imageList1.Images[1]; // place Player 2 on the board
+            spaces[p1_start_row, p1_start_col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
+            spaces[p2_start_row, p1_start_col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
 
             p1icon.BackColor = Color.White;
             p2icon.BackColor = Color.White;
