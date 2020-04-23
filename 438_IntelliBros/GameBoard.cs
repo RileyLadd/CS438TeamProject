@@ -57,10 +57,12 @@ namespace _438_IntelliBros
                     tempButton.Height = BUTTON_SIZE;
                     tempButton.Width = BUTTON_SIZE;
                     //731, 29 is location of the first button
-                    tempButton.Location = new Point(731 + (row * BUTTON_SIZE), 29 + (col * BUTTON_SIZE));
+                    tempButton.Location = new Point(731 + (col * BUTTON_SIZE), 29 + (row * BUTTON_SIZE));
                     tempButton.AutoSize = false;
                     tempButton.BackgroundImageLayout = ImageLayout.Stretch;
                     tempButton.Click += button_Click;
+
+                    //tempButton.Text = row.ToString() + ", " + col.ToString(); debugger for (col * BUTTON_SIZE), 29 + (row * BUTTON_SIZE)
 
                     spaces[row, col] = tempButton;
                     this.Controls.Add(spaces[row, col]);
