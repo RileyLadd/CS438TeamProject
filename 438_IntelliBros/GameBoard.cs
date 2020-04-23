@@ -303,7 +303,7 @@ namespace _438_IntelliBros
             if (P1.row != -1 || P1.col != -1 || P2.row != -1 || P2.col != -1) { clearBoard(); }
 
             spaces[p1_start_row, p1_start_col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
-            spaces[p2_start_row, p1_start_col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
+            spaces[p2_start_row, p2_start_col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
 
             p1icon.BackColor = Color.White;
             p2icon.BackColor = Color.White;
@@ -312,10 +312,6 @@ namespace _438_IntelliBros
             p1points_label.Text = P1.score.ToString();
             p2capacity_label.Text = P2.capacity.ToString();
             p2points_label.Text = P2.score.ToString();
-        }
-        private void groupBox_E2_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void button_Click(object sender, EventArgs e)

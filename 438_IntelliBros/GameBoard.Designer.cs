@@ -177,7 +177,6 @@
             this.groupBox_E2.TabIndex = 5;
             this.groupBox_E2.TabStop = false;
             this.groupBox_E2.Text = "Entity 2:";
-            this.groupBox_E2.Enter += new System.EventHandler(this.groupBox_E2_Enter);
             // 
             // p2icon
             // 
