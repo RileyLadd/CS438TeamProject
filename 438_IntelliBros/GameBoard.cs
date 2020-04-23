@@ -30,19 +30,22 @@ namespace _438_IntelliBros
             public void addSmall()
             {
                 score += SMALL_TRASH_POINT_VAL;
+                addCapacity(1);
             }
 
             public void addMed()
             {
                 score += MEDIUM_TRASH_POINT_VAL;
+                addCapacity(2);
             }
 
             public void addLarge()
             {
                 score += LARGE_TRASH_POINT_VAL;
+                addCapacity(3);
             }
 
-            public void checkCapacity(int type) //small / med / large
+            public void addCapacity(int type) //small / med / large
             {
                 int addingCap;
                 switch (type)
@@ -179,17 +182,14 @@ namespace _438_IntelliBros
                 if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
                 {
                     P1.addSmall();
-                    P1.checkCapacity(1);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
                 {
                     P1.addMed();
-                    P1.checkCapacity(2);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
                 {
                     P1.addLarge();
-                    P1.checkCapacity(3);
                 }
                 p1points_label.Text = P1.score.ToString();
                 p1capacity_label.Text = P1.capacity.ToString();
@@ -203,17 +203,14 @@ namespace _438_IntelliBros
                 if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
                 {
                     P2.addSmall();
-                    P2.checkCapacity(1);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
                 {
                     P2.addMed();
-                    P2.checkCapacity(2);
                 }
                 else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
                 {
                     P2.addLarge();
-                    P2.checkCapacity(3);
                 }
                 p2points_label.Text = P2.score.ToString();
                 p2capacity_label.Text = P2.capacity.ToString();
