@@ -22,6 +22,11 @@ namespace _438_IntelliBros
                 score = capacity = 0;
             }
 
+            public void reset()
+            {
+                score = capacity = 0;
+            }
+
             public void addSmall()
             {
                 score += SMALL_TRASH_POINT_VAL;
@@ -270,10 +275,6 @@ namespace _438_IntelliBros
             p2icon.BackColor = Color.Gray;
 
             generateTrash();
-            P1.row = p1_start_row;
-            P1.col = p1_start_col;
-            P2.row = p2_start_row;
-            P2.col = p2_start_col;
         }
 
         private void button_Reset_Click(object sender, EventArgs e)
@@ -285,6 +286,13 @@ namespace _438_IntelliBros
 
             p1icon.BackColor = Color.White;
             p2icon.BackColor = Color.White;
+
+            P1.reset();
+            P2.reset();
+            P1.row = p1_start_row;
+            P1.col = p1_start_col;
+            P2.row = p2_start_row;
+            P2.col = p2_start_col;
 
             p1capacity_label.Text = P1.capacity.ToString();
             p1points_label.Text = P1.score.ToString();
