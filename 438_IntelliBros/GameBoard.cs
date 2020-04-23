@@ -45,7 +45,7 @@ namespace _438_IntelliBros
             public void checkCapacity(int type) //small / med / large
             {
                 int addingCap;
-                switch(type)
+                switch (type)
                 {
                     case 1:
                         addingCap = SMALL_TRASH_CAPACITY_VAL;
