@@ -823,7 +823,7 @@
             this.b5_11.Size = new System.Drawing.Size(50, 50);
             this.b5_11.TabIndex = 42;
             this.b5_11.UseVisualStyleBackColor = false;
-            this.b5_11.Click += new System.EventHandler(this.button29_Click);
+            this.b5_11.Click += new System.EventHandler(this.b5_11_Click);
             // 
             // b4_11
             // 
@@ -1564,7 +1564,7 @@
             this.b5_9.Size = new System.Drawing.Size(50, 50);
             this.b5_9.TabIndex = 90;
             this.b5_9.UseVisualStyleBackColor = false;
-            this.b5_9.Click += new System.EventHandler(this.button86_Click);
+            this.b5_9.Click += new System.EventHandler(this.b5_9_Click);
             // 
             // b4_9
             // 

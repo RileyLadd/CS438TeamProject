@@ -13,8 +13,25 @@ namespace _438_IntelliBros
     public partial class GameBoard : Form
 
     {
+        class Player
+        {
+            public int row, col, score, capacity;
+            public Player()
+            {
+                row = col = -1;
+                score = capacity = 0;
+            }
+        }
+        Player P1, P2;
+        //change the starting positions
+        const int p1_start_row = 7;
+        const int p1_start_col = 0;
+        const int p2_start_row = 14;
+        const int p2_start_col = 7;
+
         const int BOARDSIZE = 15; // The height/width of the board
         const int MAX_CAPACITY = 200; // Max cleaning capacity of the cats
+        const int BUTTON_SIZE = 50;
         const int SMALL_TRASH_POINT_VAL = 2;
         const int MEDIUM_TRASH_POINT_VAL = 5;
         const int LARGE_TRASH_POINT_VAL = 10;
@@ -26,255 +43,36 @@ namespace _438_IntelliBros
         const string LARGE_TRASH_TAG = "LARGE";
         Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
         int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
-        int player1row = -1, player1col = -1, player2row = -1, player2col = -1;
-        int player1score = 0, player2score = 0;
-        int player1capacity = 0, player2capacity = 0;
+        
         public GameBoard()
         {
             InitializeComponent();
-            for (int i = 0; i < BOARDSIZE; i++)
+            for (int row = 0; row < BOARDSIZE; ++row)
             {
-                for (int j = 0; j < BOARDSIZE; j++)
+                for (int col = 0; col < BOARDSIZE; ++col)
                 {
-                    spaces[i, j] = new Button();
+                    //create button and assign attributes
+                    Button tempButton = new Button();
+                    tempButton.Height = BUTTON_SIZE;
+                    tempButton.Width = BUTTON_SIZE;
+                    //731, 29 is location of the first button
+                    tempButton.Location = new Point(731 + (row * BUTTON_SIZE),29 + (col * BUTTON_SIZE));
+                    tempButton.AutoSize = false;
+
+                    spaces[row, col] = tempButton;
                 }
             }
-            spaces[0, 0] = this.b0_0;
-            spaces[0, 1] = this.b0_1;
-            spaces[0, 2] = this.b0_2;
-            spaces[0, 3] = this.b0_3;
-            spaces[0, 4] = this.b0_4;
-            spaces[0, 5] = this.b0_5;
-            spaces[0, 6] = this.b0_6;
-            spaces[0, 7] = this.b0_7;
-            spaces[0, 8] = this.b0_8;
-            spaces[0, 9] = this.b0_9;
-            spaces[0, 10] = this.b0_10;
-            spaces[0, 11] = this.b0_11;
-            spaces[0, 12] = this.b0_12;
-            spaces[0, 13] = this.b0_13;
-            spaces[0, 14] = this.b0_14;
-            spaces[1, 0] = this.b1_0;
-            spaces[1, 1] = this.b1_1;
-            spaces[1, 2] = this.b1_2;
-            spaces[1, 3] = this.b1_3;
-            spaces[1, 4] = this.b1_4;
-            spaces[1, 5] = this.b1_5;
-            spaces[1, 6] = this.b1_6;
-            spaces[1, 7] = this.b1_7;
-            spaces[1, 8] = this.b1_8;
-            spaces[1, 9] = this.b1_9;
-            spaces[1, 10] = this.b1_10;
-            spaces[1, 11] = this.b1_11;
-            spaces[1, 12] = this.b1_12;
-            spaces[1, 13] = this.b1_13;
-            spaces[1, 14] = this.b1_14;
-            spaces[2, 0] = this.b2_0;
-            spaces[2, 1] = this.b2_1;
-            spaces[2, 2] = this.b2_2;
-            spaces[2, 3] = this.b2_3;
-            spaces[2, 4] = this.b2_4;
-            spaces[2, 5] = this.b2_5;
-            spaces[2, 6] = this.b2_6;
-            spaces[2, 7] = this.b2_7;
-            spaces[2, 8] = this.b2_8;
-            spaces[2, 9] = this.b2_9;
-            spaces[2, 10] = this.b2_10;
-            spaces[2, 11] = this.b2_11;
-            spaces[2, 12] = this.b2_12;
-            spaces[2, 13] = this.b2_13;
-            spaces[2, 14] = this.b2_14;
-            spaces[3, 0] = this.b3_0;
-            spaces[3, 1] = this.b3_1;
-            spaces[3, 2] = this.b3_2;
-            spaces[3, 3] = this.b3_3;
-            spaces[3, 4] = this.b3_4;
-            spaces[3, 5] = this.b3_5;
-            spaces[3, 6] = this.b3_6;
-            spaces[3, 7] = this.b3_7;
-            spaces[3, 8] = this.b3_8;
-            spaces[3, 9] = this.b3_9;
-            spaces[3, 10] = this.b3_10;
-            spaces[3, 11] = this.b3_11;
-            spaces[3, 12] = this.b3_12;
-            spaces[3, 13] = this.b3_13;
-            spaces[3, 14] = this.b3_14;
-            spaces[4, 0] = this.b4_0;
-            spaces[4, 1] = this.b4_1;
-            spaces[4, 2] = this.b4_2;
-            spaces[4, 3] = this.b4_3;
-            spaces[4, 4] = this.b4_4;
-            spaces[4, 5] = this.b4_5;
-            spaces[4, 6] = this.b4_6;
-            spaces[4, 7] = this.b4_7;
-            spaces[4, 8] = this.b4_8;
-            spaces[4, 9] = this.b4_9;
-            spaces[4, 10] = this.b4_10;
-            spaces[4, 11] = this.b4_11;
-            spaces[4, 12] = this.b4_12;
-            spaces[4, 13] = this.b4_13;
-            spaces[4, 14] = this.b4_14;
-            spaces[5, 0] = this.b5_0;
-            spaces[5, 1] = this.b5_1;
-            spaces[5, 2] = this.b5_2;
-            spaces[5, 3] = this.b5_3;
-            spaces[5, 4] = this.b5_4;
-            spaces[5, 5] = this.b5_5;
-            spaces[5, 6] = this.b5_6;
-            spaces[5, 7] = this.b5_7;
-            spaces[5, 8] = this.b5_8;
-            spaces[5, 9] = this.b5_9;
-            spaces[5, 10] = this.b5_10;
-            spaces[5, 11] = this.b5_11;
-            spaces[5, 12] = this.b5_12;
-            spaces[5, 13] = this.b5_13;
-            spaces[5, 14] = this.b5_14;
-            spaces[6, 0] = this.b6_0;
-            spaces[6, 1] = this.b6_1;
-            spaces[6, 2] = this.b6_2;
-            spaces[6, 3] = this.b6_3;
-            spaces[6, 4] = this.b6_4;
-            spaces[6, 5] = this.b6_5;
-            spaces[6, 6] = this.b6_6;
-            spaces[6, 7] = this.b6_7;
-            spaces[6, 8] = this.b6_8;
-            spaces[6, 9] = this.b6_9;
-            spaces[6, 10] = this.b6_10;
-            spaces[6, 11] = this.b6_11;
-            spaces[6, 12] = this.b6_12;
-            spaces[6, 13] = this.b6_13;
-            spaces[6, 14] = this.b6_14;
-            spaces[7, 0] = this.b7_0;
-            spaces[7, 1] = this.b7_1;
-            spaces[7, 2] = this.b7_2;
-            spaces[7, 3] = this.b7_3;
-            spaces[7, 4] = this.b7_4;
-            spaces[7, 5] = this.b7_5;
-            spaces[7, 6] = this.b7_6;
-            spaces[7, 7] = this.b7_7;
-            spaces[7, 8] = this.b7_8;
-            spaces[7, 9] = this.b7_9;
-            spaces[7, 10] = this.b7_10;
-            spaces[7, 11] = this.b7_11;
-            spaces[7, 12] = this.b7_12;
-            spaces[7, 13] = this.b7_13;
-            spaces[7, 14] = this.b7_14;
-            spaces[8, 0] = this.b8_0;
-            spaces[8, 1] = this.b8_1;
-            spaces[8, 2] = this.b8_2;
-            spaces[8, 3] = this.b8_3;
-            spaces[8, 4] = this.b8_4;
-            spaces[8, 5] = this.b8_5;
-            spaces[8, 6] = this.b8_6;
-            spaces[8, 7] = this.b8_7;
-            spaces[8, 8] = this.b8_8;
-            spaces[8, 9] = this.b8_9;
-            spaces[8, 10] = this.b8_10;
-            spaces[8, 11] = this.b8_11;
-            spaces[8, 12] = this.b8_12;
-            spaces[8, 13] = this.b8_13;
-            spaces[8, 14] = this.b8_14;
-            spaces[9, 0] = this.b9_0;
-            spaces[9, 1] = this.b9_1;
-            spaces[9, 2] = this.b9_2;
-            spaces[9, 3] = this.b9_3;
-            spaces[9, 4] = this.b9_4;
-            spaces[9, 5] = this.b9_5;
-            spaces[9, 6] = this.b9_6;
-            spaces[9, 7] = this.b9_7;
-            spaces[9, 8] = this.b9_8;
-            spaces[9, 9] = this.b9_9;
-            spaces[9, 10] = this.b9_10;
-            spaces[9, 11] = this.b9_11;
-            spaces[9, 12] = this.b9_12;
-            spaces[9, 13] = this.b9_13;
-            spaces[9, 14] = this.b9_14;
-            spaces[10, 0] = this.b10_0;
-            spaces[10, 1] = this.b10_1;
-            spaces[10, 2] = this.b10_2;
-            spaces[10, 3] = this.b10_3;
-            spaces[10, 4] = this.b10_4;
-            spaces[10, 5] = this.b10_5;
-            spaces[10, 6] = this.b10_6;
-            spaces[10, 7] = this.b10_7;
-            spaces[10, 8] = this.b10_8;
-            spaces[10, 9] = this.b10_9;
-            spaces[10, 10] = this.b10_10;
-            spaces[10, 11] = this.b10_11;
-            spaces[10, 12] = this.b10_12;
-            spaces[10, 13] = this.b10_13;
-            spaces[10, 14] = this.b10_14;
-            spaces[11, 0] = this.b11_0;
-            spaces[11, 1] = this.b11_1;
-            spaces[11, 2] = this.b11_2;
-            spaces[11, 3] = this.b11_3;
-            spaces[11, 4] = this.b11_4;
-            spaces[11, 5] = this.b11_5;
-            spaces[11, 6] = this.b11_6;
-            spaces[11, 7] = this.b11_7;
-            spaces[11, 8] = this.b11_8;
-            spaces[11, 9] = this.b11_9;
-            spaces[11, 10] = this.b11_10;
-            spaces[11, 11] = this.b11_11;
-            spaces[11, 12] = this.b11_12;
-            spaces[11, 13] = this.b11_13;
-            spaces[11, 14] = this.b11_14;
-            spaces[12, 0] = this.b12_0;
-            spaces[12, 1] = this.b12_1;
-            spaces[12, 2] = this.b12_2;
-            spaces[12, 3] = this.b12_3;
-            spaces[12, 4] = this.b12_4;
-            spaces[12, 5] = this.b12_5;
-            spaces[12, 6] = this.b12_6;
-            spaces[12, 7] = this.b12_7;
-            spaces[12, 8] = this.b12_8;
-            spaces[12, 9] = this.b12_9;
-            spaces[12, 10] = this.b12_10;
-            spaces[12, 11] = this.b12_11;
-            spaces[12, 12] = this.b12_12;
-            spaces[12, 13] = this.b12_13;
-            spaces[12, 14] = this.b12_14;
-            spaces[13, 0] = this.b13_0;
-            spaces[13, 1] = this.b13_1;
-            spaces[13, 2] = this.b13_2;
-            spaces[13, 3] = this.b13_3;
-            spaces[13, 4] = this.b13_4;
-            spaces[13, 5] = this.b13_5;
-            spaces[13, 6] = this.b13_6;
-            spaces[13, 7] = this.b13_7;
-            spaces[13, 8] = this.b13_8;
-            spaces[13, 9] = this.b13_9;
-            spaces[13, 10] = this.b13_10;
-            spaces[13, 11] = this.b13_11;
-            spaces[13, 12] = this.b13_12;
-            spaces[13, 13] = this.b13_13;
-            spaces[13, 14] = this.b13_14;
-            spaces[14, 0] = this.b14_0;
-            spaces[14, 1] = this.b14_1;
-            spaces[14, 2] = this.b14_2;
-            spaces[14, 3] = this.b14_3;
-            spaces[14, 4] = this.b14_4;
-            spaces[14, 5] = this.b14_5;
-            spaces[14, 6] = this.b14_6;
-            spaces[14, 7] = this.b14_7;
-            spaces[14, 8] = this.b14_8;
-            spaces[14, 9] = this.b14_9;
-            spaces[14, 10] = this.b14_10;
-            spaces[14, 11] = this.b14_11;
-            spaces[14, 12] = this.b14_12;
-            spaces[14, 13] = this.b14_13;
-            spaces[14, 14] = this.b14_14;
         }
 
         public void generateTrash() // Called when beginning a new game. Uses random num generator to scatter trash across board
         {
             Random rand_num = new Random();
             int rand = 0;
-            for(int i = 0; i < BOARDSIZE; i++)
+            for(int i = 0; i < BOARDSIZE; ++i)
             {
-                for(int j = 0; j < BOARDSIZE; j++)
+                for(int j = 0; j < BOARDSIZE; ++j)
                 {
-                    if( (i == 7 && j == 0) || (i == 7 && j == 14)) { } // Don't spawn trash on starting positions
+                    if( (i == p1_start_row && j == p1_start_col) || (i == p2_start_row && j == p2_start_col)) { } // Don't spawn trash on starting positions
                     else  { 
                         rand = rand_num.Next(0, 4); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
                         //spaces[i, j].BackColor = Color.Gray;
@@ -307,14 +105,14 @@ namespace _438_IntelliBros
         {
             if (currentTurn == 1)
             {
-                if (newRow == player1row && newCol == player1col) { return false; } // can't "move" to same space
-                if (newRow == player2row && newCol == player2col) { return false; } // can't sit on another player's space
-                if (Math.Abs(newRow - player1row) <= 1 && Math.Abs(newCol - player1col) <= 1) { return true; }
+                if (newRow == P1.row && newCol == P1.col) { return false; } // can't "move" to same space
+                if (newRow == P2.row && newCol == P2.col) { return false; } // can't sit on another player's space
+                if (Math.Abs(newRow - P1.row) <= 1 && Math.Abs(newCol - P1.col) <= 1) { return true; }
             } else // it is player 2's turn
             {
-                if (newRow == player2row && newCol == player2col) { return false; } // can't "move" to same space
-                if (newRow == player1row && newCol == player1col) { return false; } // can't sit on another player's space
-                if (Math.Abs(newRow - player2row) <= 1 && Math.Abs(newCol - player2col) <= 1) { return true; }
+                if (newRow == P2.row && newCol == P2.col) { return false; } // can't "move" to same space
+                if (newRow == P1.row && newCol == P1.col) { return false; } // can't sit on another player's space
+                if (Math.Abs(newRow - P2.row) <= 1 && Math.Abs(newCol - P2.col) <= 1) { return true; }
             }
             return false;
         }
@@ -326,108 +124,108 @@ namespace _438_IntelliBros
                 {
                     spaces[newRow, newCol].BackgroundImage = null;
                     spaces[newRow, newCol].Tag = "";
-                    player1score += SMALL_TRASH_POINT_VAL;
-                    p1points_label.Text = player1score.ToString();
-                    if (player1capacity + SMALL_TRASH_CAPACITY_VAL > MAX_CAPACITY)
+                    P1.score += SMALL_TRASH_POINT_VAL;
+                    p1points_label.Text = P1.score.ToString();
+                    if (P1.capacity + SMALL_TRASH_CAPACITY_VAL > MAX_CAPACITY)
                     { // check to verify that player still has capacity space
                         MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
                     }
                     else
                     {
-                        player1capacity += SMALL_TRASH_CAPACITY_VAL;
-                        p1capacity_label.Text = player1capacity.ToString();
+                        P1.capacity += SMALL_TRASH_CAPACITY_VAL;
+                        p1capacity_label.Text = P1.capacity.ToString();
                     }
                 }
                 else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
                 {
                     spaces[newRow, newCol].BackgroundImage = null;
                     spaces[newRow, newCol].Tag = "";
-                    player1score += MEDIUM_TRASH_POINT_VAL;
-                    p1points_label.Text = player1score.ToString();
-                    if (player1capacity + MEDIUM_TRASH_CAPACITY_VAL > MAX_CAPACITY)
+                    P1.score += MEDIUM_TRASH_POINT_VAL;
+                    p1points_label.Text = P1.score.ToString();
+                    if (P1.capacity + MEDIUM_TRASH_CAPACITY_VAL > MAX_CAPACITY)
                     { // check to verify that player still has capacity space
                         MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
                     }
                     else
                     {
-                        player1capacity += MEDIUM_TRASH_CAPACITY_VAL;
-                        p1capacity_label.Text = player1capacity.ToString();
+                        P1.capacity += MEDIUM_TRASH_CAPACITY_VAL;
+                        p1capacity_label.Text = P1.capacity.ToString();
                     }
                 }
                 else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
                 {
                     spaces[newRow, newCol].BackgroundImage = null;
                     spaces[newRow, newCol].Tag = "";
-                    player1score += LARGE_TRASH_POINT_VAL;
-                    p1points_label.Text = player1score.ToString();
-                    if (player1capacity + LARGE_TRASH_CAPACITY_VAL > MAX_CAPACITY)
+                    P1.score += LARGE_TRASH_POINT_VAL;
+                    p1points_label.Text = P1.score.ToString();
+                    if (P1.capacity + LARGE_TRASH_CAPACITY_VAL > MAX_CAPACITY)
                     { // check to verify that player still has capacity space
                         MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
                     }
                     else
                     {
-                        player1capacity += LARGE_TRASH_CAPACITY_VAL;
-                        p1capacity_label.Text = player1capacity.ToString();
+                        P1.capacity += LARGE_TRASH_CAPACITY_VAL;
+                        p1capacity_label.Text = P1.capacity.ToString();
                     }
                 }
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[0];
-                spaces[player1row, player1col].BackgroundImage = null;
-                player1row = newRow;
-                player1col = newCol;
+                spaces[P1.row, P1.col].BackgroundImage = null;
+                P1.row = newRow;
+                P1.col = newCol;
             } else // it is player 2's turn
             {
                 if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
                 {
                     spaces[newRow, newCol].BackgroundImage = null;
                     spaces[newRow, newCol].Tag = "";
-                    player2score += SMALL_TRASH_POINT_VAL;
-                    p2points_label.Text = player2score.ToString();
-                    if (player2capacity + SMALL_TRASH_CAPACITY_VAL > MAX_CAPACITY)
+                    P2.score += SMALL_TRASH_POINT_VAL;
+                    p2points_label.Text = P2.score.ToString();
+                    if (P2.capacity + SMALL_TRASH_CAPACITY_VAL > MAX_CAPACITY)
                     { // check to verify that player still has capacity space
                         MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
                     }
                     else
                     {
-                        player2capacity += SMALL_TRASH_CAPACITY_VAL;
-                        p2capacity_label.Text = player2capacity.ToString();
+                        P2.capacity += SMALL_TRASH_CAPACITY_VAL;
+                        p2capacity_label.Text = P2.capacity.ToString();
                     }
                 }
                 else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
                 {
                     spaces[newRow, newCol].BackgroundImage = null;
                     spaces[newRow, newCol].Tag = "";
-                    player2score += MEDIUM_TRASH_POINT_VAL;
-                    p2points_label.Text = player2score.ToString();
-                    if (player2capacity + MEDIUM_TRASH_CAPACITY_VAL > MAX_CAPACITY)
+                    P2.score += MEDIUM_TRASH_POINT_VAL;
+                    p2points_label.Text = P2.score.ToString();
+                    if (P2.capacity + MEDIUM_TRASH_CAPACITY_VAL > MAX_CAPACITY)
                     { // check to verify that player still has capacity space
                         MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
                     }
                     else
                     {
-                        player2capacity += MEDIUM_TRASH_CAPACITY_VAL;
-                        p2capacity_label.Text = player2capacity.ToString();
+                        P2.capacity += MEDIUM_TRASH_CAPACITY_VAL;
+                        p2capacity_label.Text = P2.capacity.ToString();
                     }
                 }
                 else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
                 {
                     spaces[newRow, newCol].BackgroundImage = null;
                     spaces[newRow, newCol].Tag = "";
-                    player2score += LARGE_TRASH_POINT_VAL;
-                    p2points_label.Text = player2score.ToString();
-                    if (player2capacity + LARGE_TRASH_CAPACITY_VAL > MAX_CAPACITY)
+                    P2.score += LARGE_TRASH_POINT_VAL;
+                    p2points_label.Text = P2.score.ToString();
+                    if (P2.capacity + LARGE_TRASH_CAPACITY_VAL > MAX_CAPACITY)
                     { // check to verify that player still has capacity space
                         MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
                     }
                     else
                     {
-                        player2capacity += LARGE_TRASH_CAPACITY_VAL;
-                        p2capacity_label.Text = player2capacity.ToString();
+                        P2.capacity += LARGE_TRASH_CAPACITY_VAL;
+                        p2capacity_label.Text = P2.capacity.ToString();
                     }
                 }
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[1];
-                spaces[player2row, player2col].BackgroundImage = null;
-                player2row = newRow;
-                player2col = newCol;
+                spaces[P2.row, P2.col].BackgroundImage = null;
+                P2.row = newRow;
+                P2.col = newCol;
             }
         }
 
@@ -452,7 +250,7 @@ namespace _438_IntelliBros
         {
             // Check who is currently moving. Get their current location. 
             // Check if the new desired location is a valid move (neighboring space).
-            if (player1row == -1 || player1col == -1 || player2row == -1 || player2col == 1)
+            if (P1.row == -1 || P1.col == -1 || P2.row == -1 || P2.col == 1)
             {
                 return false; // if anything is = -1, game has not started yet. Don't move any pieces.
             }
@@ -467,69 +265,47 @@ namespace _438_IntelliBros
 
         public void clearBoard() //removes any leftover cats & trash that are on board before beginning new game
         {
-            if(player1row != -1)
+            if(P1.row != -1)
             {
-                spaces[player1row, player1col].BackgroundImage = null;
+                spaces[P1.row, P1.col].BackgroundImage = null;
             }
-            if(player2row != -1)
+            if(P2.row != -1)
             {
-                spaces[player2row, player2col].BackgroundImage = null;
+                spaces[P2.row, P2.col].BackgroundImage = null;
             }
-            for(int i = 0; i < BOARDSIZE; i++)
+            for(int row = 0; row < BOARDSIZE; ++row)
             {
-                for(int j = 0; j < BOARDSIZE; j++)
+                for(int col = 0; col < BOARDSIZE; ++col)
                 {
-                    spaces[i, j].BackgroundImage = null; // remove trash images
+                    spaces[row, col].BackgroundImage = null; // remove trash images
                 }
             }
         }
-
         private void button_Start_Click(object sender, EventArgs e)
         {
-            if (player1row != -1 || player1col != -1 || player2row != -1 || player2col != -1) { clearBoard(); }
-            
-            spaces[7, 0].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
-            spaces[7, 14].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
-
-            player1row = 7; 
-            player1col = 0;
-            player2row = 7;
-            player2col = 14;
+            button_Reset_Click(sender, e);
 
             p1icon.BackColor = Color.LightGreen;
             p2icon.BackColor = Color.Gray;
-
-            player1capacity = player1score = player2capacity = player2score = 0;
-            p1capacity_label.Text = player1capacity.ToString();
-            p1points_label.Text = player1score.ToString();
-            p2capacity_label.Text = player2capacity.ToString();
-            p2points_label.Text = player2score.ToString();
 
             generateTrash();
         }
 
         private void button_Reset_Click(object sender, EventArgs e)
         {
-            if (player1row != -1 || player1col != -1 || player2row != -1 || player2col != -1) { clearBoard(); }
+            if (P1.row != -1 || P1.col != -1 || P2.row != -1 || P2.col != -1) { clearBoard(); }
 
-            //spaces[7, 0].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
-            //spaces[7, 14].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
-
-            player1row = -1;
-            player1col = -1;
-            player2row = -1;
-            player2col = -1;
+            spaces[p1_start_row, p1_start_col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
+            spaces[p2_start_row, p1_start_col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
 
             p1icon.BackColor = Color.White;
             p2icon.BackColor = Color.White;
 
-            player1capacity = player1score = player2capacity = player2score = 0;
-            p1capacity_label.Text = player1capacity.ToString();
-            p1points_label.Text = player1score.ToString();
-            p2capacity_label.Text = player2capacity.ToString();
-            p2points_label.Text = player2score.ToString();
+            p1capacity_label.Text = P1.capacity.ToString();
+            p1points_label.Text = P1.score.ToString();
+            p2capacity_label.Text = P2.capacity.ToString();
+            p2points_label.Text = P2.score.ToString();
         }
-
         private void groupBox_E2_Enter(object sender, EventArgs e)
         {
             
@@ -967,7 +743,7 @@ namespace _438_IntelliBros
             verifyMove(5, 8);
         }
 
-        private void button86_Click(object sender, EventArgs e) //wrong title?
+        private void b5_9_Click(object sender, EventArgs e) //wrong title?
         {
             verifyMove(5, 9);
         }
@@ -977,7 +753,7 @@ namespace _438_IntelliBros
             verifyMove(5, 10);
         }
 
-        private void button29_Click(object sender, EventArgs e) //wrong title?
+        private void b5_11_Click(object sender, EventArgs e) //wrong title?
         {
             verifyMove(5, 11);
         }
