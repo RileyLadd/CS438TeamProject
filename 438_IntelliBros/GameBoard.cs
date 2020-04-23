@@ -108,22 +108,21 @@ namespace _438_IntelliBros
             }
         }
 
-        public bool isNeighbor(int newRow, int newCol) // Determines if the space passed in is a neighbor of the player's current space 
+        public bool isNeighbor(int newRow, int newCol) // Determines if the space passed in is a neighbor of the player's current space
         {
+            if (newRow == P1.row && newCol == P1.col) { return false; } // can't "move" to same space
+            if (newRow == P2.row && newCol == P2.col) { return false; } // can't sit on another player's space
+
             if (currentTurn == 1)
             {
-                if (newRow == P1.row && newCol == P1.col) { return false; } // can't "move" to same space
-                if (newRow == P2.row && newCol == P2.col) { return false; } // can't sit on another player's space
-                if (Math.Abs(newRow - P1.row) <= 1 && Math.Abs(newCol - P1.col) <= 1) { return true; }
+                return (Math.Abs(newRow - P1.row) < 2 && Math.Abs(newCol - P1.col) < 2);
             }
             else // it is player 2's turn
             {
-                if (newRow == P2.row && newCol == P2.col) { return false; } // can't "move" to same space
-                if (newRow == P1.row && newCol == P1.col) { return false; } // can't sit on another player's space
-                if (Math.Abs(newRow - P2.row) <= 1 && Math.Abs(newCol - P2.col) <= 1) { return true; }
+                return (Math.Abs(newRow - P2.row) < 2 && Math.Abs(newCol - P2.col) < 2);
             }
-            return false;
         }
+
         public void makeMove(int newRow, int newCol)
         {
             if (currentTurn == 1)
