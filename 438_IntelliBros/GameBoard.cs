@@ -272,24 +272,17 @@ namespace _438_IntelliBros
             else return false;
         }
 
-        public void clearBoard() //removes any leftover cats & trash that are on board before beginning new game
+        public void clearBoard() //removes images
         {
-            if (P1.row != -1)
-            {
-                spaces[P1.row, P1.col].BackgroundImage = null;
-            }
-            if (P2.row != -1)
-            {
-                spaces[P2.row, P2.col].BackgroundImage = null;
-            }
             for (int row = 0; row < BOARDSIZE; ++row)
             {
                 for (int col = 0; col < BOARDSIZE; ++col)
                 {
-                    spaces[row, col].BackgroundImage = null; // remove trash images
+                    spaces[row, col].BackgroundImage = null;
                 }
             }
         }
+
         private void button_Start_Click(object sender, EventArgs e)
         {
             button_Reset_Click(sender, e);
@@ -298,6 +291,10 @@ namespace _438_IntelliBros
             p2icon.BackColor = Color.Gray;
 
             generateTrash();
+            P1.row = p1_start_row;
+            P1.col = p1_start_col;
+            P2.row = p2_start_row;
+            P2.col = p2_start_col;
         }
 
         private void button_Reset_Click(object sender, EventArgs e)
@@ -319,24 +316,17 @@ namespace _438_IntelliBros
         private void button_Click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
-            //225 is small enough to search thru lol, too lazy to do binary search with locations, maybe later
-            int row, col;
-            row = col = 0;
+            //find the button based on its location
+            //row = (731 + (col * BUTTON_SIZE)
+            //col = 29 + (row * BUTTON_SIZE)
 
-            while (row < BOARDSIZE && spaces[row, col].Location != b.Location)
-            {
-                while (col < BOARDSIZE && spaces[row, col].Location != b.Location)
-                {
-                    ++col;
-                }
-                ++row;
-                col = 0;
-            }
+            int newX = b.Location.X;
+            int newY = b.Location.Y;
 
-            if ((row != 15 && col != 15) && spaces[row, col].Location == b.Location)
-            {
-                verifyMove(row, col);
-            }
+            int row = (newY - 29) / BUTTON_SIZE;
+            int col = (newX - 731) / BUTTON_SIZE;
+
+            verifyMove(row, col);
         }
     }
 }
