@@ -215,9 +215,6 @@ namespace _438_IntelliBros
 
                 //copy P1 image to new spot
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[0];
-
-                //change new spot to be grey
-                spaces[newRow, newCol].BackColor = Color.LightGray;
             }
             else // it is player 2's turn
             {
@@ -236,15 +233,14 @@ namespace _438_IntelliBros
                 //rm current postion image and color
                 P2.rmImg();
 
-                //update P1 location
+                //update P2 location
                 P2.moveTo(newRow, newCol);
 
                 //copy P2 image to new spot
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[1];
-
-                //change new spot to be grey
-                spaces[newRow, newCol].BackColor = Color.LightGray;
             }
+            //change new spot to be grey
+            spaces[newRow, newCol].BackColor = Color.LightGray;
         }
 
         public void nextTurn() // changes the currentTurn field to next player
@@ -256,9 +252,9 @@ namespace _438_IntelliBros
                 p1points_label.Text = P1.score.ToString();
                 p1capacity_label.Text = P1.capacity.ToString();
 
-                //Change P1 color of big image
+                //Update P1 big image
                 p1icon.BackColor = Color.LightGray;
-                //Change P2 color of images
+                //Update P2 colors
                 p2icon.BackColor = Color.Green;
                 spaces[P2.row, P2.col].BackColor = Color.Green;
             }
@@ -269,9 +265,9 @@ namespace _438_IntelliBros
                 p2points_label.Text = P2.score.ToString();
                 p2capacity_label.Text = P2.capacity.ToString();
 
-                //Change P2 color of big image
+                //Update P2 big image
                 p2icon.BackColor = Color.LightGray;
-                //Change P1 color of images
+                //Update P1 colors
                 p1icon.BackColor = Color.Green;
                 spaces[P1.row, P1.col].BackColor = Color.Green;
             }
