@@ -14,14 +14,20 @@ namespace _438_IntelliBros
 
     {
         static Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
-
-        class Player
+        partial class Player
         {
-            public int row, col, score, capacity;
+            //player type
+            /*
+             * 1 user
+             * 2 shortest dist
+             * 3 closest
+             */
+            public int row, col, score, capacity, type;
             public Player()
             {
                 row = col = -1;
                 score = capacity = 0;
+                type = 1; //default user
             }
 
             public void reset()
@@ -29,19 +35,68 @@ namespace _438_IntelliBros
                 score = capacity = 0;
             }
 
-            public void addSmall()
+            public void rmPos()
+            {
+                //make current player lose all button attributes
+                spaces[row, col].Tag = null;
+                spaces[row, col].BackgroundImage = null;
+                spaces[row, col].BackColor = Color.LightGray;
+            }
+
+            public void moveTo(int newRow, int newCol)
+            {
+                row = newRow;
+                col = newCol;
+                spaces[row, col].Tag = "player";
+            }
+
+            public bool makeMove(int newRow, int newCol)
+            {
+                switch (type)
+                {
+                    default:
+                    case 1: //isNeightbor gets checked
+                        break;
+                    case 2:
+                        //TODO find new values for newRow / newCol
+                        break;
+                    case 3:
+                        //TODO find new values for newRow / newCol
+                        break;
+                }
+
+                if (isNeighbor(newRow, newCol))
+                {
+                    if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
+                    {
+                        addSmall();
+                    }
+                    else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
+                    {
+                        addMed();
+                    }
+                    else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
+                    {
+                        addLarge();
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            private void addSmall()
             {
                 score += SMALL_TRASH_POINT_VAL;
                 addCapacity(1);
             }
 
-            public void addMed()
+            private void addMed()
             {
                 score += MEDIUM_TRASH_POINT_VAL;
                 addCapacity(2);
             }
 
-            public void addLarge()
+            private void addLarge()
             {
                 score += LARGE_TRASH_POINT_VAL;
                 addCapacity(3);
@@ -75,18 +130,80 @@ namespace _438_IntelliBros
                 }
             }
 
-            public void rmImg()
+            private bool isNeighbor(int newRow, int newCol)
             {
-                //make current player lose its image and color
-                spaces[row, col].BackgroundImage = null;
-                spaces[row, col].BackColor = Color.LightGray;
+                if ((string)spaces[newRow, newCol].Tag == "player") { return false; } // can't move to occupied space
+                return (Math.Abs(newRow - row) < 2 && Math.Abs(newCol - col) < 2);
             }
+        }
 
-            public void moveTo(int newRow, int newCol)
-            {
-                row = newRow;
-                col = newCol;
-            }
+        //player helpers
+        public void P1_updateLabels()
+        {
+            p1capacity_label.Text = P1.capacity.ToString();
+            p1points_label.Text = P1.score.ToString();
+        }
+
+        public void P2_updateLabels()
+        {
+            p2capacity_label.Text = P2.capacity.ToString();
+            p2points_label.Text = P2.score.ToString();
+        }
+
+        //place player onto the board, default to start location
+        public void P1_PutImageLoc(int row = p1_start_row, int col = p1_start_col)
+        {
+            P1.moveTo(row, col);
+            spaces[row, col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
+        }
+
+        public void P2_PutImageLoc(int row = p2_start_row, int col = p2_start_col)
+        {
+            P2.moveTo(row, col);
+            spaces[row, col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
+        }
+
+        public void nextTurnIs_P1()
+        {
+            p1icon.BackColor = Color.LightGray;
+            spaces[P1.row, P1.col].BackColor = Color.LightGray;
+
+            p2icon.BackColor = Color.Green;
+            spaces[P2.row, P2.col].BackColor = Color.Green;
+        }
+
+        public void nextTurnIs_P2()
+        {
+            p2icon.BackColor = Color.LightGray;
+            spaces[P2.row, P2.col].BackColor = Color.LightGray;
+
+            p1icon.BackColor = Color.Green;
+            spaces[P1.row, P1.col].BackColor = Color.Green;
+        }
+
+        private void E1_User_Click(object sender, EventArgs e)
+        {
+            P1.type = 1;
+        }
+        private void E2_User_Click(object sender, EventArgs e)
+        {
+            P2.type = 1;
+        }
+        private void E1_ShortestDist_Click(object sender, EventArgs e)
+        {
+            P1.type = 2;
+        }
+        private void E2_ShortestDist_Click(object sender, EventArgs e)
+        {
+            P2.type = 2;
+        }
+        private void E1_Closest_Click(object sender, EventArgs e)
+        {
+            P1.type = 3;
+        }
+        private void E2_Closest_Click(object sender, EventArgs e)
+        {
+            P2.type = 3;
         }
 
         Player P1 = new Player();
@@ -149,8 +266,8 @@ namespace _438_IntelliBros
                     if (!(i == P1.row && j == P1.col) && !(i == P2.row && j == P2.col)) // Don't spawn trash on players
                     {
                         rand = rand_num.Next(0, 4); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
-                        //spaces[i, j].BackColor = Color.LightGray;
-                        //Console.WriteLine(rand);
+                                                    //spaces[i, j].BackColor = Color.LightGray;
+                                                    //Console.WriteLine(rand);
                         if (rand == 3)
                         {
                             rand = rand_num.Next(2, 8); //generate rand num between 2 and 7
@@ -175,107 +292,48 @@ namespace _438_IntelliBros
             }
         }
 
-        public bool isNeighbor(int newRow, int newCol) // Determines if the space passed in is a neighbor of the player's current space
-        {
-            if (newRow == P1.row && newCol == P1.col) { return false; } // can't "move" to same space
-            if (newRow == P2.row && newCol == P2.col) { return false; } // can't sit on another player's space
-
-            if (currentTurn == 1)
+        public void verifyMove(int newRow, int newCol) {
+            if (P1.row != -1 && P1.col != -1 && P2.row != -1 && P2.col != -1)
             {
-                return (Math.Abs(newRow - P1.row) < 2 && Math.Abs(newCol - P1.col) < 2);
-            }
-            else // it is player 2's turn
-            {
-                return (Math.Abs(newRow - P2.row) < 2 && Math.Abs(newCol - P2.col) < 2);
-            }
-        }
-
-        public void makeMove(int newRow, int newCol)
-        {
-            if (currentTurn == 1)   //P1
-            {
-                if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
+                if (currentTurn == 1)
                 {
-                    P1.addSmall();
+                    if (P1.makeMove(newRow, newCol))
+                    {
+                        //rm current postion image, color, tag
+                        P1.rmPos();
+
+                        //updates P1 image and location
+                        P1_PutImageLoc(newRow, newCol);
+
+                        P1_updateLabels();
+
+                        currentTurn = 2;
+                        nextTurnIs_P1();
+                    }
                 }
-                else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
+                else
                 {
-                    P1.addMed();
+                    if (P2.makeMove(newRow, newCol))
+                    {
+                        //rm current postion image, color, tag
+                        P2.rmPos();
+
+                        //updates P2 image and location
+                        P2_PutImageLoc(newRow, newCol);
+
+                        P2_updateLabels();
+
+                        currentTurn = 1;
+                        nextTurnIs_P2();
+                    }
                 }
-                else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
-                {
-                    P1.addLarge();
-                }
-                //rm current postion image and color
-                P1.rmImg();
-
-                //updates P1 image and location
-                P1_PutImageLoc(newRow, newCol);
-            }
-            else // it is player 2's turn
-            {
-                if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
-                {
-                    P2.addSmall();
-                }
-                else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
-                {
-                    P2.addMed();
-                }
-                else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
-                {
-                    P2.addLarge();
-                }
-                //rm current postion image and color
-                P2.rmImg();
-
-                //updates P2 image and location
-                P2_PutImageLoc(newRow, newCol);
-            }
-        }
-
-        public bool verifyMove(int newRow, int newCol) // verifies that the move to the passed-in row and col
-                                                       // is valid by considering the player who is moving and their current location
-        {
-            // Check who is currently moving. Get their current location. 
-            // Check if the new desired location is a valid move (neighboring space).
-            if (P1.row == -1 || P1.col == -1 || P2.row == -1 || P2.col == 1)
-            {
-                return false; // if anything is = -1, game has not started yet. Don't move any pieces.
-            }
-            if (isNeighbor(newRow, newCol)) // if true, make move.
-            {
-                makeMove(newRow, newCol);
-                nextTurn();
-                return true;
-            }
-            else return false;
-        }
-
-        public void nextTurn() // changes the currentTurn field to next player
-        {
-            if (currentTurn == 1)
-            {
-                currentTurn = 2;
-                //update P1 values
-                P1_updateLabels();
-
-                nextTurnIs_P1();
-            }
-            else
-            {
-                currentTurn = 1;
-                //update P2 values
-                P2_updateLabels();
-
-                nextTurnIs_P2();
             }
         }
 
         public void button_Start_Click(object sender, EventArgs e)
         {
             if (P1.row == -1 || P1.col == -1 || P2.row == -1 || P2.col == 1) { button_Reset_Click(sender, e); }
-            
+
             generateTrash();
         }
 
@@ -329,49 +387,6 @@ namespace _438_IntelliBros
             int col = (newX - 731) / BUTTON_SIZE;
 
             verifyMove(row, col);
-        }
-
-        public void P1_updateLabels()
-        {
-            p1capacity_label.Text = P1.capacity.ToString();
-            p1points_label.Text = P1.score.ToString();
-        }
-
-        public void P2_updateLabels()
-        {
-            p2capacity_label.Text = P2.capacity.ToString();
-            p2points_label.Text = P2.score.ToString();
-        }
-
-        //default to start
-        public void P1_PutImageLoc(int row = p1_start_row, int col = p1_start_col)
-        {
-            P1.moveTo(row, col);
-            spaces[row, col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
-        }
-
-        public void P2_PutImageLoc(int row = p2_start_row, int col = p2_start_col)
-        {
-            P2.moveTo(row, col);
-            spaces[row, col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
-        }
-
-        public void nextTurnIs_P1()
-        {
-            p1icon.BackColor = Color.LightGray;
-            spaces[P1.row, P1.col].BackColor = Color.LightGray;
-
-            p2icon.BackColor = Color.Green;
-            spaces[P2.row, P2.col].BackColor = Color.Green;
-        }
-
-        public void nextTurnIs_P2()
-        {
-            p2icon.BackColor = Color.LightGray;
-            spaces[P2.row, P2.col].BackColor = Color.LightGray;
-
-            p1icon.BackColor = Color.Green;
-            spaces[P1.row, P1.col].BackColor = Color.Green;
         }
     }
 }
