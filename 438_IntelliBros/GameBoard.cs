@@ -14,7 +14,7 @@ namespace _438_IntelliBros
 
     {
         static Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
-        
+
         class Player
         {
             public int row, col, score, capacity;
@@ -47,7 +47,7 @@ namespace _438_IntelliBros
                 addCapacity(3);
             }
 
-            public void addCapacity(int type) //small / med / large
+            private void addCapacity(int type) //small / med / large
             {
                 int addingCap;
                 switch (type)
@@ -92,7 +92,7 @@ namespace _438_IntelliBros
         Player P1 = new Player();
         Player P2 = new Player();
         int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
-        
+
         //change the starting positions
         const int p1_start_row = 7;
         const int p1_start_col = 0;
@@ -146,8 +146,7 @@ namespace _438_IntelliBros
             {
                 for (int j = 0; j < BOARDSIZE; ++j)
                 {
-                    if ((i == p1_start_row && j == p1_start_col) || (i == p2_start_row && j == p2_start_col)) { } // Don't spawn trash on starting positions
-                    else
+                    if (!(i == P1.row && j == P1.col) && !(i == P2.row && j == P2.col)) // Don't spawn trash on players
                     {
                         rand = rand_num.Next(0, 4); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
                         //spaces[i, j].BackColor = Color.LightGray;
@@ -210,11 +209,8 @@ namespace _438_IntelliBros
                 //rm current postion image and color
                 P1.rmImg();
 
-                //update P1 location
-                P1.moveTo(newRow, newCol);
-
-                //copy P1 image to new spot
-                spaces[newRow, newCol].BackgroundImage = imageList1.Images[0];
+                //updates P1 image and location
+                P1_PutImageLoc(newRow, newCol);
             }
             else // it is player 2's turn
             {
@@ -233,43 +229,8 @@ namespace _438_IntelliBros
                 //rm current postion image and color
                 P2.rmImg();
 
-                //update P2 location
-                P2.moveTo(newRow, newCol);
-
-                //copy P2 image to new spot
-                spaces[newRow, newCol].BackgroundImage = imageList1.Images[1];
-            }
-            //change new spot to be grey
-            spaces[newRow, newCol].BackColor = Color.LightGray;
-        }
-
-        public void nextTurn() // changes the currentTurn field to next player
-        {
-            if (currentTurn == 1)
-            {
-                currentTurn = 2;
-                //update P1 values
-                p1points_label.Text = P1.score.ToString();
-                p1capacity_label.Text = P1.capacity.ToString();
-
-                //Update P1 big image
-                p1icon.BackColor = Color.LightGray;
-                //Update P2 colors
-                p2icon.BackColor = Color.Green;
-                spaces[P2.row, P2.col].BackColor = Color.Green;
-            }
-            else
-            {
-                currentTurn = 1;
-                //update P2 values
-                p2points_label.Text = P2.score.ToString();
-                p2capacity_label.Text = P2.capacity.ToString();
-
-                //Update P2 big image
-                p2icon.BackColor = Color.LightGray;
-                //Update P1 colors
-                p1icon.BackColor = Color.Green;
-                spaces[P1.row, P1.col].BackColor = Color.Green;
+                //updates P2 image and location
+                P2_PutImageLoc(newRow, newCol);
             }
         }
 
@@ -291,53 +252,70 @@ namespace _438_IntelliBros
             else return false;
         }
 
-        public void clearBoard() //removes images
+        public void nextTurn() // changes the currentTurn field to next player
+        {
+            if (currentTurn == 1)
+            {
+                currentTurn = 2;
+                //update P1 values
+                P1_updateLabels();
+
+                nextTurnIs_P1();
+            }
+            else
+            {
+                currentTurn = 1;
+                //update P2 values
+                P2_updateLabels();
+
+                nextTurnIs_P2();
+            }
+        }
+
+        public void button_Start_Click(object sender, EventArgs e)
+        {
+            if (P1.row == -1 || P1.col == -1 || P2.row == -1 || P2.col == 1) { button_Reset_Click(sender, e); }
+            
+            generateTrash();
+        }
+
+        public void button_Reset_Click(object sender, EventArgs e)
+        {
+            clearBoard();
+
+            P1_PutImageLoc();
+            P2_PutImageLoc();
+
+            if (currentTurn == 1)
+            {
+                nextTurnIs_P2();
+            }
+            else
+            {
+                nextTurnIs_P1();
+            }
+
+            P1.reset();
+            P2.reset();
+
+            P1_updateLabels();
+            P2_updateLabels();
+        }
+
+        public void clearBoard() //removes images, colors, tags
         {
             for (int row = 0; row < BOARDSIZE; ++row)
             {
                 for (int col = 0; col < BOARDSIZE; ++col)
                 {
                     spaces[row, col].BackgroundImage = null;
+                    spaces[row, col].BackColor = Color.LightGray;
+                    spaces[row, col].Tag = null;
                 }
             }
         }
 
-        private void button_Start_Click(object sender, EventArgs e)
-        {
-            button_Reset_Click(sender, e);
-
-            p1icon.BackColor = Color.Green;
-            p2icon.BackColor = Color.LightGray;
-            spaces[P1.row, P1.col].BackColor = Color.Green;
-            spaces[P2.row, P2.col].BackColor = Color.LightGray;
-
-            generateTrash();
-        }
-
-        private void button_Reset_Click(object sender, EventArgs e)
-        {
-            if (P1.row != -1 || P1.col != -1 || P2.row != -1 || P2.col != -1) { clearBoard(); }
-
-            spaces[p1_start_row, p1_start_col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
-            spaces[p2_start_row, p2_start_col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
-
-            p1icon.BackColor = Color.White;
-            p2icon.BackColor = Color.White;
-
-            P1.reset();
-            P2.reset();
-            P1.row = p1_start_row;
-            P1.col = p1_start_col;
-            P2.row = p2_start_row;
-            P2.col = p2_start_col;
-
-            p1capacity_label.Text = P1.capacity.ToString();
-            p1points_label.Text = P1.score.ToString();
-            p2capacity_label.Text = P2.capacity.ToString();
-            p2points_label.Text = P2.score.ToString();
-        }
-
-        private void button_Click(object sender, EventArgs e)
+        public void button_Click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
             //find the button based on its location
@@ -351,6 +329,49 @@ namespace _438_IntelliBros
             int col = (newX - 731) / BUTTON_SIZE;
 
             verifyMove(row, col);
+        }
+
+        public void P1_updateLabels()
+        {
+            p1capacity_label.Text = P1.capacity.ToString();
+            p1points_label.Text = P1.score.ToString();
+        }
+
+        public void P2_updateLabels()
+        {
+            p2capacity_label.Text = P2.capacity.ToString();
+            p2points_label.Text = P2.score.ToString();
+        }
+
+        //default to start
+        public void P1_PutImageLoc(int row = p1_start_row, int col = p1_start_col)
+        {
+            P1.moveTo(row, col);
+            spaces[row, col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
+        }
+
+        public void P2_PutImageLoc(int row = p2_start_row, int col = p2_start_col)
+        {
+            P2.moveTo(row, col);
+            spaces[row, col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
+        }
+
+        public void nextTurnIs_P1()
+        {
+            p1icon.BackColor = Color.LightGray;
+            spaces[P1.row, P1.col].BackColor = Color.LightGray;
+
+            p2icon.BackColor = Color.Green;
+            spaces[P2.row, P2.col].BackColor = Color.Green;
+        }
+
+        public void nextTurnIs_P2()
+        {
+            p2icon.BackColor = Color.LightGray;
+            spaces[P2.row, P2.col].BackColor = Color.LightGray;
+
+            p1icon.BackColor = Color.Green;
+            spaces[P1.row, P1.col].BackColor = Color.Green;
         }
     }
 }
