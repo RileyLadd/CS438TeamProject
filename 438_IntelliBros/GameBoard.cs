@@ -13,6 +13,8 @@ namespace _438_IntelliBros
     public partial class GameBoard : Form
 
     {
+        static Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
+        
         class Player
         {
             public int row, col, score, capacity;
@@ -72,10 +74,25 @@ namespace _438_IntelliBros
                     capacity += addingCap;
                 }
             }
+
+            public void rmImg()
+            {
+                //make current player lose its image and color
+                spaces[row, col].BackgroundImage = null;
+                spaces[row, col].BackColor = Color.LightGray;
+            }
+
+            public void moveTo(int newRow, int newCol)
+            {
+                row = newRow;
+                col = newCol;
+            }
         }
 
         Player P1 = new Player();
         Player P2 = new Player();
+        int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
+        
         //change the starting positions
         const int p1_start_row = 7;
         const int p1_start_col = 0;
@@ -94,8 +111,6 @@ namespace _438_IntelliBros
         const string SMALL_TRASH_TAG = "SMALL";
         const string MEDIUM_TRASH_TAG = "MEDIUM";
         const string LARGE_TRASH_TAG = "LARGE";
-        Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
-        int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
 
         public GameBoard()
         {
@@ -110,6 +125,7 @@ namespace _438_IntelliBros
                     tempButton.Width = BUTTON_SIZE;
                     //731, 29 is location of the first button
                     tempButton.Location = new Point(731 + (col * BUTTON_SIZE), 29 + (row * BUTTON_SIZE));
+                    tempButton.BackColor = Color.LightGray;
                     tempButton.AutoSize = false;
                     tempButton.BackgroundImageLayout = ImageLayout.Stretch;
                     tempButton.Click += button_Click;
@@ -134,7 +150,7 @@ namespace _438_IntelliBros
                     else
                     {
                         rand = rand_num.Next(0, 4); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
-                        //spaces[i, j].BackColor = Color.Gray;
+                        //spaces[i, j].BackColor = Color.LightGray;
                         //Console.WriteLine(rand);
                         if (rand == 3)
                         {
@@ -191,12 +207,14 @@ namespace _438_IntelliBros
                 {
                     P1.addLarge();
                 }
-                p1points_label.Text = P1.score.ToString();
-                p1capacity_label.Text = P1.capacity.ToString();
+                //rm current postion image and color
+                P1.rmImg();
+
+                //update P1 location
+                P1.moveTo(newRow, newCol);
+
+                //copy P1 image to new spot
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[0];
-                spaces[P1.row, P1.col].BackgroundImage = null;
-                P1.row = newRow;
-                P1.col = newCol;
             }
             else // it is player 2's turn
             {
@@ -212,13 +230,17 @@ namespace _438_IntelliBros
                 {
                     P2.addLarge();
                 }
-                p2points_label.Text = P2.score.ToString();
-                p2capacity_label.Text = P2.capacity.ToString();
+                //rm current postion image and color
+                P2.rmImg();
+
+                //update P2 location
+                P2.moveTo(newRow, newCol);
+
+                //copy P2 image to new spot
                 spaces[newRow, newCol].BackgroundImage = imageList1.Images[1];
-                spaces[P2.row, P2.col].BackgroundImage = null;
-                P2.row = newRow;
-                P2.col = newCol;
             }
+            //change new spot to be grey
+            spaces[newRow, newCol].BackColor = Color.LightGray;
         }
 
         public void nextTurn() // changes the currentTurn field to next player
@@ -226,13 +248,29 @@ namespace _438_IntelliBros
             if (currentTurn == 1)
             {
                 currentTurn = 2;
+                //update P1 values
+                p1points_label.Text = P1.score.ToString();
+                p1capacity_label.Text = P1.capacity.ToString();
+
+                //Update P1 big image
+                p1icon.BackColor = Color.LightGray;
+                //Update P2 colors
+                p2icon.BackColor = Color.Green;
+                spaces[P2.row, P2.col].BackColor = Color.Green;
             }
             else
             {
                 currentTurn = 1;
+                //update P2 values
+                p2points_label.Text = P2.score.ToString();
+                p2capacity_label.Text = P2.capacity.ToString();
+
+                //Update P2 big image
+                p2icon.BackColor = Color.LightGray;
+                //Update P1 colors
+                p1icon.BackColor = Color.Green;
+                spaces[P1.row, P1.col].BackColor = Color.Green;
             }
-            p2icon.BackColor = Color.LightGreen;
-            p1icon.BackColor = Color.Gray;
         }
 
         public bool verifyMove(int newRow, int newCol) // verifies that the move to the passed-in row and col
@@ -268,8 +306,10 @@ namespace _438_IntelliBros
         {
             button_Reset_Click(sender, e);
 
-            p1icon.BackColor = Color.LightGreen;
-            p2icon.BackColor = Color.Gray;
+            p1icon.BackColor = Color.Green;
+            p2icon.BackColor = Color.LightGray;
+            spaces[P1.row, P1.col].BackColor = Color.Green;
+            spaces[P2.row, P2.col].BackColor = Color.LightGray;
 
             generateTrash();
         }
