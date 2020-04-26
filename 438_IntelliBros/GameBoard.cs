@@ -142,7 +142,19 @@ namespace _438_IntelliBros
 
             private bool isNeighbor(int newRow, int newCol)
             {
-                if ((string)spaces[newRow, newCol].Tag == "player" || newRow == BOARDSIZE || newCol == BOARDSIZE) { return false; } // can't move to occupied space
+                if (newRow == BOARDSIZE || newCol == BOARDSIZE || (string)spaces[newRow, newCol].Tag == "player")
+                { // can't move to occupied space
+
+                    if(newRow == BOARDSIZE || newCol == BOARDSIZE)
+                    {
+                        string error_msg = "A player made a wrong move into an out-of-bounds board space.\nGame over.";
+                        //if ( currentTurn == 1) error_msg += "Entity 1 ";
+                        //else error_msg += "Entity 2 ";
+
+                        MessageBox.Show(error_msg,"Error");
+                    }
+                    return false; 
+                } 
                 return (Math.Abs(newRow - row) < 2 && Math.Abs(newCol - col) < 2);
             }
         }
