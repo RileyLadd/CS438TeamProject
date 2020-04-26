@@ -89,6 +89,12 @@ namespace _438_IntelliBros
                     {
                         addLarge();
                     }
+                    else if ((string)spaces[newRow, newCol].Tag == "mouse")
+                    {
+                        addMouse();
+                        spaces[newRow, newCol].Tag = null;
+                    }
+                        
                     return true;
                 }
                 return false;
@@ -110,6 +116,12 @@ namespace _438_IntelliBros
             {
                 score += LARGE_TRASH_POINT_VAL;
                 addCapacity(3);
+            }
+            private void addMouse()
+            {
+                score += MOUSE_POINT_VAL;
+                
+                
             }
 
             private void addCapacity(int type) //small / med / large
@@ -194,6 +206,7 @@ namespace _438_IntelliBros
             p2icon.BackColor = Color.Green;
             spaces[P2.row, P2.col].BackColor = Color.Green;
             Refresh();
+            ++numTurns; // counter that keeps track of number of turns 
             if (!isTrashRemaining() || gameOver || P1.capacity > MAX_CAPACITY || P2.capacity > MAX_CAPACITY) determineWinner(); 
             else if (P2.type != 1) determineNextMove(); // i.e., if P2 isn't a human player, go ahead and move automatically
         }
@@ -206,9 +219,27 @@ namespace _438_IntelliBros
             p1icon.BackColor = Color.Green;
             spaces[P1.row, P1.col].BackColor = Color.Green;
             Refresh();
+            ++numTurns; // counter that keeps track of number of turns
+
+            Random rand_num = new Random(); //mouse generation/movement
+            int rand = 0;
+            rand = rand_num.Next(0, 5);
+            if(!isMouseOnBoard())
+            {
+                if(rand == 0) // 20% chance of generating mouse on this player's turn
+                {
+                    generateMouse();
+                }
+            } else // there's a mouse in the game, need to move it and add trash where it was
+            {
+                if(rand_num.Next(0,2) == 0) // 50% chance of moving on this player's turn
+                    moveMouse();
+            }
+
             if (!isTrashRemaining() || gameOver || P1.capacity > MAX_CAPACITY || P2.capacity > MAX_CAPACITY) determineWinner();
             else if (P1.type != 1) determineNextMove(); // i.e., if P1 isn't a human player, go ahead and move automatically
         }
+
 
         private void E1_User_Click(object sender, EventArgs e)
         {
@@ -263,12 +294,15 @@ namespace _438_IntelliBros
         Player P2 = new Player();
         int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
         bool gameOver = false;
+        int numTurns = 0;
+        bool mouseInGame = false;
 
         //change the starting positions
         const int p1_start_row = 7;
         const int p1_start_col = 0;
         const int p2_start_row = 7;
         const int p2_start_col = 14;
+        int mouseRow = -1, mouseCol = -1;
 
         const int BOARDSIZE = 15; // The height/width of the board
         const int MAX_CAPACITY = 200; // Max cleaning capacity of the cats
@@ -276,9 +310,11 @@ namespace _438_IntelliBros
         const int SMALL_TRASH_POINT_VAL = 2;
         const int MEDIUM_TRASH_POINT_VAL = 5;
         const int LARGE_TRASH_POINT_VAL = 10;
+        const int MOUSE_POINT_VAL = 20;
         const int SMALL_TRASH_CAPACITY_VAL = 1;
         const int MEDIUM_TRASH_CAPACITY_VAL = 2;
         const int LARGE_TRASH_CAPACITY_VAL = 3;
+        const int MOUSE_CAPACITY_VAL = 0;
         const string SMALL_TRASH_TAG = "SMALL";
         const string MEDIUM_TRASH_TAG = "MEDIUM";
         const string LARGE_TRASH_TAG = "LARGE";
@@ -310,6 +346,65 @@ namespace _438_IntelliBros
             }
         }
 
+        public void generateMouse()
+        {
+            Random rand_num = new Random();
+            int rand = 0;
+            rand = rand_num.Next(0, 2);
+            if (rand == 0) mouseRow = 0; //only generate mouse on top or bottom of board
+            else mouseRow = 14;
+
+            do
+            {
+                mouseCol = rand_num.Next(0, 15);
+            }
+            while ((string)spaces[mouseRow, mouseCol].Tag != null);
+            spaces[mouseRow, mouseCol].BackgroundImage = imageList1.Images[2];
+            spaces[mouseRow, mouseCol].Tag = "mouse";
+            mouseInGame = true;
+        }
+        public void moveMouse()
+        {
+
+            Random rand_num = new Random();
+            int rand = 0, trashType = -1, newRow = -1, newCol = -1;
+            rand = rand_num.Next(0, 6);
+            if (rand == 0 || rand == 1 || rand == 2) trashType = 3; //small trash
+            else if (rand == 3 || rand == 4) trashType = 4; //medium trash
+            else trashType = 5; //large trash
+
+            bool foundNewSpot = false;
+            int iters = 0;
+            while(!foundNewSpot && iters < 100)
+            {
+                newRow = mouseRow + rand_num.Next(-1, 2);
+                newCol = mouseCol + rand_num.Next(-1, 2);
+                foundNewSpot = isValidMouseMove(newRow, newCol);
+                ++iters;
+            }
+            if (iters == 100) return; //mouse can't move, so just don't move this time.
+            //have now found a new spot
+            //if((string)spaces[mouseRow, mouseCol].Tag == )
+            spaces[mouseRow, mouseCol].BackgroundImage = imageList1.Images[trashType];
+            if (trashType == 3) spaces[mouseRow, mouseCol].Tag = SMALL_TRASH_TAG;
+            else if (trashType == 4) spaces[mouseRow, mouseCol].Tag = MEDIUM_TRASH_TAG;
+            else spaces[mouseRow, mouseCol].Tag = LARGE_TRASH_TAG;
+            spaces[newRow, newCol].BackgroundImage = imageList1.Images[2]; //put mouse icon on new spot
+            spaces[newRow, newCol].Tag = "mouse";
+            mouseRow = newRow;
+            mouseCol = newCol;
+
+
+        }
+        public bool isValidMouseMove(int newRow, int newCol)
+        {
+            if (newRow < 0 || newRow > 14 || newCol < 0 || newCol > 14) return false; //outside bounds of board
+            else if (newRow == mouseRow && newCol == mouseCol) return false; //same as current spot
+            //else if ((string)spaces[newRow, newCol].Tag == "player") return false;
+            else if ((string)spaces[newRow, newCol].Tag != null) return false;
+            else return true;
+        }
+        
         public void generateTrash() // Called when beginning a new game. Uses random num generator to scatter trash across board
         {
             Random rand_num = new Random();
@@ -363,6 +458,17 @@ namespace _438_IntelliBros
                 for(int col = 0; col < BOARDSIZE; ++col)
                 {
                     if((string)spaces[row, col].Tag == SMALL_TRASH_TAG || (string)spaces[row, col].Tag == MEDIUM_TRASH_TAG || (string)spaces[row, col].Tag == LARGE_TRASH_TAG) return true;  
+                }
+            }
+            return false;
+        }
+        public bool isMouseOnBoard()
+        {
+            for (int row = 0; row < BOARDSIZE; ++row)
+            {
+                for (int col = 0; col < BOARDSIZE; ++col)
+                {
+                    if ((string)spaces[row, col].Tag == "mouse") return true;
                 }
             }
             return false;
@@ -576,7 +682,9 @@ namespace _438_IntelliBros
             P1_PutImageLoc();
             P2_PutImageLoc();
             currentTurn = 1;
-            gameOver = false;
+            gameOver = mouseInGame = false;
+            numTurns = 0;
+
             
 
             //P1.reset();
@@ -601,6 +709,8 @@ namespace _438_IntelliBros
         {
             clearBoard();
             gameOver = false;
+            gameOver = mouseInGame = false;
+            numTurns = 0;
             /*
             P1_PutImageLoc();
             P2_PutImageLoc();
