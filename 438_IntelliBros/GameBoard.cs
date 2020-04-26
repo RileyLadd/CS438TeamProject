@@ -132,7 +132,8 @@ namespace _438_IntelliBros
                 }
                 if (capacity + addingCap > MAX_CAPACITY)
                 { // check to verify that player still has capacity space
-                    MessageBox.Show("TODO: Capacity exceeded. \nGame should end here and player with most points wins.", "Error");
+                    MessageBox.Show("A player has exceeded their Capacity.", "Capacity Exceeded");
+                    
                 }
                 else
                 {
@@ -142,7 +143,7 @@ namespace _438_IntelliBros
 
             private bool isNeighbor(int newRow, int newCol)
             {
-                if (newRow == BOARDSIZE || newCol == BOARDSIZE || (string)spaces[newRow, newCol].Tag == "player")
+                if (newRow < 0 || newCol < 0 || newRow == BOARDSIZE || newCol == BOARDSIZE || (string)spaces[newRow, newCol].Tag == "player")
                 { // can't move to occupied space
 
                     if(newRow == BOARDSIZE || newCol == BOARDSIZE)
@@ -193,11 +194,8 @@ namespace _438_IntelliBros
             p2icon.BackColor = Color.Green;
             spaces[P2.row, P2.col].BackColor = Color.Green;
             Refresh();
-            if (P2.type != 1) // i.e., if P2 isn't a human player, go ahead and move automatically
-            {
-                //System.Threading.Thread.Sleep(1000);
-                verifyMove(P2.row + 1, P2.col);
-            }
+            if (!isTrashRemaining() || gameOver || P1.capacity > MAX_CAPACITY || P2.capacity > MAX_CAPACITY) determineWinner(); 
+            else if (P2.type != 1) determineNextMove(); // i.e., if P2 isn't a human player, go ahead and move automatically
         }
 
         public void nextTurnIs_P2()
@@ -208,12 +206,8 @@ namespace _438_IntelliBros
             p1icon.BackColor = Color.Green;
             spaces[P1.row, P1.col].BackColor = Color.Green;
             Refresh();
-            if (P1.type != 1) // i.e., if P1 isn't a human player, go ahead and move automatically
-            {
-                //for (int i = 0; i < 1000000; i++) { }
-                //System.Threading.Thread.Sleep(1000);
-                verifyMove(P1.row + 1, P1.col);
-            }
+            if (!isTrashRemaining() || gameOver || P1.capacity > MAX_CAPACITY || P2.capacity > MAX_CAPACITY) determineWinner();
+            else if (P1.type != 1) determineNextMove(); // i.e., if P1 isn't a human player, go ahead and move automatically
         }
 
         private void E1_User_Click(object sender, EventArgs e)
@@ -268,6 +262,7 @@ namespace _438_IntelliBros
         Player P1 = new Player();
         Player P2 = new Player();
         int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
+        bool gameOver = false;
 
         //change the starting positions
         const int p1_start_row = 7;
@@ -352,6 +347,189 @@ namespace _438_IntelliBros
             }
         }
 
+        public bool spaceContainsTrash(int row, int col)
+        {
+            if ((string)spaces[row, col].Tag == SMALL_TRASH_TAG || (string)spaces[row, col].Tag == MEDIUM_TRASH_TAG || (string)spaces[row, col].Tag == LARGE_TRASH_TAG)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public bool isTrashRemaining()
+        {
+            for(int row = 0; row < BOARDSIZE; ++row)
+            {
+                for(int col = 0; col < BOARDSIZE; ++col)
+                {
+                    if((string)spaces[row, col].Tag == SMALL_TRASH_TAG || (string)spaces[row, col].Tag == MEDIUM_TRASH_TAG || (string)spaces[row, col].Tag == LARGE_TRASH_TAG) return true;  
+                }
+            }
+            return false;
+        }
+        public void determineWinner()
+        {
+            if(P1.score > P2.score)
+            {
+                p1icon.BackColor = Color.Gold;
+                spaces[P1.row, P1.col].BackColor = Color.Gold;
+                p2icon.BackColor = Color.LightGray;
+                spaces[P2.row, P2.col].BackColor = Color.LightGray;
+                MessageBox.Show("Player 1 wins!", "Winner");
+            } else if(P2.score > P1.score)
+            {
+                p2icon.BackColor = Color.Gold;
+                spaces[P2.row, P2.col].BackColor = Color.Gold;
+                p1icon.BackColor = Color.LightGray;
+                spaces[P1.row, P1.col].BackColor = Color.LightGray;
+                MessageBox.Show("Player 2 wins!", "Winner");
+            } else
+            {
+                p1icon.BackColor = Color.Gold;
+                spaces[P1.row, P1.col].BackColor = Color.Gold;
+                p2icon.BackColor = Color.Gold;
+                spaces[P2.row, P2.col].BackColor = Color.Gold;
+                MessageBox.Show("Tie!","Winner");
+            }
+            gameOver = true;
+        }
+        public int distBetweenSpaces(int row1, int col1, int row2, int col2)
+        {
+            if(row1 != row2 && col1 != col2) return (Math.Abs(row1 - row2) + Math.Abs(col1 - col2) - 1); // the -1 allows for some diagonal movement
+            return (Math.Abs(row1 - row2) + Math.Abs(col1 - col2));
+        }
+        public bool areSpacesNeighbors(int row1, int col1, int row2, int col2)
+        {
+            return (Math.Abs(row1 - row2) < 2 && Math.Abs(col1 - col2) < 2);
+        }
+        public void determineNextMove() // AI's turn to move. Determine next move for current player.
+        {
+            if(currentTurn == 1)
+            {
+                switch(P1.type)
+                {
+                    case 2:
+                        break;
+                    case 3: // move to closest space with trash (aka Greedy)
+                        int currRow = P1.row, currCol = P1.col, newRow = -1, newCol = -1, dist = 100;
+                        for(int i = 0; i < BOARDSIZE; ++i)
+                        {
+                            for(int j = 0; j < BOARDSIZE; ++j)
+                            {
+                                if( spaceContainsTrash(i, j) && distBetweenSpaces(currRow, currCol, i, j) < dist)
+                                {
+                                    dist = distBetweenSpaces(currRow, currCol, i, j);
+                                    newRow = i;
+                                    newCol = j;
+                                }                                
+                            }                            
+                        }
+                        string msg = "Found nearest trash at row " + newRow.ToString() + ", col " + newCol.ToString();
+                        //MessageBox.Show(msg, "Next Move");
+                        if (areSpacesNeighbors(currRow, currCol, newRow, newCol)) verifyMove(newRow, newCol);
+                        else
+                        {
+                            if (newRow < currRow)
+                            {
+                                if ((string)spaces[currRow - 1, currCol].Tag != "player") verifyMove(currRow - 1, currCol);
+                                else if (currCol > 0) verifyMove(currRow - 1, currCol - 1);
+                                else verifyMove(currRow - 1, currCol + 1);
+                            }
+                            else if (newRow > currRow)
+                            {
+                                if ((string)spaces[currRow + 1, currCol].Tag != "player") verifyMove(currRow + 1, currCol);
+                                else if (currCol > 0) verifyMove(currRow + 1, currCol - 1);
+                                else verifyMove(currRow + 1, currCol + 1);
+                            }
+
+                            else if (newCol < currCol)
+                            {
+                                if ((string)spaces[currRow, currCol - 1].Tag != "player") verifyMove(currRow, currCol - 1);
+                                else if (currRow > 0) verifyMove(currRow - 1, currCol - 1);
+                                else verifyMove(currRow + 1, currCol - 1);
+                            }
+                            else
+                            {
+                                if ((string)spaces[currRow, currCol + 1].Tag != "player") verifyMove(currRow, currCol + 1);
+                                else if (currRow > 0) verifyMove(currRow - 1, currCol + 1);
+                                else verifyMove(currRow + 1, currCol + 1);
+                            }
+                        }
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
+                }
+            } else
+            {
+                switch (P2.type)
+                {
+                    case 2:
+                        break;
+                    case 3:
+                        int currRow = P2.row, currCol = P2.col, newRow = -1, newCol = -1, dist = 100;
+                        for (int i = 0; i < BOARDSIZE; ++i)
+                        {
+                            for (int j = 0; j < BOARDSIZE; ++j)
+                            {
+                                if (spaceContainsTrash(i, j) && distBetweenSpaces(currRow, currCol, i, j) < dist)
+                                {
+                                    dist = distBetweenSpaces(currRow, currCol, i, j);
+                                    newRow = i;
+                                    newCol = j;
+                                }
+
+                            }
+
+                        }
+                        string msg = "Found nearest trash at row " + newRow.ToString() + ", col " + newCol.ToString();
+                        //MessageBox.Show(msg, "Next Move");
+                        if (areSpacesNeighbors(currRow, currCol, newRow, newCol)) verifyMove(newRow, newCol);
+                        else
+                        {
+                            if (newRow < currRow)
+                            {
+                                if ((string)spaces[currRow - 1, currCol].Tag != "player") verifyMove(currRow - 1, currCol);
+                                else if (currCol > 0) verifyMove(currRow - 1, currCol - 1);
+                                else verifyMove(currRow - 1, currCol + 1);
+                            }
+                            else if (newRow > currRow)
+                            {
+                                if ((string)spaces[currRow + 1, currCol].Tag != "player") verifyMove(currRow + 1, currCol);
+                                else if (currCol > 0) verifyMove(currRow + 1, currCol - 1);
+                                else verifyMove(currRow + 1, currCol + 1);
+                            }
+
+                            else if (newCol < currCol)
+                            {
+                                if ((string)spaces[currRow, currCol - 1].Tag != "player") verifyMove(currRow, currCol - 1);
+                                else if (currRow > 0) verifyMove(currRow - 1, currCol - 1);
+                                else verifyMove(currRow + 1, currCol - 1);
+                            }
+                            else
+                            {
+                                if ((string)spaces[currRow, currCol + 1].Tag != "player") verifyMove(currRow, currCol + 1);
+                                else if (currRow > 0) verifyMove(currRow - 1, currCol + 1);
+                                else verifyMove(currRow + 1, currCol + 1);
+                            }
+                        }
+                        /*else
+                        {
+                            if (newRow < currRow) verifyMove(currRow - 1, currCol);
+                            else if (newRow > currRow) verifyMove(currRow + 1, currCol);
+                            else if (newCol < currCol) verifyMove(currRow, currCol - 1);
+                            else verifyMove(currRow, currCol + 1);
+                        }*/
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        
         public void verifyMove(int newRow, int newCol) {
             if (P1.row != -1 && P1.col != -1 && P2.row != -1 && P2.col != -1)
             {
@@ -398,7 +576,7 @@ namespace _438_IntelliBros
             P1_PutImageLoc();
             P2_PutImageLoc();
             currentTurn = 1;
-
+            gameOver = false;
             
 
             //P1.reset();
@@ -422,6 +600,7 @@ namespace _438_IntelliBros
         public void button_Reset_Click(object sender, EventArgs e)
         {
             clearBoard();
+            gameOver = false;
             /*
             P1_PutImageLoc();
             P2_PutImageLoc();
@@ -474,8 +653,7 @@ namespace _438_IntelliBros
 
             int row = (newY - 29) / BUTTON_SIZE;
             int col = (newX - 731) / BUTTON_SIZE;
-
-            verifyMove(row, col);
+            if(!gameOver) verifyMove(row, col);
         }
 
  
