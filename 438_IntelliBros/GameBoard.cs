@@ -142,7 +142,7 @@ namespace _438_IntelliBros
 
             private bool isNeighbor(int newRow, int newCol)
             {
-                if ((string)spaces[newRow, newCol].Tag == "player") { return false; } // can't move to occupied space
+                if ((string)spaces[newRow, newCol].Tag == "player" || newRow == BOARDSIZE || newCol == BOARDSIZE) { return false; } // can't move to occupied space
                 return (Math.Abs(newRow - row) < 2 && Math.Abs(newCol - col) < 2);
             }
         }
