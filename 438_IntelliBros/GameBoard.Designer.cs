@@ -45,6 +45,7 @@
             this.E1_ShortestDist = new System.Windows.Forms.Button();
             this.E1_User = new System.Windows.Forms.Button();
             this.groupBox_E2 = new System.Windows.Forms.GroupBox();
+            this.E2_User = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.p2icon = new System.Windows.Forms.Button();
             this.p2capacity_label = new System.Windows.Forms.Label();
@@ -58,7 +59,8 @@
             this.button_Start = new System.Windows.Forms.Button();
             this.button_Reset = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.E2_User = new System.Windows.Forms.Button();
+            this.E1_BigTrashFirst = new System.Windows.Forms.Button();
+            this.E2_BigTrashFirst = new System.Windows.Forms.Button();
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -105,6 +107,7 @@
             // 
             // groupBox_E1
             // 
+            this.groupBox_E1.Controls.Add(this.E1_BigTrashFirst);
             this.groupBox_E1.Controls.Add(this.label5);
             this.groupBox_E1.Controls.Add(this.p1capacity_label);
             this.groupBox_E1.Controls.Add(this.label3);
@@ -216,6 +219,7 @@
             // 
             // groupBox_E2
             // 
+            this.groupBox_E2.Controls.Add(this.E2_BigTrashFirst);
             this.groupBox_E2.Controls.Add(this.E2_User);
             this.groupBox_E2.Controls.Add(this.label2);
             this.groupBox_E2.Controls.Add(this.p2icon);
@@ -232,6 +236,16 @@
             this.groupBox_E2.TabIndex = 5;
             this.groupBox_E2.TabStop = false;
             this.groupBox_E2.Text = "Entity 2:";
+            // 
+            // E2_User
+            // 
+            this.E2_User.Location = new System.Drawing.Point(207, 53);
+            this.E2_User.Name = "E2_User";
+            this.E2_User.Size = new System.Drawing.Size(179, 37);
+            this.E2_User.TabIndex = 241;
+            this.E2_User.Text = "Change to User";
+            this.E2_User.UseVisualStyleBackColor = true;
+            this.E2_User.Click += new System.EventHandler(this.E2_User_Click);
             // 
             // label2
             // 
@@ -336,6 +350,7 @@
             // 
             // button_Start
             // 
+            this.button_Start.Enabled = false;
             this.button_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Start.Location = new System.Drawing.Point(312, 665);
             this.button_Start.Name = "button_Start";
@@ -367,15 +382,25 @@
             this.imageList1.Images.SetKeyName(4, "trash 2.png");
             this.imageList1.Images.SetKeyName(5, "trash 3.png");
             // 
-            // E2_User
+            // E1_BigTrashFirst
             // 
-            this.E2_User.Location = new System.Drawing.Point(207, 53);
-            this.E2_User.Name = "E2_User";
-            this.E2_User.Size = new System.Drawing.Size(179, 37);
-            this.E2_User.TabIndex = 241;
-            this.E2_User.Text = "Change to User";
-            this.E2_User.UseVisualStyleBackColor = true;
-            this.E2_User.Click += new System.EventHandler(this.E2_User_Click);
+            this.E1_BigTrashFirst.Location = new System.Drawing.Point(207, 118);
+            this.E1_BigTrashFirst.Name = "E1_BigTrashFirst";
+            this.E1_BigTrashFirst.Size = new System.Drawing.Size(179, 37);
+            this.E1_BigTrashFirst.TabIndex = 241;
+            this.E1_BigTrashFirst.Text = "Big Trash First";
+            this.E1_BigTrashFirst.UseVisualStyleBackColor = true;
+            this.E1_BigTrashFirst.Click += new System.EventHandler(this.E1_BigTrashFirst_Click);
+            // 
+            // E2_BigTrashFirst
+            // 
+            this.E2_BigTrashFirst.Location = new System.Drawing.Point(207, 112);
+            this.E2_BigTrashFirst.Name = "E2_BigTrashFirst";
+            this.E2_BigTrashFirst.Size = new System.Drawing.Size(179, 37);
+            this.E2_BigTrashFirst.TabIndex = 242;
+            this.E2_BigTrashFirst.Text = "Big Trash First";
+            this.E2_BigTrashFirst.UseVisualStyleBackColor = true;
+            this.E2_BigTrashFirst.Click += new System.EventHandler(this.E2_BigTrashFirst_Click);
             // 
             // GameBoard
             // 
@@ -437,6 +462,8 @@
         private System.Windows.Forms.Label p2points_label;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button E2_User;
+        private System.Windows.Forms.Button E1_BigTrashFirst;
+        private System.Windows.Forms.Button E2_BigTrashFirst;
     }
 }
 

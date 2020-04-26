@@ -21,18 +21,20 @@ namespace _438_IntelliBros
              * 1 user
              * 2 shortest dist
              * 3 closest
+             * 4 focus on largest available trash
              */
             public int row, col, score, capacity, type;
             public Player()
             {
                 row = col = -1;
                 score = capacity = 0;
-                type = 1; //default user
+                type = -1; //default user before selecting the actual type
             }
 
             public void reset()
             {
                 score = capacity = 0;
+                type = -1;
             }
 
             public void rmPos()
@@ -54,14 +56,22 @@ namespace _438_IntelliBros
             {
                 switch (type)
                 {
-                    default:
                     case 1: //isNeightbor gets checked
                         break;
                     case 2:
                         //TODO find new values for newRow / newCol
+                        //newRow = 5;
                         break;
                     case 3:
-                        //TODO find new values for newRow / newCol
+                        //TODO find new values for newRow / newCol (closest, aka greedy)
+                        //++newRow;
+                        //newCol = col + 1;
+                        
+                        break;
+                    case 4:
+                        break;
+
+                    default:
                         break;
                 }
 
@@ -170,6 +180,12 @@ namespace _438_IntelliBros
 
             p2icon.BackColor = Color.Green;
             spaces[P2.row, P2.col].BackColor = Color.Green;
+            Refresh();
+            if (P2.type != 1) // i.e., if P2 isn't a human player, go ahead and move automatically
+            {
+                //System.Threading.Thread.Sleep(1000);
+                verifyMove(P2.row + 1, P2.col);
+            }
         }
 
         public void nextTurnIs_P2()
@@ -179,31 +195,62 @@ namespace _438_IntelliBros
 
             p1icon.BackColor = Color.Green;
             spaces[P1.row, P1.col].BackColor = Color.Green;
+            Refresh();
+            if (P1.type != 1) // i.e., if P1 isn't a human player, go ahead and move automatically
+            {
+                //for (int i = 0; i < 1000000; i++) { }
+                //System.Threading.Thread.Sleep(1000);
+                verifyMove(P1.row + 1, P1.col);
+            }
         }
 
         private void E1_User_Click(object sender, EventArgs e)
         {
             P1.type = 1;
+            if (P2.type != -1 && !game_started) button_Start.Enabled = true;
+            E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
         }
         private void E2_User_Click(object sender, EventArgs e)
         {
             P2.type = 1;
+            if (P1.type != -1 && !game_started) button_Start.Enabled = true;
+            E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
         }
         private void E1_ShortestDist_Click(object sender, EventArgs e)
         {
             P1.type = 2;
+            if (P2.type != -1 && !game_started) button_Start.Enabled = true;
+            E1_User.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
         }
         private void E2_ShortestDist_Click(object sender, EventArgs e)
         {
             P2.type = 2;
+            if (P1.type != -1 && !game_started) button_Start.Enabled = true;
+            E2_User.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
         }
         private void E1_Closest_Click(object sender, EventArgs e)
         {
             P1.type = 3;
+            if (P2.type != -1&& !game_started) button_Start.Enabled = true;
+            E1_User.Enabled = E1_ShortestDist.Enabled = E1_BigTrashFirst.Enabled = false;
         }
         private void E2_Closest_Click(object sender, EventArgs e)
         {
             P2.type = 3;
+            if (P1.type != -1 && !game_started) button_Start.Enabled = true;
+            E2_User.Enabled = E2_ShortestDist.Enabled = E2_BigTrashFirst.Enabled = false;
+        }
+        private void E1_BigTrashFirst_Click(object sender, EventArgs e)
+        {
+            P1.type = 4;
+            if (P2.type != -1 && !game_started) button_Start.Enabled = true;
+            E1_User.Enabled = E1_ShortestDist.Enabled = E1_Closest.Enabled = false;
+        }
+        private void E2_BigTrashFirst_Click(object sender, EventArgs e)
+        {
+            P2.type = 4;
+            if (P1.type != -1 && !game_started) button_Start.Enabled = true;
+            E2_User.Enabled = E2_ShortestDist.Enabled = E2_Closest.Enabled = false;
         }
 
         Player P1 = new Player();
@@ -213,8 +260,8 @@ namespace _438_IntelliBros
         //change the starting positions
         const int p1_start_row = 7;
         const int p1_start_col = 0;
-        const int p2_start_row = 14;
-        const int p2_start_col = 7;
+        const int p2_start_row = 7;
+        const int p2_start_col = 14;
 
         const int BOARDSIZE = 15; // The height/width of the board
         const int MAX_CAPACITY = 200; // Max cleaning capacity of the cats
@@ -228,6 +275,7 @@ namespace _438_IntelliBros
         const string SMALL_TRASH_TAG = "SMALL";
         const string MEDIUM_TRASH_TAG = "MEDIUM";
         const string LARGE_TRASH_TAG = "LARGE";
+        bool game_started = false; // if true, game is in progress
 
         public GameBoard()
         {
@@ -332,18 +380,23 @@ namespace _438_IntelliBros
 
         public void button_Start_Click(object sender, EventArgs e)
         {
-            if (P1.row == -1 || P1.col == -1 || P2.row == -1 || P2.col == 1) { button_Reset_Click(sender, e); }
-
-            generateTrash();
-        }
-
-        public void button_Reset_Click(object sender, EventArgs e)
-        {
+            //if (P1.row == -1 || P1.col == -1 || P2.row == -1 || P2.col == -1) { button_Reset_Click(sender, e); }
+            button_Start.Enabled = false;
             clearBoard();
-
             P1_PutImageLoc();
             P2_PutImageLoc();
+            currentTurn = 1;
 
+            
+
+            //P1.reset();
+            //P2.reset();
+
+            P1_updateLabels();
+            P2_updateLabels();
+            generateTrash();
+            Refresh();
+            game_started = true;
             if (currentTurn == 1)
             {
                 nextTurnIs_P2();
@@ -352,12 +405,36 @@ namespace _438_IntelliBros
             {
                 nextTurnIs_P1();
             }
+        }
 
+        public void button_Reset_Click(object sender, EventArgs e)
+        {
+            clearBoard();
+            /*
+            P1_PutImageLoc();
+            P2_PutImageLoc();
+            
+            if (currentTurn == 1)
+            {
+                nextTurnIs_P2();
+            }
+            else
+            {
+                nextTurnIs_P1();
+            }
+            */
             P1.reset();
             P2.reset();
+            game_started = false;
 
             P1_updateLabels();
             P2_updateLabels();
+            p1icon.BackColor = Color.LightGray;
+            p2icon.BackColor = Color.LightGray;
+
+            E1_Closest.Enabled = E1_ShortestDist.Enabled = E1_User.Enabled = E1_BigTrashFirst.Enabled = true; // reset option buttons to be enabled
+            E2_Closest.Enabled = E2_ShortestDist.Enabled = E2_User.Enabled = E2_BigTrashFirst.Enabled = true;
+            button_Start.Enabled = false;
         }
 
         public void clearBoard() //removes images, colors, tags
@@ -388,5 +465,7 @@ namespace _438_IntelliBros
 
             verifyMove(row, col);
         }
+
+ 
     }
 }
