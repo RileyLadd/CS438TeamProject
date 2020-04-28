@@ -14,7 +14,32 @@ namespace _438_IntelliBros
 
     {
         static Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
-        partial class Player
+        partial class PossibleMove : IComparable<PossibleMove> // Used to store a possible next move in the Priotity Queue
+        {
+            public int nextRow, nextColumn;
+            public double priority; //small values are higher priority
+
+            public PossibleMove(int row, int col, double priority)
+            {
+                nextRow = row;
+                nextColumn = col;
+                this.priority = priority;
+            }
+
+            //public override string ToString()
+            //{
+                //return "(" + lastName + ", " + priority.ToString("F1") + ")";
+            //}
+
+            public int CompareTo(PossibleMove other)
+            {
+                if (this.priority < other.priority) return -1;
+                else if (this.priority > other.priority) return 1;
+                else return 0;
+            }
+        }
+        
+        partial class Player 
         {
             //player type
             /*
@@ -120,8 +145,7 @@ namespace _438_IntelliBros
             private void addMouse()
             {
                 score += MOUSE_POINT_VAL;
-                
-                
+                addCapacity(4);                
             }
 
             private void addCapacity(int type) //small / med / large
@@ -137,6 +161,9 @@ namespace _438_IntelliBros
                         break;
                     case 3:
                         addingCap = LARGE_TRASH_CAPACITY_VAL;
+                        break;
+                    case 4:
+                        addingCap = MOUSE_CAPACITY_VAL;
                         break;
                     default:
                         addingCap = 0;
@@ -290,6 +317,7 @@ namespace _438_IntelliBros
             E2_User.Enabled = E2_ShortestDist.Enabled = E2_Closest.Enabled = false;
         }
 
+        
         Player P1 = new Player();
         Player P2 = new Player();
         int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
@@ -310,11 +338,11 @@ namespace _438_IntelliBros
         const int SMALL_TRASH_POINT_VAL = 2;
         const int MEDIUM_TRASH_POINT_VAL = 5;
         const int LARGE_TRASH_POINT_VAL = 10;
-        const int MOUSE_POINT_VAL = 20;
+        const int MOUSE_POINT_VAL = 15;
         const int SMALL_TRASH_CAPACITY_VAL = 1;
         const int MEDIUM_TRASH_CAPACITY_VAL = 2;
         const int LARGE_TRASH_CAPACITY_VAL = 3;
-        const int MOUSE_CAPACITY_VAL = 0;
+        const int MOUSE_CAPACITY_VAL = 10;
         const string SMALL_TRASH_TAG = "SMALL";
         const string MEDIUM_TRASH_TAG = "MEDIUM";
         const string LARGE_TRASH_TAG = "LARGE";
@@ -344,6 +372,11 @@ namespace _438_IntelliBros
                     this.Controls.Add(spaces[row, col]);
                 }
             }
+        }
+
+        public void BigTrashFirst(ref int nextRow, ref int nextCol) // determines where to move next; utilizes Priority Queue
+        {
+
         }
 
         public void generateMouse()
@@ -562,7 +595,11 @@ namespace _438_IntelliBros
                             }
                         }
                         break;
-                    case 4:
+                    case 4: // prefer big trash first
+                        int nextRow = -1, nextCol = -1;
+                        BigTrashFirst(ref nextRow, ref nextCol);
+                        verifyMove(nextRow, nextCol);
+                        
                         break;
                     default:
                         break;
@@ -651,6 +688,8 @@ namespace _438_IntelliBros
 
                         P1_updateLabels();
 
+
+                         // SAVE HERE 
                         currentTurn = 2;
                         nextTurnIs_P1();
                     }
@@ -666,6 +705,9 @@ namespace _438_IntelliBros
                         P2_PutImageLoc(newRow, newCol);
 
                         P2_updateLabels();
+
+
+                        // SAVE HERE
 
                         currentTurn = 1;
                         nextTurnIs_P2();
