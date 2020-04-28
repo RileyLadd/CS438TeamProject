@@ -1101,6 +1101,16 @@ namespace _438_IntelliBros
             }
         }
 
+        private void button_IncTimer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDecTimer_Click(object sender, EventArgs e)
+        {
+
+        }
+
         public void button_Click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
