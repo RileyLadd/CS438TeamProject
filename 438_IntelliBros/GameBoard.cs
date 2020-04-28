@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using "PriorityQueuesProgram.cs";
 
 namespace _438_IntelliBros
 {
@@ -14,7 +16,35 @@ namespace _438_IntelliBros
 
     {
         static Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
-        partial class Player
+        partial class PossibleMove : IComparable<PossibleMove> // Used to store a possible next move in the Priotity Queue
+        {
+            public int nextRow, nextColumn;
+            public double priority; //small values are higher priority
+            public PossibleMove()
+            {
+
+            }
+            public PossibleMove(int row, int col, double priority)
+            {
+                nextRow = row;
+                nextColumn = col;
+                this.priority = priority;
+            }
+
+            //public override string ToString()
+            //{
+                //return "(" + lastName + ", " + priority.ToString("F1") + ")";
+            //}
+
+            public int CompareTo(PossibleMove other)
+            {
+                if (this.priority < other.priority) return -1;
+                else if (this.priority > other.priority) return 1;
+                else return 0;
+            }
+        }
+        
+        partial class Player 
         {
             //player type
             /*
@@ -120,8 +150,7 @@ namespace _438_IntelliBros
             private void addMouse()
             {
                 score += MOUSE_POINT_VAL;
-                
-                
+                addCapacity(4);                
             }
 
             private void addCapacity(int type) //small / med / large
@@ -137,6 +166,9 @@ namespace _438_IntelliBros
                         break;
                     case 3:
                         addingCap = LARGE_TRASH_CAPACITY_VAL;
+                        break;
+                    case 4:
+                        addingCap = MOUSE_CAPACITY_VAL;
                         break;
                     default:
                         addingCap = 0;
@@ -290,12 +322,14 @@ namespace _438_IntelliBros
             E2_User.Enabled = E2_ShortestDist.Enabled = E2_Closest.Enabled = false;
         }
 
+        
         Player P1 = new Player();
         Player P2 = new Player();
         int currentTurn = 1; // Keeps track of if player 1 or player 2 is currently playing/making a move
         bool gameOver = false;
         int numTurns = 0;
         bool mouseInGame = false;
+        string log = "";
 
         //change the starting positions
         const int p1_start_row = 7;
@@ -310,11 +344,11 @@ namespace _438_IntelliBros
         const int SMALL_TRASH_POINT_VAL = 2;
         const int MEDIUM_TRASH_POINT_VAL = 5;
         const int LARGE_TRASH_POINT_VAL = 10;
-        const int MOUSE_POINT_VAL = 20;
+        const int MOUSE_POINT_VAL = 15;
         const int SMALL_TRASH_CAPACITY_VAL = 1;
         const int MEDIUM_TRASH_CAPACITY_VAL = 2;
         const int LARGE_TRASH_CAPACITY_VAL = 3;
-        const int MOUSE_CAPACITY_VAL = 0;
+        const int MOUSE_CAPACITY_VAL = 10;
         const string SMALL_TRASH_TAG = "SMALL";
         const string MEDIUM_TRASH_TAG = "MEDIUM";
         const string LARGE_TRASH_TAG = "LARGE";
@@ -344,6 +378,312 @@ namespace _438_IntelliBros
                     this.Controls.Add(spaces[row, col]);
                 }
             }
+        }
+
+
+        public double BTF_heuristic(int nextRow, int nextCol)
+        {
+            double lt_coef = 0.3, mt_coef = 0.6, st_coef = 0.9;
+            double h_val = 0.0;
+            double distToNearestLT = 100, distToNearestMT = 100, distToNearestST = 100;
+            //double constant = 2.0;
+            //if(nextRow < 0 || nextCol < 0 || nextRow >= BOARDSIZE || nextCol >= BOARDSIZE) { } //out of bounds of board
+            if (currentTurn == 1) { // it is player 1's turn
+                
+                //find distance between given space and nearest large, medium, and small trashes
+                for(int i = 0; i < BOARDSIZE; i++)
+                {
+                    for(int j = 0; j < BOARDSIZE; j++)
+                    {
+                        if((string)spaces[i,j].Tag == LARGE_TRASH_TAG && distBetweenSpaces(nextRow, nextCol, i, j) < distToNearestLT)
+                        {
+                            distToNearestLT = distBetweenSpaces(nextRow, nextCol, i, j);
+                        }
+                        if ((string)spaces[i, j].Tag == MEDIUM_TRASH_TAG && distBetweenSpaces(nextRow, nextCol, i, j) < distToNearestMT)
+                        {
+                            distToNearestMT = distBetweenSpaces(nextRow, nextCol, i, j);
+                        }
+                        if ((string)spaces[i, j].Tag == SMALL_TRASH_TAG && distBetweenSpaces(nextRow, nextCol, i, j) < distToNearestST)
+                        {
+                            distToNearestST = distBetweenSpaces(nextRow, nextCol, i, j);
+                        }
+
+                    }
+                }
+                distToNearestLT *= lt_coef;
+                distToNearestMT *= mt_coef;
+                distToNearestST *= st_coef;
+                if (distToNearestLT <= distToNearestMT && distToNearestLT <= distToNearestST) return distToNearestLT;
+                else if (distToNearestMT <= distToNearestLT && distToNearestMT <= distToNearestST) return distToNearestMT;
+                else return distToNearestST;
+                //if (distToNearestLT < distToNearestMT && distToNearestLT < distToNearestST) return distToNearestLT;
+
+                //multiply dists by respective coefs
+                // return lowest of three resulting nums
+
+
+            } else // it is player 2's turn
+            {
+                //find distance between given space and nearest large, medium, and small trashes
+                for (int i = 0; i < BOARDSIZE; i++)
+                {
+                    for (int j = 0; j < BOARDSIZE; j++)
+                    {
+                        if ((string)spaces[i, j].Tag == LARGE_TRASH_TAG && distBetweenSpaces(nextRow, nextCol, i, j) < distToNearestLT)
+                        {
+                            distToNearestLT = distBetweenSpaces(nextRow, nextCol, i, j);
+                        }
+                        if ((string)spaces[i, j].Tag == MEDIUM_TRASH_TAG && distBetweenSpaces(nextRow, nextCol, i, j) < distToNearestMT)
+                        {
+                            distToNearestMT = distBetweenSpaces(nextRow, nextCol, i, j);
+                        }
+                        if ((string)spaces[i, j].Tag == SMALL_TRASH_TAG && distBetweenSpaces(nextRow, nextCol, i, j) < distToNearestST)
+                        {
+                            distToNearestST = distBetweenSpaces(nextRow, nextCol, i, j);
+                        }
+
+                    }
+                }
+                distToNearestLT *= lt_coef;
+                distToNearestMT *= mt_coef;
+                distToNearestST *= st_coef;
+                if (distToNearestLT <= distToNearestMT && distToNearestLT <= distToNearestST) return distToNearestLT;
+                else if (distToNearestMT <= distToNearestLT && distToNearestMT <= distToNearestST) return distToNearestMT;
+                else return distToNearestST;
+                /*
+                if (areSpacesNeighbors(P2.row, P2.col, nextRow, nextCol) && (string)spaces[nextRow, nextCol].Tag != "player")
+                {
+                    if ((string)spaces[nextRow, nextCol].Tag == LARGE_TRASH_TAG) h_val = lt_coef;
+                    else if ((string)spaces[nextRow, nextCol].Tag == MEDIUM_TRASH_TAG) h_val = mt_coef;
+                    else if ((string)spaces[nextRow, nextCol].Tag == SMALL_TRASH_TAG) h_val = st_coef;
+                    else h_val = 0.1;
+                    //return 0.0;
+                }
+                //return h_val;
+                */
+                //if (nextRow < 0 || nextCol < 0 || nextRow >= BOARDSIZE || nextCol >= BOARDSIZE) { }
+
+                /*
+                if (spaceContainsTrash(nextRow, nextCol))
+                {
+                    if ((string)spaces[nextRow, nextCol].Tag == LARGE_TRASH_TAG) h_val = lt_coef;
+                    else if ((string)spaces[nextRow, nextCol].Tag == MEDIUM_TRASH_TAG) h_val = mt_coef;
+                    else if ((string)spaces[nextRow, nextCol].Tag == SMALL_TRASH_TAG) h_val = st_coef;
+                    //else h_val = 0.1;
+
+
+                }
+                else
+                {
+                    h_val = 0.1;
+                    /*
+                    int currRow = nextRow, currCol = nextCol, newRow = -1, newCol = -1, dist = 100;
+                    int distToNearestLT = 100, distToNearestMT = 100, distToNearestST = 100;
+                    for (int i = 0; i < BOARDSIZE; ++i)
+                    {
+                        for (int j = 0; j < BOARDSIZE; ++j)
+                        {
+                            //if (spaceContainsTrash(i, j) && distBetweenSpaces(currRow, currCol, i, j) < dist)
+                            //{
+                            //dist = distBetweenSpaces(currRow, currCol, i, j);
+                            //newRow = i;
+                            //newCol = j;
+                            //}
+                            if ((string)spaces[i, j].Tag == LARGE_TRASH_TAG && distBetweenSpaces(currRow, currCol, i, j) < distToNearestLT)
+                            {
+                                distToNearestLT = distBetweenSpaces(currRow, currCol, i, j);
+                                h_val = distToNearestLT/constant * lt_coef;
+                            }
+                            else if ((string)spaces[i, j].Tag == MEDIUM_TRASH_TAG && distBetweenSpaces(currRow, currCol, i, j) < distToNearestMT)
+                            {
+                                distToNearestMT = distBetweenSpaces(currRow, currCol, i, j);
+                                h_val = distToNearestLT/constant * mt_coef;
+                            }
+                            else if ((string)spaces[i, j].Tag == SMALL_TRASH_TAG && distBetweenSpaces(currRow, currCol, i, j) < distToNearestST)
+                            {
+                                distToNearestST = distBetweenSpaces(currRow, currCol, i, j);
+                                h_val = distToNearestLT/constant * st_coef;
+                            }
+                        }
+                    }
+                }*/
+            }
+            //return (100.0 - 100*h_val);
+        }
+        public void BigTrashFirst(ref int nextRow, ref int nextCol) // determines where to move next; utilizes Priority Queue
+        {
+            PriorityQueue<PossibleMove> pq = new PriorityQueue<PossibleMove>();
+            PossibleMove [] move = new PossibleMove[10];
+            int i = 0;
+            if (currentTurn == 1) // player 1's turn
+            {
+                for (int r = P1.row-1; r <= P1.row + 1; ++r)
+                {
+                    for (int c = P1.col - 1; c <= P1.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P1.row == r && P1.col == c || P2.row == r && P2.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
+                        else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG || (string)spaces[r, c].Tag == "mouse")
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }                        
+                    }
+                }
+                for (int r = P1.row - 1; r <= P1.row + 1; ++r)
+                {
+                    for (int c = P1.col - 1; c <= P1.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P1.row == r && P1.col == c || P2.row == r && P2.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
+                        else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+                        
+                    }
+                }
+                for (int r = P1.row - 1; r <= P1.row + 1; ++r)
+                {
+                    for (int c = P1.col - 1; c <= P1.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P1.row == r && P1.col == c || P2.row == r && P2.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
+                        else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+
+                    }
+                }
+                for (int r = P1.row - 1; r <= P1.row + 1; ++r)
+                {
+                    for (int c = P1.col - 1; c <= P1.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P1.row == r && P1.col == c || P2.row == r && P2.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
+                        else
+                        {
+                            move[i] = new PossibleMove(r, c, BTF_heuristic(r, c));
+                            //move[i].priority = BTF_heuristic(r, c);
+                            //move[i].nextRow = r; move[i].nextColumn = c;
+                            pq.Enqueue(move[i]);
+                            ++i;
+                        }
+
+                    }
+                }
+            } else // player 2's turn
+            {
+                /* original bad code
+                for (int r = 0; r < BOARDSIZE; ++r)
+                {
+                    for (int c = 0; c < BOARDSIZE; ++c)
+                    {
+                        //move = new PossibleMove(nextRow, nextCol, BTF_heuristic(nextRow, nextCol));
+                        move[i] = new PossibleMove();
+                        move[i].priority = BTF_heuristic(r, c);
+
+                        move[i].nextRow = r; move[i].nextColumn = c;
+
+                        pq.Enqueue(move[i]);
+                        ++i;
+                    }                    
+                }
+                */
+                for (int r = P2.row - 1; r <= P2.row + 1; ++r)
+                {
+                    for (int c = P2.col - 1; c <= P2.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P2.row == r && P2.col == c || P1.row == r && P1.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
+                        else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG || (string)spaces[r, c].Tag == "mouse")
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+                    }
+                }
+                for (int r = P2.row - 1; r <= P2.row + 1; ++r)
+                {
+                    for (int c = P2.col - 1; c <= P2.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P2.row == r && P2.col == c || P1.row == r && P1.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
+                        else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+
+                    }
+                }
+                for (int r = P2.row - 1; r <= P2.row + 1; ++r)
+                {
+                    for (int c = P2.col - 1; c <= P2.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P1.row == r && P1.col == c || P2.row == r && P2.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
+                        else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+
+                    }
+                }
+                for (int r = P2.row - 1; r <= P2.row + 1; ++r)
+                {
+                    for (int c = P2.col - 1; c <= P2.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P1.row == r && P1.col == c || P2.row == r && P2.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
+                        else
+                        {
+                            move[i] = new PossibleMove(r, c, BTF_heuristic(r, c));
+                            //move[i].priority = BTF_heuristic(r, c);
+                            //move[i].nextRow = r; move[i].nextColumn = c;
+                            pq.Enqueue(move[i]);
+                            ++i;
+                        }
+
+                    }
+                }
+
+                /*
+                for (int r = P2.row - 1; r <= P2.row + 1; ++r)
+                {
+                    for (int c = P2.col - 1; c <= P2.col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (P2.row == r && P2.col == c || P1.row == r && P1.col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
+                        else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG)
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+                        else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+                        else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
+                        {
+                            nextRow = r; nextCol = c; return;
+                        }
+                        else
+                        {
+                            //move = new PossibleMove(nextRow, nextCol, BTF_heuristic(nextRow, nextCol));
+                            move[i] = new PossibleMove(r, c, BTF_heuristic(r, c));
+                            //move[i].priority = BTF_heuristic(r, c);
+                            //move[i].nextRow = r; move[i].nextColumn = c;
+                            pq.Enqueue(move[i]);
+                            ++i;
+                        }
+                    }
+                }*/
+            }
+
+
+            PossibleMove move2 = pq.Dequeue();
+            string msg = "moving to row " + move2.nextRow + ", col " + move2.nextColumn;
+            //MessageBox.Show(msg, "move");
+            nextRow = move2.nextRow; nextCol = move2.nextColumn;
+            //verifyMove(, nextCol); // make move
         }
 
         public void generateMouse()
@@ -497,6 +837,9 @@ namespace _438_IntelliBros
                 spaces[P2.row, P2.col].BackColor = Color.Gold;
                 MessageBox.Show("Tie!","Winner");
             }
+            //output log
+            File.WriteAllText(@"./end.log",log);
+
             gameOver = true;
         }
         public int distBetweenSpaces(int row1, int col1, int row2, int col2)
@@ -562,7 +905,11 @@ namespace _438_IntelliBros
                             }
                         }
                         break;
-                    case 4:
+                    case 4: // prefer big trash first
+                        int nextRow = -1, nextCol = -1;
+                        BigTrashFirst(ref nextRow, ref nextCol);
+                        verifyMove(nextRow, nextCol);
+                        
                         break;
                     default:
                         break;
@@ -628,7 +975,10 @@ namespace _438_IntelliBros
                             else verifyMove(currRow, currCol + 1);
                         }*/
                         break;
-                    case 4:
+                    case 4: // prefer big trash first
+                        int nextRow = -1, nextCol = -1;
+                        BigTrashFirst(ref nextRow, ref nextCol);
+                        verifyMove(nextRow, nextCol);
                         break;
                     default:
                         break;
@@ -651,6 +1001,8 @@ namespace _438_IntelliBros
 
                         P1_updateLabels();
 
+                        log += stateString();
+
                         currentTurn = 2;
                         nextTurnIs_P1();
                     }
@@ -667,11 +1019,64 @@ namespace _438_IntelliBros
 
                         P2_updateLabels();
 
+                        log += stateString();
+
                         currentTurn = 1;
                         nextTurnIs_P2();
                     }
                 }
             }
+        }
+
+        public string stateString()
+        {
+            string tmp = "Turn: " + numTurns + "\n";
+            tmp += "Player 1 Score: " + P1.score + "\n";
+            tmp += "Player 1 Capacity: " + P1.capacity + "\n";
+            tmp += "Player 2 Score: " + P2.score + "\n";
+            tmp += "Player 2 Capacity: " + P2.capacity + "\n";
+            tmp += "Board:\n";
+            for (int i = 0; i < BOARDSIZE; i++)
+            {
+                for (int j = 0; j < BOARDSIZE; j++)
+                {
+                    if ((string)spaces[i, j].Tag == "player")
+                    {
+                        if (P1.row == i && P1.col == j)
+                        {
+                            tmp += "A ";
+                        }
+                        else
+                        {
+                            tmp += "B ";
+                        }
+                    }
+                    else if ((string)spaces[i, j].Tag == "mouse")
+                    {
+                        tmp += "M ";
+                    }
+                    else if ((string)spaces[i,j].Tag == SMALL_TRASH_TAG)
+                    {
+                        tmp += "1 ";
+                    }
+                    else if ((string)spaces[i,j].Tag == MEDIUM_TRASH_TAG)
+                    {
+                        tmp += "2 ";
+                    }
+                    else if ((string)spaces[i,j].Tag == LARGE_TRASH_TAG)
+                    {
+                        tmp += "3 ";
+                    }
+                    else
+                    {
+                        tmp += "_ ";
+                    }
+                }
+                tmp += "\n";
+            }
+            tmp += "\n";
+
+            return tmp;
         }
 
         public void button_Start_Click(object sender, EventArgs e)
@@ -749,6 +1154,16 @@ namespace _438_IntelliBros
                     spaces[row, col].Tag = null;
                 }
             }
+        }
+
+        private void button_IncTimer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDecTimer_Click(object sender, EventArgs e)
+        {
+
         }
 
         public void button_Click(object sender, EventArgs e)

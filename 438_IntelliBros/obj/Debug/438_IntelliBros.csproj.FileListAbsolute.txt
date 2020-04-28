@@ -37,3 +37,13 @@ C:\Users\rh\Documents\repos\CS438TeamProject\438_IntelliBros\obj\Debug\438_Intel
 C:\Users\rh\Documents\repos\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.csproj.CoreCompileInputs.cache
 C:\Users\rh\Documents\repos\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.exe
 C:\Users\rh\Documents\repos\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.pdb
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\bin\Debug\438_IntelliBros.exe.config
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\bin\Debug\438_IntelliBros.exe
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\bin\Debug\438_IntelliBros.pdb
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.csprojAssemblyReference.cache
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\obj\Debug\_438_IntelliBros.GameBoard.resources
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\obj\Debug\_438_IntelliBros.Properties.Resources.resources
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.csproj.GenerateResource.cache
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.csproj.CoreCompileInputs.cache
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.exe
+C:\Users\trent\Source\Repos\RileyLadd\CS438TeamProject\438_IntelliBros\obj\Debug\438_IntelliBros.pdb
