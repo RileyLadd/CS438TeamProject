@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using "PriorityQueuesProgram.cs";
 
 namespace _438_IntelliBros
 {
@@ -18,7 +19,10 @@ namespace _438_IntelliBros
         {
             public int nextRow, nextColumn;
             public double priority; //small values are higher priority
+            public PossibleMove()
+            {
 
+            }
             public PossibleMove(int row, int col, double priority)
             {
                 nextRow = row;
@@ -374,9 +378,49 @@ namespace _438_IntelliBros
             }
         }
 
+
+        public double BTF_heuristic(int nextRow, int nextCol)
+        {
+            if (currentTurn == 1) { // it is player 1's turn
+                if(areSpacesNeighbors(P1.row, P1.col, nextRow, nextCol) && (string)spaces[nextRow, nextCol].Tag != "player")
+                {
+                    return 0.0;
+                }
+
+
+                return 100.0;
+            } else // it is player 2's turn
+            {
+                if (areSpacesNeighbors(P2.row, P2.col, nextRow, nextCol) && (string)spaces[nextRow, nextCol].Tag != "player")
+                {
+                    return 0.0;
+                }
+                return 100.0;
+            }
+        }
         public void BigTrashFirst(ref int nextRow, ref int nextCol) // determines where to move next; utilizes Priority Queue
         {
+            PriorityQueue<PossibleMove> pq = new PriorityQueue<PossibleMove>();
+            PossibleMove [] move = new PossibleMove[226];
+            int i = 0;
+            for(int r = 0; r < BOARDSIZE; ++r)
+            {
+                for(int c = 0; c < BOARDSIZE; ++c)
+                {
+                    //move = new PossibleMove(nextRow, nextCol, BTF_heuristic(nextRow, nextCol));
+                    move[i] = new PossibleMove();
+                    move[i].priority = BTF_heuristic(nextRow, nextCol);
 
+                    move[i].nextRow = nextRow; move[i].nextColumn = nextCol;
+
+                    pq.Enqueue(move[i]);
+                    ++i;
+                }
+            }
+            PossibleMove move2 = pq.Dequeue();
+            
+            nextRow = move2.nextRow; nextCol = move2.nextColumn;
+            //verifyMove(, nextCol); // make move
         }
 
         public void generateMouse()
@@ -665,7 +709,10 @@ namespace _438_IntelliBros
                             else verifyMove(currRow, currCol + 1);
                         }*/
                         break;
-                    case 4:
+                    case 4: // prefer big trash first
+                        int nextRow = -1, nextCol = -1;
+                        BigTrashFirst(ref nextRow, ref nextCol);
+                        verifyMove(nextRow, nextCol);
                         break;
                     default:
                         break;

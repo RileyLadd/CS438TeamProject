@@ -9,7 +9,8 @@ using System.Collections.Generic;
 
 // Demonstrate a Priority Queue implemented with a Binary Heap
 
-namespace PriorityQueues
+//namespace PriorityQueues
+namespace _438_IntelliBros
 {
   class PriorityQueuesProgram
   {
