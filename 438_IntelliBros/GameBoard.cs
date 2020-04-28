@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -296,6 +297,7 @@ namespace _438_IntelliBros
         bool gameOver = false;
         int numTurns = 0;
         bool mouseInGame = false;
+        string log = "";
 
         //change the starting positions
         const int p1_start_row = 7;
@@ -497,6 +499,9 @@ namespace _438_IntelliBros
                 spaces[P2.row, P2.col].BackColor = Color.Gold;
                 MessageBox.Show("Tie!","Winner");
             }
+            //output log
+            File.WriteAllText(@"./end.log",log);
+
             gameOver = true;
         }
         public int distBetweenSpaces(int row1, int col1, int row2, int col2)
@@ -651,6 +656,8 @@ namespace _438_IntelliBros
 
                         P1_updateLabels();
 
+                        log += stateString();
+
                         currentTurn = 2;
                         nextTurnIs_P1();
                     }
@@ -667,11 +674,64 @@ namespace _438_IntelliBros
 
                         P2_updateLabels();
 
+                        log += stateString();
+
                         currentTurn = 1;
                         nextTurnIs_P2();
                     }
                 }
             }
+        }
+
+        public string stateString()
+        {
+            string tmp = "Turn: " + numTurns + "\n";
+            tmp += "Player 1 Score: " + P1.score + "\n";
+            tmp += "Player 1 Capacity: " + P1.capacity + "\n";
+            tmp += "Player 2 Score: " + P2.score + "\n";
+            tmp += "Player 2 Capacity: " + P2.capacity + "\n";
+            tmp += "Board:\n";
+            for (int i = 0; i < BOARDSIZE; i++)
+            {
+                for (int j = 0; j < BOARDSIZE; j++)
+                {
+                    if ((string)spaces[i, j].Tag == "player")
+                    {
+                        if (P1.row == i && P1.col == j)
+                        {
+                            tmp += "A ";
+                        }
+                        else
+                        {
+                            tmp += "B ";
+                        }
+                    }
+                    else if ((string)spaces[i, j].Tag == "mouse")
+                    {
+                        tmp += "M ";
+                    }
+                    else if ((string)spaces[i,j].Tag == SMALL_TRASH_TAG)
+                    {
+                        tmp += "1 ";
+                    }
+                    else if ((string)spaces[i,j].Tag == MEDIUM_TRASH_TAG)
+                    {
+                        tmp += "2 ";
+                    }
+                    else if ((string)spaces[i,j].Tag == LARGE_TRASH_TAG)
+                    {
+                        tmp += "3 ";
+                    }
+                    else
+                    {
+                        tmp += "_ ";
+                    }
+                }
+                tmp += "\n";
+            }
+            tmp += "\n";
+
+            return tmp;
         }
 
         public void button_Start_Click(object sender, EventArgs e)
