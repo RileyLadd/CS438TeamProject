@@ -1177,8 +1177,8 @@ namespace _438_IntelliBros
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            --ticks;
             if (ticks == 0) { determineWinner(); }
+            --ticks;
             label_Timer.Text = ticks.ToString();
         }
 
