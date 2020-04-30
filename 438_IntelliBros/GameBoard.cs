@@ -1171,7 +1171,7 @@ namespace _438_IntelliBros
 
         private void button_DecTimer_Click(object sender, EventArgs e)
         {
-            --ticks;
+            if (ticks > 1) { --ticks; }
             label_Timer.Text = ticks.ToString();
         }
 
