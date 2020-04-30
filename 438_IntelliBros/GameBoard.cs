@@ -105,10 +105,9 @@ namespace _438_IntelliBros
             public bool TryMoveTo(int newRow, int newCol)
             {
                 if ((newRow < -1) || (newRow > BOARDSIZE - 1) || (newCol < -1) || (newCol > BOARDSIZE - 1)) { return false; }
-                if (newRow == row && newCol == col) { return false; }
-                if (!isNeighbor(newRow, newCol)) { return false; }
-                //string viewStr = (string)spaces[newRow, newCol].Tag; TODO this causes problems, the if statement evaluates to false yet runs
-                //if ((string)(spaces[newRow, newCol].Tag) != null) { return false; }
+                if (newRow == row && newCol == col)                                                         { return false; }
+                if (!isNeighbor(newRow, newCol))                                                            { return false; }
+                if ((string)spaces[newRow, newCol].Tag == "player")                                         { return false; }
 
                 else { moveTo(newRow, newCol); return true; }
             }
