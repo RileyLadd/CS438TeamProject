@@ -246,6 +246,7 @@ namespace _438_IntelliBros
                     }
                     spaces[row, col].Tag = "player";
                     currentTurnIsP1 = !currentTurnIsP1;
+                    ++numTurns;
                     if (!currentTurnIsP1) { spaces[row, col].BackgroundImage = imageList1.Images[0]; }
                     else                  { spaces[row, col].BackgroundImage = imageList1.Images[1]; }
                     return true;
@@ -276,6 +277,7 @@ namespace _438_IntelliBros
 
             private void absorbPoints(string tag)
             {
+                --trashRemaining;
                 if (tag == SMALL_TRASH_TAG)
                 {
                     addSmall();
@@ -290,6 +292,7 @@ namespace _438_IntelliBros
                 }
                 else if (tag == "mouse")
                 {
+                    ++trashRemaining; //undo the previous add
                     addMouse();
                 }
             }
