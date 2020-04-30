@@ -16,6 +16,14 @@ namespace _438_IntelliBros
     public partial class GameBoard : Form
     {
         static public ImageList imageList1 = new ImageList();
+        /*
+         * 0 P1
+         * 1 P2
+         * 2 rat
+         * 3 small trash
+         * 4 med trash
+         * 6 large trash
+         * */
 
         const int p1_start_row = 7;
         const int p1_start_col = 0;
@@ -497,13 +505,18 @@ namespace _438_IntelliBros
         public GameBoard()
         {
             InitializeComponent();
+            //deal with images
             string cwd = Directory.GetCurrentDirectory();
+            imageList1.ImageSize = new Size(256, 256);
             imageList1.Images.Add(Image.FromFile(cwd + "/p1.png"));
             imageList1.Images.Add(Image.FromFile(cwd + "/p2.png"));
             imageList1.Images.Add(Image.FromFile(cwd + "/rat.png"));
             imageList1.Images.Add(Image.FromFile(cwd + "/trash 1.png"));
             imageList1.Images.Add(Image.FromFile(cwd + "/trash 2.png"));
             imageList1.Images.Add(Image.FromFile(cwd + "/trash 3.png"));
+
+            p1icon.BackgroundImage = imageList1.Images[0];
+            p2icon.BackgroundImage = imageList1.Images[1];
 
             label_Timer.Text = ticks.ToString();
 
