@@ -81,9 +81,8 @@
             this.label_Timer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Timer.Location = new System.Drawing.Point(12, 43);
             this.label_Timer.Name = "label_Timer";
-            this.label_Timer.Size = new System.Drawing.Size(27, 20);
+            this.label_Timer.Size = new System.Drawing.Size(0, 20);
             this.label_Timer.TabIndex = 1;
-            this.label_Timer.Text = "10";
             // 
             // button_IncTimer
             // 
@@ -190,7 +189,6 @@
             // p1icon
             // 
             this.p1icon.BackColor = System.Drawing.Color.White;
-            this.p1icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p1;
             this.p1icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.p1icon.Location = new System.Drawing.Point(417, 92);
             this.p1icon.Name = "p1icon";
@@ -282,7 +280,6 @@
             // p2icon
             // 
             this.p2icon.BackColor = System.Drawing.Color.White;
-            this.p2icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p2;
             this.p2icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.p2icon.Location = new System.Drawing.Point(417, 77);
             this.p2icon.Name = "p2icon";

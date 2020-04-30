@@ -504,6 +504,9 @@ namespace _438_IntelliBros
             imageList1.Images.Add(Image.FromFile(cwd + "/trash 1.png"));
             imageList1.Images.Add(Image.FromFile(cwd + "/trash 2.png"));
             imageList1.Images.Add(Image.FromFile(cwd + "/trash 3.png"));
+
+            label_Timer.Text = ticks.ToString();
+
             for (int row = 0; row < BOARDSIZE; ++row)
             {
                 for (int col = 0; col < BOARDSIZE; ++col)
@@ -647,7 +650,7 @@ namespace _438_IntelliBros
 
         private void button_DecTimer_Click(object sender, EventArgs e)
         {
-            if (ticks > 0) { --ticks; }
+            if (ticks > 1) { --ticks; }
             label_Timer.Text = ticks.ToString();
         }
 
