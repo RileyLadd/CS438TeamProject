@@ -235,7 +235,7 @@ namespace _438_IntelliBros
                 int prevCol = col;
                 //hold info before moving
                 string tag = (string)spaces[newRow, newCol].Tag;
-                if (base.TryMoveTo(newRow, newCol)) //player has moved to new spot
+                if (base.TryMoveTo(newRow, newCol)) //if true, player has moved to new spot
                 {
                     //deal with mouse tag
                     if (prevRow != -1 && prevCol != -1)
@@ -555,6 +555,30 @@ namespace _438_IntelliBros
             }
         }
 
+        public void determineNextMove()
+        {
+            if (!gameOver && trashRemaining > -1)
+            {
+                if (currentTurnIsP1)
+                {
+                    if (P1.type != 1)
+                    {
+                        P1.decide();
+                        determineNextMove();
+                    }
+                }
+                else if (P2.type != 1)
+                {
+                    P2.decide();
+                    determineNextMove();
+                }
+            }
+            else
+            {
+                determineWinner();
+            }
+        }
+
         //buttons
         public void button_Start_Click(object sender, EventArgs e)
         {
@@ -575,16 +599,7 @@ namespace _438_IntelliBros
             Refresh();
             game_started = true;
 
-            if (P1.type != 1)
-            {
-                while (!gameOver || trashRemaining != 0)
-                {
-                    P1.decide();
-                    P2.decide();
-                    Mouse1.Move_Or_Generate();
-                }
-                determineWinner();
-            }
+            determineNextMove();
         }
 
         public void button_Reset_Click(object sender, EventArgs e)
@@ -619,6 +634,7 @@ namespace _438_IntelliBros
 
             if (currentTurnIsP1) { if (P1.TryMoveTo(row, col)) { P1_updateLabels(); P1_Set_Colors(); } }
             else                 { if (P2.TryMoveTo(row, col)) { P2_updateLabels(); P2_Set_Colors(); } }
+            determineNextMove();
         }
 
         private void E1_User_Click(object sender, EventArgs e)
