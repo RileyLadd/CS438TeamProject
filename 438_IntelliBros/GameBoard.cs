@@ -15,6 +15,8 @@ namespace _438_IntelliBros
 {
     public partial class GameBoard : Form
     {
+        static public ImageList imageList1 = new ImageList();
+
         const int p1_start_row = 7;
         const int p1_start_col = 0;
         const int p2_start_row = 7;
@@ -495,6 +497,13 @@ namespace _438_IntelliBros
         public GameBoard()
         {
             InitializeComponent();
+            string cwd = Directory.GetCurrentDirectory();
+            imageList1.Images.Add(Image.FromFile(cwd + "/p1.png"));
+            imageList1.Images.Add(Image.FromFile(cwd + "/p2.png"));
+            imageList1.Images.Add(Image.FromFile(cwd + "/rat.png"));
+            imageList1.Images.Add(Image.FromFile(cwd + "/trash 1.png"));
+            imageList1.Images.Add(Image.FromFile(cwd + "/trash 2.png"));
+            imageList1.Images.Add(Image.FromFile(cwd + "/trash 3.png"));
             for (int row = 0; row < BOARDSIZE; ++row)
             {
                 for (int col = 0; col < BOARDSIZE; ++col)

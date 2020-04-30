@@ -60,7 +60,6 @@
             this.button_Forward = new System.Windows.Forms.Button();
             this.button_Start = new System.Windows.Forms.Button();
             this.button_Reset = new System.Windows.Forms.Button();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
@@ -394,17 +393,6 @@
             this.button_Reset.UseVisualStyleBackColor = true;
             this.button_Reset.Click += new System.EventHandler(this.button_Reset_Click);
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "p1.png");
-            this.imageList1.Images.SetKeyName(1, "p2.png");
-            this.imageList1.Images.SetKeyName(2, "rat.png");
-            this.imageList1.Images.SetKeyName(3, "trash 1.png");
-            this.imageList1.Images.SetKeyName(4, "trash 2.png");
-            this.imageList1.Images.SetKeyName(5, "trash 3.png");
-            // 
             // timer1
             // 
             this.timer1.Interval = 1000;
@@ -456,7 +444,6 @@
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_Reset;
 
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button p2icon;
         private System.Windows.Forms.Button p1icon;
         private System.Windows.Forms.Label label3;
