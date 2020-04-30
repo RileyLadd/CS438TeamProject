@@ -126,11 +126,10 @@ namespace _438_IntelliBros
                 row = col = 1;
             }
 
-            public void Move_Or_Generate()
+            public void move_Or_Generate()
             {
                 Random rand_num = new Random(); //mouse generation/movement
-                int rand = 0;
-                rand = rand_num.Next(0, 5);
+                int rand = rand_num.Next(0, 5);
 
                 if (!mouseInGame)
                 {
@@ -149,8 +148,7 @@ namespace _438_IntelliBros
             private void generateMouse()
             {
                 Random rand_num = new Random();
-                int rand = 0;
-                rand = rand_num.Next(0, 2);
+                int rand = rand_num.Next(0, 2);
                 if (rand == 0) row = 0; //only generate mouse on top or bottom of board
                 else row = 14;
 
@@ -168,32 +166,32 @@ namespace _438_IntelliBros
             {
                 Random rand_num = new Random();
                 int rand = 0, trashType = -1, newRow = -1, newCol = -1;
-                rand = rand_num.Next(0, 6);
-                if (rand == 0 || rand == 1 || rand == 2) trashType = 3; //small trash
-                else if (rand == 3 || rand == 4) trashType = 4; //medium trash
-                else trashType = 5; //large trash
+                int prevRow = row; int prevCol = col; //hold current spot
 
-                bool foundNewSpot = false;
+                bool MovedToNewSpot = false;
                 int iters = 0;
-                while (!foundNewSpot && iters < 100)
+                while (!MovedToNewSpot && iters < 100)  //try find new spot
                 {
                     newRow = row + rand_num.Next(-1, 2);
                     newCol = col + rand_num.Next(-1, 2);
-                    foundNewSpot = TryMoveTo(newRow, newCol);
+                    MovedToNewSpot = TryMoveTo(newRow, newCol); //TryMoveTo moves rat
                     ++iters;
                 }
                 if (iters == 100) return; //mouse can't move, so just don't move this time.
                                           //have now found a new spot
                                           //if((string)spaces[mouseRow, mouseCol].Tag == )
 
-                spaces[row, col].BackgroundImage = imageList1.Images[trashType];
-                if (trashType == 3) spaces[row, col].Tag = SMALL_TRASH_TAG;
-                else if (trashType == 4) spaces[row, col].Tag = MEDIUM_TRASH_TAG;
-                else spaces[row, col].Tag = LARGE_TRASH_TAG;
-
-                base.TryMoveTo(newRow, newCol);
                 spaces[row, col].BackgroundImage = imageList1.Images[2]; //put mouse icon on new spot
                 spaces[row, col].Tag = "mouse";
+
+                if      (rand == 0 || rand == 1 || rand == 2)   trashType = 3; //small trash
+                else if (rand == 3 || rand == 4)                trashType = 4; //medium trash
+                else                                            trashType = 5; //large trash
+
+                spaces[prevRow, prevCol].BackgroundImage = imageList1.Images[trashType];
+                if      (trashType == 3) spaces[prevRow, prevCol].Tag = SMALL_TRASH_TAG;
+                else if (trashType == 4) spaces[prevRow, prevCol].Tag = MEDIUM_TRASH_TAG;
+                else                     spaces[prevRow, prevCol].Tag = LARGE_TRASH_TAG;
             }
         }
 
@@ -559,6 +557,7 @@ namespace _438_IntelliBros
         {
             if (!gameOver && trashRemaining > -1)
             {
+                Mouse1.move_Or_Generate();
                 if (currentTurnIsP1)
                 {
                     if (P1.type != 1)
