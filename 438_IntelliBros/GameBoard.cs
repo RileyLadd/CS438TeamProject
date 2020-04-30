@@ -665,7 +665,7 @@ namespace _438_IntelliBros
             return (Math.Abs(row1 - row2) < 2 && Math.Abs(col1 - col2) < 2);
         }
 
-        static public void determineWinner()
+        public void determineWinner()
         {
             if (P1.score > P2.score)
             {
@@ -719,7 +719,7 @@ namespace _438_IntelliBros
             else return false;
         }
 
-        static public void generateTrash() // Called when beginning a new game. Uses random num generator to scatter trash across board
+        public void generateTrash() // Called when beginning a new game. Uses random num generator to scatter trash across board
         {
             Random rand_num = new Random();
             int rand = 0;
