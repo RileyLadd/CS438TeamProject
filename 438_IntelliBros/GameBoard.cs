@@ -91,7 +91,7 @@ namespace _438_IntelliBros
                 row = r; col = c;
             }
 
-            public void MoveTo(int r, int c)
+            public void moveTo(int r, int c)
             {
                 row = r; col = c;
             }
@@ -178,7 +178,7 @@ namespace _438_IntelliBros
                 else if (trashType == 4) spaces[row, col].Tag = MEDIUM_TRASH_TAG;
                 else spaces[row, col].Tag = LARGE_TRASH_TAG;
 
-                MoveTo(newRow, newCol);
+                base.moveTo(newRow, newCol);
                 spaces[row, col].BackgroundImage = imageList1.Images[2]; //put mouse icon on new spot
                 spaces[row, col].Tag = "mouse";
             }
@@ -218,7 +218,7 @@ namespace _438_IntelliBros
 
             public void moveTo(int newRow, int newCol)
             {
-                moveTo(newRow, newCol);
+                base.moveTo(newRow, newCol);
                 spaces[row, col].Tag = "player";
             }
 
