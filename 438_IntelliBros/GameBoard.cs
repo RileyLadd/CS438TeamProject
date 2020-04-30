@@ -15,12 +15,10 @@ namespace _438_IntelliBros
 {
     public partial class GameBoard : Form
     {
-        //change the starting positions
         const int p1_start_row = 7;
         const int p1_start_col = 0;
         const int p2_start_row = 7;
         const int p2_start_col = 14;
-        //Player
 
         static int turnTime = 5;
         static int ticks = turnTime;
@@ -33,7 +31,7 @@ namespace _438_IntelliBros
         static string log = "";
 
         const int BOARDSIZE = 15; // The height/width of the board
-        const int MAX_CAPACITY = 200; // Max cleaning capacity of the cats
+        const int MAX_CAPACITY = 200;
         const int BUTTON_SIZE = 50;
         const int SMALL_TRASH_POINT_VAL = 2;
         const int MEDIUM_TRASH_POINT_VAL = 5;
