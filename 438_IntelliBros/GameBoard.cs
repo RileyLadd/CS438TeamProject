@@ -15,6 +15,7 @@ namespace _438_IntelliBros
     public partial class GameBoard : Form
 
     {
+        int ticks = 10;
         static Button[,] spaces = new Button[BOARDSIZE, BOARDSIZE]; // *** Use this array to modify button background colors/images/etc !!! *** //
         partial class PossibleMove : IComparable<PossibleMove> // Used to store a possible next move in the Priotity Queue
         {
@@ -1099,6 +1100,12 @@ namespace _438_IntelliBros
             P2_updateLabels();
             generateTrash();
             Refresh();
+            //Timer
+            button_IncTimer.Enabled = false;
+            button_DecTimer.Enabled = false;
+            timer1.Enabled = true;
+            timer1.Start();
+            //Timer
             game_started = true;
             if (currentTurn == 1)
             {
@@ -1158,12 +1165,21 @@ namespace _438_IntelliBros
 
         private void button_IncTimer_Click(object sender, EventArgs e)
         {
-
+            ++ticks;
+            label_Timer.Text = ticks.ToString();
         }
 
-        private void buttonDecTimer_Click(object sender, EventArgs e)
+        private void button_DecTimer_Click(object sender, EventArgs e)
         {
+            --ticks;
+            label_Timer.Text = ticks.ToString();
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            --ticks;
+            if (ticks == 0) { determineWinner(); }
+            label_Timer.Text = ticks.ToString();
         }
 
         public void button_Click(object sender, EventArgs e)
