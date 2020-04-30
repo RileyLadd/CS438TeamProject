@@ -91,18 +91,32 @@ namespace _438_IntelliBros
                 row = r; col = c;
             }
 
-            public void moveTo(int r, int c)
+            private void moveTo(int r, int c)
             {
+                if (row != -1 && col != -1)
+                {
+                    spaces[row, col].Tag = null;
+                    spaces[row, col].BackgroundImage = null;
+                    spaces[row, col].BackColor = Color.LightGray;
+                }
                 row = r; col = c;
             }
 
-            public bool isValidMoveTo(int newRow, int newCol)
+            public bool TryMoveTo(int newRow, int newCol)
             {
-                if ((newRow < 0) || (newRow > BOARDSIZE - 1) || (newCol < 0) || (newCol > BOARDSIZE - 1)
-                   || (newRow == row && newCol == col) //same as current spot
-                   || (string)spaces[newRow, newCol].Tag != null)
-                    return false;
-                else return true;
+                if ((newRow < -1) || (newRow > BOARDSIZE - 1) || (newCol < -1) || (newCol > BOARDSIZE - 1)) { return false; }
+                if (newRow == row && newCol == col) { return false; }
+                if (!isNeighbor(newRow, newCol)) { return false; }
+                //string viewStr = (string)spaces[newRow, newCol].Tag; TODO this causes problems, the if statement evaluates to false yet runs
+                //if ((string)(spaces[newRow, newCol].Tag) != null) { return false; }
+
+                else { moveTo(newRow, newCol); return true; }
+            }
+
+            public bool isNeighbor(int newRow, int newCol)
+            {
+                if(row == -1 && col == -1) { return true; }
+                return (Math.Abs(row - newRow) < 2 && Math.Abs(col - newCol) < 2);
             }
         }
 
@@ -166,7 +180,7 @@ namespace _438_IntelliBros
                 {
                     newRow = row + rand_num.Next(-1, 2);
                     newCol = col + rand_num.Next(-1, 2);
-                    foundNewSpot = isValidMoveTo(newRow, newCol);
+                    foundNewSpot = TryMoveTo(newRow, newCol);
                     ++iters;
                 }
                 if (iters == 100) return; //mouse can't move, so just don't move this time.
@@ -178,7 +192,7 @@ namespace _438_IntelliBros
                 else if (trashType == 4) spaces[row, col].Tag = MEDIUM_TRASH_TAG;
                 else spaces[row, col].Tag = LARGE_TRASH_TAG;
 
-                base.moveTo(newRow, newCol);
+                base.TryMoveTo(newRow, newCol);
                 spaces[row, col].BackgroundImage = imageList1.Images[2]; //put mouse icon on new spot
                 spaces[row, col].Tag = "mouse";
             }
@@ -216,10 +230,27 @@ namespace _438_IntelliBros
                 spaces[row, col].BackColor = Color.LightGray;
             }
 
-            public void moveTo(int newRow, int newCol)
+            public bool TryMoveTo(int newRow, int newCol)
             {
-                base.moveTo(newRow, newCol);
-                spaces[row, col].Tag = "player";
+                int prevRow = row;
+                int prevCol = col;
+                //hold info before moving
+                string tag = (string)spaces[newRow, newCol].Tag;
+                if (base.TryMoveTo(newRow, newCol)) //player has moved to new spot
+                {
+                    //deal with mouse tag
+                    if (prevRow != -1 && prevCol != -1)
+                    {
+                        absorbPoints(tag);
+                        spaces[prevRow, prevCol].Tag = null;
+                    }
+                    spaces[row, col].Tag = "player";
+                    currentTurnIsP1 = !currentTurnIsP1;
+                    if (!currentTurnIsP1) { spaces[row, col].BackgroundImage = imageList1.Images[0]; }
+                    else                  { spaces[row, col].BackgroundImage = imageList1.Images[1]; }
+                    return true;
+                }
+                return false;
             }
 
             public void decide()
@@ -227,13 +258,6 @@ namespace _438_IntelliBros
                 switch (type)
                 {
                     case 1:
-                        int temp_r = row;
-                        int temp_c = col;
-                        //wait for the user to decide
-                        while (temp_r == row && temp_c == col)
-                        {
-                            Thread.Sleep(1000);
-                        }
                         break;
                     case 2:
 
@@ -250,24 +274,23 @@ namespace _438_IntelliBros
                 }
             }
 
-            public void absorbPoints(int newRow, int newCol)
+            private void absorbPoints(string tag)
             {
-                if ((string)spaces[newRow, newCol].Tag == SMALL_TRASH_TAG)
+                if (tag == SMALL_TRASH_TAG)
                 {
                     addSmall();
                 }
-                else if ((string)spaces[newRow, newCol].Tag == MEDIUM_TRASH_TAG)
+                else if (tag == MEDIUM_TRASH_TAG)
                 {
                     addMed();
                 }
-                else if ((string)spaces[newRow, newCol].Tag == LARGE_TRASH_TAG)
+                else if (tag == LARGE_TRASH_TAG)
                 {
                     addLarge();
                 }
-                else if ((string)spaces[newRow, newCol].Tag == "mouse")
+                else if (tag == "mouse")
                 {
                     addMouse();
-                    spaces[newRow, newCol].Tag = null;
                 }
             }
             //private Player methods
@@ -294,7 +317,7 @@ namespace _438_IntelliBros
                 addCapacity_returns_PlayerHasMaxCap(4);
             }
 
-            private bool addCapacity_returns_PlayerHasMaxCap(int type) //small / med / large
+            private bool addCapacity_returns_PlayerHasMaxCap(int type = 0) //small / med / large
             {
                 int addingCap;
                 switch (type)
@@ -315,7 +338,7 @@ namespace _438_IntelliBros
                         addingCap = 0;
                         break;
                 }
-                if (capacity + addingCap > MAX_CAPACITY)
+                if (capacity + addingCap >= MAX_CAPACITY)
                 { // check to verify that player still has capacity space
                     MessageBox.Show("A player has exceeded their Capacity.", "Capacity Exceeded");
                     return true;
@@ -344,33 +367,33 @@ namespace _438_IntelliBros
                 }
                 string msg = "Found nearest trash at row " + newRow.ToString() + ", col " + newCol.ToString();
                 //MessageBox.Show(msg, "Next Move");
-                if (areSpacesNeighbors(currRow, currCol, newRow, newCol)) isValidMoveTo(newRow, newCol);
+                if (isNeighbor(newRow, newCol)) TryMoveTo(newRow, newCol);
                 else
                 {
                     if (newRow < currRow)
                     {
-                        if ((string)spaces[currRow - 1, currCol].Tag != "player") isValidMoveTo(currRow - 1, currCol);
-                        else if (currCol > 0) isValidMoveTo(currRow - 1, currCol - 1);
-                        else isValidMoveTo(currRow - 1, currCol + 1);
+                        if ((string)spaces[currRow - 1, currCol].Tag != "player") TryMoveTo(currRow - 1, currCol);
+                        else if (currCol > 0) TryMoveTo(currRow - 1, currCol - 1);
+                        else TryMoveTo(currRow - 1, currCol + 1);
                     }
                     else if (newRow > currRow)
                     {
-                        if ((string)spaces[currRow + 1, currCol].Tag != "player") isValidMoveTo(currRow + 1, currCol);
-                        else if (currCol > 0) isValidMoveTo(currRow + 1, currCol - 1);
-                        else isValidMoveTo(currRow + 1, currCol + 1);
+                        if ((string)spaces[currRow + 1, currCol].Tag != "player") TryMoveTo(currRow + 1, currCol);
+                        else if (currCol > 0) TryMoveTo(currRow + 1, currCol - 1);
+                        else TryMoveTo(currRow + 1, currCol + 1);
                     }
 
                     else if (newCol < currCol)
                     {
-                        if ((string)spaces[currRow, currCol - 1].Tag != "player") isValidMoveTo(currRow, currCol - 1);
-                        else if (currRow > 0) isValidMoveTo(currRow - 1, currCol - 1);
-                        else isValidMoveTo(currRow + 1, currCol - 1);
+                        if ((string)spaces[currRow, currCol - 1].Tag != "player") TryMoveTo(currRow, currCol - 1);
+                        else if (currRow > 0) TryMoveTo(currRow - 1, currCol - 1);
+                        else TryMoveTo(currRow + 1, currCol - 1);
                     }
                     else
                     {
-                        if ((string)spaces[currRow, currCol + 1].Tag != "player") isValidMoveTo(currRow, currCol + 1);
-                        else if (currRow > 0) isValidMoveTo(currRow - 1, currCol + 1);
-                        else isValidMoveTo(currRow + 1, currCol + 1);
+                        if ((string)spaces[currRow, currCol + 1].Tag != "player") TryMoveTo(currRow, currCol + 1);
+                        else if (currRow > 0) TryMoveTo(currRow - 1, currCol + 1);
+                        else TryMoveTo(currRow + 1, currCol + 1);
                     }
                 }
             }
@@ -448,7 +471,6 @@ namespace _438_IntelliBros
             }
         }
         //Classes
-
         //player helpers
         public void P1_updateLabels()
         {
@@ -462,20 +484,7 @@ namespace _438_IntelliBros
             p2points_label.Text = P2.score.ToString();
         }
 
-        //place player onto the board, default to start location
-        public void P1_PutImageLoc(int row = p1_start_row, int col = p1_start_col)
-        {
-            P1.moveTo(row, col);
-            spaces[row, col].BackgroundImage = imageList1.Images[0]; // place Player 1 on the board
-        }
-
-        public void P2_PutImageLoc(int row = p2_start_row, int col = p2_start_col)
-        {
-            P2.moveTo(row, col);
-            spaces[row, col].BackgroundImage = imageList1.Images[1]; // place Player 2 on the board
-        }
-
-        public void next_P1_Set_Colors()
+        public void P1_Set_Colors()
         {
             p1icon.BackColor = Color.LightGray;
             spaces[P1.row, P1.col].BackColor = Color.LightGray;
@@ -485,7 +494,7 @@ namespace _438_IntelliBros
             Refresh();
         }
 
-        public void next_P2_Set_Colors()
+        public void P2_Set_Colors()
         {
             p2icon.BackColor = Color.LightGray;
             spaces[P2.row, P2.col].BackColor = Color.LightGray;
@@ -532,10 +541,11 @@ namespace _438_IntelliBros
                     tempButton.Location = new Point(731 + (col * BUTTON_SIZE), 29 + (row * BUTTON_SIZE));
                     tempButton.BackColor = Color.LightGray;
                     tempButton.AutoSize = false;
+                    tempButton.Tag = null;
                     tempButton.BackgroundImageLayout = ImageLayout.Stretch;
                     tempButton.Click += button_Click;
 
-                    //tempButton.Text = row.ToString() + ", " + col.ToString(); debugger for (col * BUTTON_SIZE), 29 + (row * BUTTON_SIZE)
+                    //tempButton.Text = row.ToString() + ", " + col.ToString();
 
                     spaces[row, col] = tempButton;
                     this.Controls.Add(spaces[row, col]);
@@ -550,24 +560,29 @@ namespace _438_IntelliBros
             button_DecTimer.Enabled = false;
             button_Start.Enabled = false;
             clearBoard();
-            P1_PutImageLoc();
-            P2_PutImageLoc();
             gameOver = mouseInGame = false;
             currentTurnIsP1 = true;
             numTurns = 0;
+
+            P1.TryMoveTo(p1_start_row, p1_start_col);
+            P2.TryMoveTo(p2_start_row, p2_start_col);
 
             P1_updateLabels();
             P2_updateLabels();
             generateTrash();
             Refresh();
             game_started = true;
-            while (!gameOver || trashRemaining != 0)
+
+            if (P1.type != 1)
             {
-                P1.decide();
-                P2.decide();
-                Mouse1.Move_Or_Generate();
+                while (!gameOver || trashRemaining != 0)
+                {
+                    P1.decide();
+                    P2.decide();
+                    Mouse1.Move_Or_Generate();
+                }
+                determineWinner();
             }
-            determineWinner();
         }
 
         public void button_Reset_Click(object sender, EventArgs e)
@@ -599,11 +614,9 @@ namespace _438_IntelliBros
 
             int row = (newY - 29) / BUTTON_SIZE;
             int col = (newX - 731) / BUTTON_SIZE;
-            if (!gameOver)
-            {
-                if (currentTurnIsP1) { P1.isValidMoveTo(row, col); }
-                else { P2.isValidMoveTo(row, col); }
-            }
+
+            if (currentTurnIsP1) { if (P1.TryMoveTo(row, col)) { P1_updateLabels(); P1_Set_Colors(); } }
+            else                 { if (P2.TryMoveTo(row, col)) { P2_updateLabels(); P2_Set_Colors(); } }
         }
 
         private void E1_User_Click(object sender, EventArgs e)
@@ -682,10 +695,6 @@ namespace _438_IntelliBros
         {
             if (row1 != row2 && col1 != col2) return (Math.Abs(row1 - row2) + Math.Abs(col1 - col2) - 1); // the -1 allows for some diagonal movement
             return (Math.Abs(row1 - row2) + Math.Abs(col1 - col2));
-        }
-        static public bool areSpacesNeighbors(int row1, int col1, int row2, int col2)
-        {
-            return (Math.Abs(row1 - row2) < 2 && Math.Abs(col1 - col2) < 2);
         }
 
         public void determineWinner()

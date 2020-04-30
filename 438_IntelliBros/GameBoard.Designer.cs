@@ -195,7 +195,6 @@
             this.p1icon.Size = new System.Drawing.Size(75, 75);
             this.p1icon.TabIndex = 235;
             this.p1icon.UseVisualStyleBackColor = false;
-            this.p1icon.Click += new System.EventHandler(this.button_Click);
             // 
             // E1_Closest
             // 
@@ -440,9 +439,6 @@
         private System.Windows.Forms.Button button_Forward;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_Reset;
-
-        private System.Windows.Forms.Button p2icon;
-        private System.Windows.Forms.Button p1icon;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label p1points_label;
         private System.Windows.Forms.Label label1;
@@ -457,6 +453,8 @@
         private System.Windows.Forms.Button E1_BigTrashFirst;
         private System.Windows.Forms.Button E2_BigTrashFirst;
         private System.Windows.Forms.Timer timer1;
+        public System.Windows.Forms.Button p2icon;
+        public System.Windows.Forms.Button p1icon;
     }
 }
 
