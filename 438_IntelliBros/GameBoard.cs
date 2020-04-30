@@ -1171,15 +1171,18 @@ namespace _438_IntelliBros
 
         private void button_DecTimer_Click(object sender, EventArgs e)
         {
-            if (ticks > 1) { --ticks; }
+            if (ticks > 0) { --ticks; }
             label_Timer.Text = ticks.ToString();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (ticks == 0) { determineWinner(); }
-            --ticks;
-            label_Timer.Text = ticks.ToString();
+            else
+            {
+                --ticks;
+                label_Timer.Text = ticks.ToString();
+            }
         }
 
         public void button_Click(object sender, EventArgs e)
