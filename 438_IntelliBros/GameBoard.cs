@@ -160,6 +160,7 @@ namespace _438_IntelliBros
                 spaces[row, col].Tag = "mouse";
                 mouseInGame = true;
                 ++trashRemaining;   //mouse counts as trash lol
+                Console.WriteLine("                     Trash due to Mouse: " + trashRemaining);
             }
 
             private void moveMouse()
@@ -190,6 +191,7 @@ namespace _438_IntelliBros
                 else trashType = 5; //large trash
 
                 ++trashRemaining;
+                Console.WriteLine("                                 Mouse generated trash: " + trashRemaining);
                 spaces[prevRow, prevCol].BackgroundImage = imageList1.Images[trashType];
                 if (trashType == 3) spaces[prevRow, prevCol].Tag = SMALL_TRASH_TAG;
                 else if (trashType == 4) spaces[prevRow, prevCol].Tag = MEDIUM_TRASH_TAG;
@@ -218,7 +220,6 @@ namespace _438_IntelliBros
             {
                 score = capacity = 0;
                 type = -1;
-                spaces[row, col].BackColor = Color.LightGray;
             }
 
             public void rmPos()
@@ -321,6 +322,7 @@ namespace _438_IntelliBros
             private bool addCapacity_returns_PlayerHasMaxCap(int type = 0) //small / med / large
             {
                 --trashRemaining;
+                Console.WriteLine("Player cleaned Trash: " + trashRemaining);
                 int addingCap;
                 switch (type)
                 {
@@ -533,13 +535,14 @@ namespace _438_IntelliBros
             Refresh();
             if (trashRemaining > 0)
             {
-                Mouse1.move_Or_Generate();
+                //Mouse1.move_Or_Generate();
                 if (currentTurnIsP1)
                 {
                     if (P1.type != 1)
                     {
                         P1.decide();
                         P1_updateLabels();
+                        P1_Set_Colors();
                         determineNextMove();
                     }
                 }
@@ -547,6 +550,7 @@ namespace _438_IntelliBros
                 {
                     P2.decide();
                     P2_updateLabels();
+                    P2_Set_Colors();
                     determineNextMove();
                 }
             }
@@ -757,7 +761,7 @@ namespace _438_IntelliBros
                 {
                     if (!(i == P1.row && j == P1.col) && !(i == P2.row && j == P2.col)) // Don't spawn trash on players
                     {
-                        rand = rand_num.Next(0, 4); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
+                        rand = rand_num.Next(0, 30); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
                                                     //spaces[i, j].BackColor = Color.LightGray;
                                                     //Console.WriteLine(rand);
                         if (rand == 3)
@@ -783,6 +787,7 @@ namespace _438_IntelliBros
                     }
                 }
             }
+            Console.WriteLine("Trash generated: " + trashRemaining);
         }
         static public double BTF_heuristic(int nextRow, int nextCol)
         {
