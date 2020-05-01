@@ -564,12 +564,14 @@ namespace _438_IntelliBros
                     if (P1.type != 1)
                     {
                         P1.decide();
+                        P1_updateLabels();
                         determineNextMove();
                     }
                 }
                 else if (P2.type != 1)
                 {
                     P2.decide();
+                    P2_updateLabels();
                     determineNextMove();
                 }
             }
@@ -745,6 +747,7 @@ namespace _438_IntelliBros
             File.WriteAllText(@"./end.log", log);
 
             gameOver = true;
+            Application.Exit();
         }
 
         static public void clearBoard() //removes images, colors, tags
