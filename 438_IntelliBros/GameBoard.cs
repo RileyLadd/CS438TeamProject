@@ -435,13 +435,12 @@ namespace _438_IntelliBros
                             pq.Enqueue(move[i]);
                             ++i;
                         }
-
-                        PossibleMove move2 = pq.Dequeue();
-                        string msg = "moving to row " + move2.nextRow + ", col " + move2.nextColumn;
-                        TryMoveTo(move2.nextRow, move2.nextColumn);
-                        //MessageBox.Show(msg, "move");
                     }
                 }
+                PossibleMove move2 = pq.Dequeue();
+                string msg = "moving to row " + move2.nextRow + ", col " + move2.nextColumn;
+                TryMoveTo(move2.nextRow, move2.nextColumn);
+                //MessageBox.Show(msg, "move");
             }
         }
 
