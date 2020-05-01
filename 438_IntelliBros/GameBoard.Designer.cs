@@ -48,6 +48,8 @@
             this.E1_ShortestDist = new System.Windows.Forms.Button();
             this.E1_User = new System.Windows.Forms.Button();
             this.groupBox_E2 = new System.Windows.Forms.GroupBox();
+            this.E2_File_Label = new System.Windows.Forms.Label();
+            this.E2_FileSelectButton = new System.Windows.Forms.Button();
             this.E2_BigTrashFirst = new System.Windows.Forms.Button();
             this.E2_User = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -64,6 +66,7 @@
             this.button_Reset = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.E1_openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.E2_openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -271,6 +274,8 @@
             // 
             // groupBox_E2
             // 
+            this.groupBox_E2.Controls.Add(this.E2_File_Label);
+            this.groupBox_E2.Controls.Add(this.E2_FileSelectButton);
             this.groupBox_E2.Controls.Add(this.E2_BigTrashFirst);
             this.groupBox_E2.Controls.Add(this.E2_User);
             this.groupBox_E2.Controls.Add(this.label2);
@@ -290,6 +295,25 @@
             this.groupBox_E2.TabIndex = 5;
             this.groupBox_E2.TabStop = false;
             this.groupBox_E2.Text = "Entity 2:";
+            // 
+            // E2_File_Label
+            // 
+            this.E2_File_Label.AutoSize = true;
+            this.E2_File_Label.Location = new System.Drawing.Point(248, 227);
+            this.E2_File_Label.Name = "E2_File_Label";
+            this.E2_File_Label.Size = new System.Drawing.Size(194, 29);
+            this.E2_File_Label.TabIndex = 247;
+            this.E2_File_Label.Text = "No File Selected";
+            // 
+            // E2_FileSelectButton
+            // 
+            this.E2_FileSelectButton.Location = new System.Drawing.Point(7, 210);
+            this.E2_FileSelectButton.Name = "E2_FileSelectButton";
+            this.E2_FileSelectButton.Size = new System.Drawing.Size(239, 46);
+            this.E2_FileSelectButton.TabIndex = 246;
+            this.E2_FileSelectButton.Text = "Select File";
+            this.E2_FileSelectButton.UseVisualStyleBackColor = true;
+            this.E2_FileSelectButton.Click += new System.EventHandler(this.E2_FileSelectButton_Click);
             // 
             // E2_BigTrashFirst
             // 
@@ -464,6 +488,10 @@
             // 
             this.E1_openFileDialog.FileName = "openFileDialog1";
             // 
+            // E2_openFileDialog
+            // 
+            this.E2_openFileDialog.FileName = "openFileDialog1";
+            // 
             // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -530,6 +558,9 @@
         private System.Windows.Forms.Button E1_FileSelectButton;
         private System.Windows.Forms.OpenFileDialog E1_openFileDialog;
         private System.Windows.Forms.Label E1_file_label;
+        private System.Windows.Forms.Label E2_File_Label;
+        private System.Windows.Forms.Button E2_FileSelectButton;
+        private System.Windows.Forms.OpenFileDialog E2_openFileDialog;
     }
 }
 

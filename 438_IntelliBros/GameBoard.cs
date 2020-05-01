@@ -283,7 +283,7 @@ namespace _438_IntelliBros
         {
             P2.type = 1;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_FileSelectButton.Enabled = false;
         }
         private void E1_ShortestDist_Click(object sender, EventArgs e)
         {
@@ -295,7 +295,7 @@ namespace _438_IntelliBros
         {
             P2.type = 2;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_User.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_FileSelectButton.Enabled = false;
         }
         private void E1_Closest_Click(object sender, EventArgs e)
         {
@@ -307,7 +307,7 @@ namespace _438_IntelliBros
         {
             P2.type = 3;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_ShortestDist.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_User.Enabled = E2_ShortestDist.Enabled = E2_BigTrashFirst.Enabled = E2_FileSelectButton.Enabled = false;
         }
         private void E1_BigTrashFirst_Click(object sender, EventArgs e)
         {
@@ -319,7 +319,7 @@ namespace _438_IntelliBros
         {
             P2.type = 4;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_ShortestDist.Enabled = E2_Closest.Enabled = false;
+            E2_User.Enabled = E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_FileSelectButton.Enabled = false;
         }
 
         
@@ -988,6 +988,14 @@ namespace _438_IntelliBros
                         BigTrashFirst(ref nextRow, ref nextCol);
                         verifyMove(nextRow, nextCol);
                         break;
+                    case 5:
+                        int ExtRow = -1, ExtCol = -1;
+                        outBoardState(currentTurn);
+                        System.Diagnostics.Process.Start(E2_openFileDialog.FileName);
+                        getAIMove(ref ExtRow, ref ExtCol);
+                        verifyMove(ExtRow, ExtCol);
+
+                        break;
                     default:
                         break;
                 }
@@ -1235,6 +1243,17 @@ namespace _438_IntelliBros
                 P1.type = 5;
                 if (P2.type != -1 && !game_started) button_Start.Enabled = true;
                 E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
+            }
+        }
+
+        private void E2_FileSelectButton_Click(object sender, EventArgs e)
+        {
+            if (E2_openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                E2_File_Label.Text = E2_openFileDialog.FileName;
+                P2.type = 5;
+                if (P1.type != -1 && !game_started) button_Start.Enabled = true;
+                E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
             }
         }
 
