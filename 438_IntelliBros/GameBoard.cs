@@ -531,7 +531,7 @@ namespace _438_IntelliBros
         public void determineNextMove()
         {
             Refresh();
-            if (!gameOver && trashRemaining > -1)
+            if (trashRemaining > 0)
             {
                 Mouse1.move_Or_Generate();
                 if (currentTurnIsP1)
