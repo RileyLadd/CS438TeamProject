@@ -128,7 +128,7 @@ namespace _438_IntelliBros
             public void move_Or_Generate()
             {
                 Random rand_num = new Random(); //mouse generation/movement
-                int rand = rand_num.Next(0, 5);
+                int rand = rand_num.Next(0, 25);
 
                 if (!mouseInGame)
                 {
@@ -196,6 +196,23 @@ namespace _438_IntelliBros
                 if (trashType == 3) spaces[prevRow, prevCol].Tag = SMALL_TRASH_TAG;
                 else if (trashType == 4) spaces[prevRow, prevCol].Tag = MEDIUM_TRASH_TAG;
                 else spaces[prevRow, prevCol].Tag = LARGE_TRASH_TAG;
+            }
+
+            private bool TryMoveTo(int newRow, int newCol)
+            {
+                //rat does not use base class TryMoveTo, this is a hotfix
+                if ((newRow < 0) || (newRow > BOARDSIZE - 1) || (newCol < 0) || (newCol > BOARDSIZE - 1)) { return false; }
+                if (newRow == row && newCol == col) { return false; }
+                if (!isNeighbor(newRow, newCol)) { return false; }
+                if (spaces[newRow, newCol].Tag != null) { return false; }
+
+                spaces[row, col].Tag = null;
+                spaces[row, col].BackgroundImage = null;
+                spaces[row, col].BackColor = Color.LightGray;
+
+                row = newRow;
+                col = newCol;
+                return true;
             }
         }
 
@@ -532,10 +549,11 @@ namespace _438_IntelliBros
 
         public void determineNextMove()
         {
+            log += stateString();
             Refresh();
             if (trashRemaining > 0)
             {
-                //Mouse1.move_Or_Generate();
+                Mouse1.move_Or_Generate();
                 if (currentTurnIsP1)
                 {
                     if (P1.type != 1)
@@ -573,6 +591,7 @@ namespace _438_IntelliBros
 
             P1.TryMoveTo(p1_start_row, p1_start_col);
             P2.TryMoveTo(p2_start_row, p2_start_col);
+            P1_Set_Colors();
 
             P1_updateLabels();
             P2_updateLabels();
@@ -833,10 +852,11 @@ namespace _438_IntelliBros
             tmp += "Player 1 Capacity: " + P1.capacity + "\n";
             tmp += "Player 2 Score: " + P2.score + "\n";
             tmp += "Player 2 Capacity: " + P2.capacity + "\n";
+            tmp += "Trash Remaining: " + trashRemaining + "\n";
             tmp += "Board:\n";
-            for (int i = 0; i < BOARDSIZE; i++)
+            for (int i = 0; i < BOARDSIZE; ++i)
             {
-                for (int j = 0; j < BOARDSIZE; j++)
+                for (int j = 0; j < BOARDSIZE; ++j)
                 {
                     if ((string)spaces[i, j].Tag == "player")
                     {
@@ -873,7 +893,6 @@ namespace _438_IntelliBros
                 tmp += "\n";
             }
             tmp += "\n";
-
             return tmp;
         }
 
