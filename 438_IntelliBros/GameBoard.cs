@@ -104,11 +104,10 @@ namespace _438_IntelliBros
 
             public bool TryMoveTo(int newRow, int newCol)
             {
-                if ((newRow < -1) || (newRow > BOARDSIZE - 1) || (newCol < -1) || (newCol > BOARDSIZE - 1)) { return false; }
+                if ((newRow < 0) || (newRow > BOARDSIZE - 1) || (newCol < 0) || (newCol > BOARDSIZE - 1))   { return false; }
                 if (newRow == row && newCol == col)                                                         { return false; }
                 if (!isNeighbor(newRow, newCol))                                                            { return false; }
                 if ((string)spaces[newRow, newCol].Tag == "player")                                         { return false; }
-
                 else { moveTo(newRow, newCol); return true; }
             }
 
@@ -165,7 +164,7 @@ namespace _438_IntelliBros
             private void moveMouse()
             {
                 Random rand_num = new Random();
-                int rand = 0, trashType = -1, newRow = -1, newCol = -1;
+                int rand = 0; int trashType = -1; int newRow = -1; int newCol = -1;
                 int prevRow = row; int prevCol = col; //hold current spot
 
                 bool MovedToNewSpot = false;
@@ -174,6 +173,7 @@ namespace _438_IntelliBros
                 {
                     newRow = row + rand_num.Next(-1, 2);
                     newCol = col + rand_num.Next(-1, 2);
+                    //Console.WriteLine("Row, col:" + newRow + " " + newCol);
                     MovedToNewSpot = TryMoveTo(newRow, newCol); //TryMoveTo moves rat
                     ++iters;
                 }
@@ -235,7 +235,7 @@ namespace _438_IntelliBros
                 string tag = (string)spaces[newRow, newCol].Tag;
                 if (base.TryMoveTo(newRow, newCol)) //if true, player has moved to new spot
                 {
-                    //deal with mouse tag
+                    //manage tag
                     if (prevRow != -1 && prevCol != -1)
                     {
                         absorbPoints(tag);
@@ -290,6 +290,7 @@ namespace _438_IntelliBros
                 else if (tag == "mouse")
                 {
                     ++trashRemaining; //undo the previous add
+                    mouseInGame = false;
                     addMouse();
                 }
             }
