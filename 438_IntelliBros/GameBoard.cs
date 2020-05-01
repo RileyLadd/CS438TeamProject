@@ -239,14 +239,6 @@ namespace _438_IntelliBros
                 type = -1;
             }
 
-            public void rmPos()
-            {
-                //make current player lose all button attributes
-                spaces[row, col].Tag = null;
-                spaces[row, col].BackgroundImage = null;
-                spaces[row, col].BackColor = Color.LightGray;
-            }
-
             public bool TryMoveTo(int newRow, int newCol)
             {
                 int prevRow = row;
@@ -632,7 +624,7 @@ namespace _438_IntelliBros
             int col = (newX - 731) / BUTTON_SIZE;
 
             if (currentTurnIsP1) { if (P1.TryMoveTo(row, col)) { P1_updateLabels(); P1_Set_Colors(); } }
-            else { if (P2.TryMoveTo(row, col)) { P2_updateLabels(); P2_Set_Colors(); } }
+            else                 { if (P2.TryMoveTo(row, col)) { P2_updateLabels(); P2_Set_Colors(); } }
             determineNextMove();
         }
 
