@@ -104,16 +104,16 @@ namespace _438_IntelliBros
 
             public bool TryMoveTo(int newRow, int newCol)
             {
-                if ((newRow < 0) || (newRow > BOARDSIZE - 1) || (newCol < 0) || (newCol > BOARDSIZE - 1))   { return false; }
-                if (newRow == row && newCol == col)                                                         { return false; }
-                if (!isNeighbor(newRow, newCol))                                                            { return false; }
-                if ((string)spaces[newRow, newCol].Tag == "player")                                         { return false; }
+                if ((newRow < 0) || (newRow > BOARDSIZE - 1) || (newCol < 0) || (newCol > BOARDSIZE - 1)) { return false; }
+                if (newRow == row && newCol == col) { return false; }
+                if (!isNeighbor(newRow, newCol)) { return false; }
+                if ((string)spaces[newRow, newCol].Tag == "player") { return false; }
                 else { moveTo(newRow, newCol); return true; }
             }
 
             public bool isNeighbor(int newRow, int newCol)
             {
-                if(row == -1 && col == -1) { return true; }
+                if (row == -1 && col == -1) { return true; }
                 return (Math.Abs(row - newRow) < 2 && Math.Abs(col - newCol) < 2);
             }
         }
@@ -184,14 +184,14 @@ namespace _438_IntelliBros
                 spaces[row, col].BackgroundImage = imageList1.Images[2]; //put mouse icon on new spot
                 spaces[row, col].Tag = "mouse";
 
-                if      (rand == 0 || rand == 1 || rand == 2)   trashType = 3; //small trash
-                else if (rand == 3 || rand == 4)                trashType = 4; //medium trash
-                else                                            trashType = 5; //large trash
+                if (rand == 0 || rand == 1 || rand == 2) trashType = 3; //small trash
+                else if (rand == 3 || rand == 4) trashType = 4; //medium trash
+                else trashType = 5; //large trash
 
                 spaces[prevRow, prevCol].BackgroundImage = imageList1.Images[trashType];
-                if      (trashType == 3) spaces[prevRow, prevCol].Tag = SMALL_TRASH_TAG;
+                if (trashType == 3) spaces[prevRow, prevCol].Tag = SMALL_TRASH_TAG;
                 else if (trashType == 4) spaces[prevRow, prevCol].Tag = MEDIUM_TRASH_TAG;
-                else                     spaces[prevRow, prevCol].Tag = LARGE_TRASH_TAG;
+                else spaces[prevRow, prevCol].Tag = LARGE_TRASH_TAG;
             }
         }
 
@@ -245,7 +245,7 @@ namespace _438_IntelliBros
                     currentTurnIsP1 = !currentTurnIsP1;
                     ++numTurns;
                     if (!currentTurnIsP1) { spaces[row, col].BackgroundImage = imageList1.Images[0]; }
-                    else                  { spaces[row, col].BackgroundImage = imageList1.Images[1]; }
+                    else { spaces[row, col].BackgroundImage = imageList1.Images[1]; }
                     return true;
                 }
                 return false;
@@ -408,69 +408,43 @@ namespace _438_IntelliBros
                 int otherPlayer_col;
                 if (currentTurnIsP1) { otherPlayer_row = P2.row; otherPlayer_col = P2.col; }
                 else { otherPlayer_row = P1.row; otherPlayer_col = P1.col; }
+
+                for (int r = row - 1; r <= row + 1; ++r)
                 {
-                    for (int r = row - 1; r <= row + 1; ++r)
+                    for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
                     {
-                        for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
+                        if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { }
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
+                        else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG || (string)spaces[r, c].Tag == "mouse")
                         {
-                            if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { }
-                            else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
-                            else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG || (string)spaces[r, c].Tag == "mouse")
-                            {
-                                nextRow = r; nextCol = c; return;
-                            }
+                            if (TryMoveTo(r, c)) { return; }
                         }
-                    }
-                    for (int r = row - 1; r <= row + 1; ++r)
-                    {
-                        for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
+                        else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
                         {
-                            if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { }
-                            else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
-                            else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
-                            {
-                                nextRow = r; nextCol = c; return;
-                            }
+                            if (TryMoveTo(r, c)) { return; }
+                        }
+                        else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
+                        {
+                            if (TryMoveTo(r, c)) ; return;
+                        }
+                        else
+                        {
+                            move[i] = new PossibleMove(r, c, BTF_heuristic(r, c));
+                            //move[i].priority = BTF_heuristic(r, c);
+                            //move[i].nextRow = r; move[i].nextColumn = c;
+                            pq.Enqueue(move[i]);
+                            ++i;
+                        }
 
-                        }
-                    }
-                    for (int r = row - 1; r <= row + 1; ++r)
-                    {
-                        for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
-                        {
-                            if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { }
-                            else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
-                            else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
-                            {
-                                nextRow = r; nextCol = c; return;
-                            }
-
-                        }
-                    }
-                    for (int r = row - 1; r <= row + 1; ++r)
-                    {
-                        for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
-                        {
-                            if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { }
-                            else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
-                            else
-                            {
-                                move[i] = new PossibleMove(r, c, BTF_heuristic(r, c));
-                                //move[i].priority = BTF_heuristic(r, c);
-                                //move[i].nextRow = r; move[i].nextColumn = c;
-                                pq.Enqueue(move[i]);
-                                ++i;
-                            }
-
-                        }
+                        PossibleMove move2 = pq.Dequeue();
+                        string msg = "moving to row " + move2.nextRow + ", col " + move2.nextColumn;
+                        TryMoveTo(move2.nextRow, move2.nextColumn);
+                        //MessageBox.Show(msg, "move");
                     }
                 }
-                PossibleMove move2 = pq.Dequeue();
-                string msg = "moving to row " + move2.nextRow + ", col " + move2.nextColumn;
-                //MessageBox.Show(msg, "move");
-                nextRow = move2.nextRow; nextCol = move2.nextColumn;
             }
         }
+
         //Classes
         //player helpers
         public void P1_updateLabels()
@@ -635,7 +609,7 @@ namespace _438_IntelliBros
             int col = (newX - 731) / BUTTON_SIZE;
 
             if (currentTurnIsP1) { if (P1.TryMoveTo(row, col)) { P1_updateLabels(); P1_Set_Colors(); } }
-            else                 { if (P2.TryMoveTo(row, col)) { P2_updateLabels(); P2_Set_Colors(); } }
+            else { if (P2.TryMoveTo(row, col)) { P2_updateLabels(); P2_Set_Colors(); } }
             determineNextMove();
         }
 
