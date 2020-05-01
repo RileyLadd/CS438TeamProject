@@ -284,14 +284,13 @@ namespace _438_IntelliBros
                         greedy();
                         break;
                     case 4:
-                        int nextRow = -1, nextCol = -1;
-                        BigTrashFirst(ref nextRow, ref nextCol);
+                        BigTrashFirst();
                         break;
                     default:
                         break;
                 }
             }
-
+            //private Player methods
             private void absorbPoints(string tag)
             {
                 if (tag == SMALL_TRASH_TAG)
@@ -312,7 +311,7 @@ namespace _438_IntelliBros
                     addMouse();
                 }
             }
-            //private Player methods
+            
             private void addSmall()
             {
                 score += SMALL_TRASH_POINT_VAL;
@@ -419,7 +418,7 @@ namespace _438_IntelliBros
                 }
             }
 
-            public void BigTrashFirst(ref int nextRow, ref int nextCol) // determines where to move next; utilizes Priority Queue
+            public void BigTrashFirst() // determines where to move next; utilizes Priority Queue
             {
                 PriorityQueue<PossibleMove> pq = new PriorityQueue<PossibleMove>();
                 PossibleMove[] move = new PossibleMove[10];
