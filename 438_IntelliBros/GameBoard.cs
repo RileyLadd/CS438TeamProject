@@ -159,6 +159,7 @@ namespace _438_IntelliBros
                 spaces[row, col].BackgroundImage = imageList1.Images[2];
                 spaces[row, col].Tag = "mouse";
                 mouseInGame = true;
+                ++trashRemaining;   //mouse counts as trash lol
             }
 
             private void moveMouse()
@@ -188,6 +189,7 @@ namespace _438_IntelliBros
                 else if (rand == 3 || rand == 4) trashType = 4; //medium trash
                 else trashType = 5; //large trash
 
+                ++trashRemaining;
                 spaces[prevRow, prevCol].BackgroundImage = imageList1.Images[trashType];
                 if (trashType == 3) spaces[prevRow, prevCol].Tag = SMALL_TRASH_TAG;
                 else if (trashType == 4) spaces[prevRow, prevCol].Tag = MEDIUM_TRASH_TAG;
@@ -274,7 +276,6 @@ namespace _438_IntelliBros
 
             private void absorbPoints(string tag)
             {
-                --trashRemaining;
                 if (tag == SMALL_TRASH_TAG)
                 {
                     addSmall();
@@ -289,7 +290,6 @@ namespace _438_IntelliBros
                 }
                 else if (tag == "mouse")
                 {
-                    ++trashRemaining; //undo the previous add
                     mouseInGame = false;
                     addMouse();
                 }
@@ -320,6 +320,7 @@ namespace _438_IntelliBros
 
             private bool addCapacity_returns_PlayerHasMaxCap(int type = 0) //small / med / large
             {
+                --trashRemaining;
                 int addingCap;
                 switch (type)
                 {
@@ -341,7 +342,7 @@ namespace _438_IntelliBros
                 }
                 if (capacity + addingCap >= MAX_CAPACITY)
                 { // check to verify that player still has capacity space
-                    MessageBox.Show("A player has exceeded their Capacity.", "Capacity Exceeded");
+                    determineWinner();
                     return true;
                 }
                 else
@@ -425,7 +426,7 @@ namespace _438_IntelliBros
                         }
                         else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
                         {
-                            if (TryMoveTo(r, c)) ; return;
+                            if (TryMoveTo(r, c)) { return; }
                         }
                         else
                         {
@@ -529,6 +530,7 @@ namespace _438_IntelliBros
 
         public void determineNextMove()
         {
+            Refresh();
             if (!gameOver && trashRemaining > -1)
             {
                 Mouse1.move_Or_Generate();
@@ -690,29 +692,29 @@ namespace _438_IntelliBros
             return (Math.Abs(row1 - row2) + Math.Abs(col1 - col2));
         }
 
-        public void determineWinner()
+        static public void determineWinner()    //rm picons because static allows player to call determineWinner()
         {
             if (P1.score > P2.score)
             {
-                p1icon.BackColor = Color.Gold;
+                //p1icon.BackColor = Color.Gold;
                 spaces[P1.row, P1.col].BackColor = Color.Gold;
-                p2icon.BackColor = Color.LightGray;
+                //p2icon.BackColor = Color.LightGray;
                 spaces[P2.row, P2.col].BackColor = Color.LightGray;
                 MessageBox.Show("Player 1 wins!", "Winner");
             }
             else if (P2.score > P1.score)
             {
-                p2icon.BackColor = Color.Gold;
+                //p2icon.BackColor = Color.Gold;
                 spaces[P2.row, P2.col].BackColor = Color.Gold;
-                p1icon.BackColor = Color.LightGray;
+                //p1icon.BackColor = Color.LightGray;
                 spaces[P1.row, P1.col].BackColor = Color.LightGray;
                 MessageBox.Show("Player 2 wins!", "Winner");
             }
             else
             {
-                p1icon.BackColor = Color.Gold;
+                //p1icon.BackColor = Color.Gold;
                 spaces[P1.row, P1.col].BackColor = Color.Gold;
-                p2icon.BackColor = Color.Gold;
+                //p2icon.BackColor = Color.Gold;
                 spaces[P2.row, P2.col].BackColor = Color.Gold;
                 MessageBox.Show("Tie!", "Winner");
             }
