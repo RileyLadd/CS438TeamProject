@@ -99,5 +99,8 @@
   <ItemGroup>
     <None Include="trash 3.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="gamecomm.h" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

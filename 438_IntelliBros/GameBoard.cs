@@ -277,7 +277,7 @@ namespace _438_IntelliBros
         {
             P1.type = 1;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_FileSelectButton.Enabled = false;
         }
         private void E2_User_Click(object sender, EventArgs e)
         {
@@ -289,7 +289,7 @@ namespace _438_IntelliBros
         {
             P1.type = 2;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_User.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_FileSelectButton.Enabled = false;
         }
         private void E2_ShortestDist_Click(object sender, EventArgs e)
         {
@@ -301,7 +301,7 @@ namespace _438_IntelliBros
         {
             P1.type = 3;
             if (P2.type != -1&& !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_ShortestDist.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_User.Enabled = E1_ShortestDist.Enabled = E1_BigTrashFirst.Enabled = E1_FileSelectButton.Enabled = false;
         }
         private void E2_Closest_Click(object sender, EventArgs e)
         {
@@ -313,7 +313,7 @@ namespace _438_IntelliBros
         {
             P1.type = 4;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_ShortestDist.Enabled = E1_Closest.Enabled = false;
+            E1_User.Enabled = E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_FileSelectButton.Enabled = false;
         }
         private void E2_BigTrashFirst_Click(object sender, EventArgs e)
         {
@@ -911,6 +911,14 @@ namespace _438_IntelliBros
                         verifyMove(nextRow, nextCol);
                         
                         break;
+                    case 5:
+                        int ExtRow = -1, ExtCol = -1;
+                        outBoardState(currentTurn);
+                        System.Diagnostics.Process.Start(E1_openFileDialog.FileName);
+                        getAIMove(ref ExtRow, ref ExtCol);
+                        verifyMove(ExtRow, ExtCol);
+
+                        break;
                     default:
                         break;
                 }
@@ -1079,6 +1087,59 @@ namespace _438_IntelliBros
             return tmp;
         }
 
+        public void outBoardState(int turn)
+        {
+            string tmp = "";
+
+            for (int i = 0; i < BOARDSIZE; i++)
+            {
+                for (int j = 0; j < BOARDSIZE; j++)
+                {
+                    if ((string)spaces[i, j].Tag == "player")
+                    {
+                        if (P1.row == i && P1.col == j && turn == 1)
+                        {
+                            tmp += "A";
+                        }
+                        else
+                        {
+                            tmp += "B";
+                        }
+                    }
+                    else if ((string)spaces[i, j].Tag == "mouse")
+                    {
+                        tmp += "M";
+                    }
+                    else if ((string)spaces[i, j].Tag == SMALL_TRASH_TAG)
+                    {
+                        tmp += "1";
+                    }
+                    else if ((string)spaces[i, j].Tag == MEDIUM_TRASH_TAG)
+                    {
+                        tmp += "2";
+                    }
+                    else if ((string)spaces[i, j].Tag == LARGE_TRASH_TAG)
+                    {
+                        tmp += "3";
+                    }
+                    else
+                    {
+                        tmp += "_";
+                    }
+                }
+            }
+
+            File.WriteAllText(@"./boardstate.txt", tmp);
+        }
+
+        public void getAIMove(ref int newRow, ref int newCol)
+        {
+            string tmp = File.ReadAllText(@"./move.txt");
+            string[] coords = tmp.Split(' ');
+            newRow = int.Parse(coords[0]);
+            newCol = int.Parse(coords[1]);
+        }
+
         public void button_Start_Click(object sender, EventArgs e)
         {
             //if (P1.row == -1 || P1.col == -1 || P2.row == -1 || P2.col == -1) { button_Reset_Click(sender, e); }
@@ -1164,6 +1225,17 @@ namespace _438_IntelliBros
         private void buttonDecTimer_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void E1_FileSelectButton_Click(object sender, EventArgs e)
+        {
+            if (E1_openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                E1_file_label.Text = E1_openFileDialog.FileName;
+                P1.type = 5;
+                if (P2.type != -1 && !game_started) button_Start.Enabled = true;
+                E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
+            }
         }
 
         public void button_Click(object sender, EventArgs e)

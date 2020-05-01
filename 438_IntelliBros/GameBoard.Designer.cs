@@ -35,6 +35,8 @@
             this.button_IncTimer = new System.Windows.Forms.Button();
             this.buttonDecTimer = new System.Windows.Forms.Button();
             this.groupBox_E1 = new System.Windows.Forms.GroupBox();
+            this.E1_file_label = new System.Windows.Forms.Label();
+            this.E1_FileSelectButton = new System.Windows.Forms.Button();
             this.E1_BigTrashFirst = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.p1capacity_label = new System.Windows.Forms.Label();
@@ -61,6 +63,7 @@
             this.button_Start = new System.Windows.Forms.Button();
             this.button_Reset = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.E1_openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -91,7 +94,7 @@
             // 
             this.button_IncTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_IncTimer.Location = new System.Drawing.Point(181, 49);
-            this.button_IncTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_IncTimer.Margin = new System.Windows.Forms.Padding(4);
             this.button_IncTimer.Name = "button_IncTimer";
             this.button_IncTimer.Size = new System.Drawing.Size(100, 28);
             this.button_IncTimer.TabIndex = 2;
@@ -103,7 +106,7 @@
             // 
             this.buttonDecTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDecTimer.Location = new System.Drawing.Point(73, 49);
-            this.buttonDecTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonDecTimer.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDecTimer.Name = "buttonDecTimer";
             this.buttonDecTimer.Size = new System.Drawing.Size(100, 28);
             this.buttonDecTimer.TabIndex = 3;
@@ -113,6 +116,8 @@
             // 
             // groupBox_E1
             // 
+            this.groupBox_E1.Controls.Add(this.E1_file_label);
+            this.groupBox_E1.Controls.Add(this.E1_FileSelectButton);
             this.groupBox_E1.Controls.Add(this.E1_BigTrashFirst);
             this.groupBox_E1.Controls.Add(this.label5);
             this.groupBox_E1.Controls.Add(this.p1capacity_label);
@@ -125,18 +130,37 @@
             this.groupBox_E1.Controls.Add(this.E1_User);
             this.groupBox_E1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_E1.Location = new System.Drawing.Point(16, 114);
-            this.groupBox_E1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox_E1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox_E1.Name = "groupBox_E1";
-            this.groupBox_E1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox_E1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox_E1.Size = new System.Drawing.Size(916, 283);
             this.groupBox_E1.TabIndex = 4;
             this.groupBox_E1.TabStop = false;
             this.groupBox_E1.Text = "Entity 1:";
             // 
+            // E1_file_label
+            // 
+            this.E1_file_label.AutoSize = true;
+            this.E1_file_label.Location = new System.Drawing.Point(248, 237);
+            this.E1_file_label.Name = "E1_file_label";
+            this.E1_file_label.Size = new System.Drawing.Size(194, 29);
+            this.E1_file_label.TabIndex = 243;
+            this.E1_file_label.Text = "No File Selected";
+            // 
+            // E1_FileSelectButton
+            // 
+            this.E1_FileSelectButton.Location = new System.Drawing.Point(8, 220);
+            this.E1_FileSelectButton.Name = "E1_FileSelectButton";
+            this.E1_FileSelectButton.Size = new System.Drawing.Size(239, 46);
+            this.E1_FileSelectButton.TabIndex = 242;
+            this.E1_FileSelectButton.Text = "Select File";
+            this.E1_FileSelectButton.UseVisualStyleBackColor = true;
+            this.E1_FileSelectButton.Click += new System.EventHandler(this.E1_FileSelectButton_Click);
+            // 
             // E1_BigTrashFirst
             // 
             this.E1_BigTrashFirst.Location = new System.Drawing.Point(276, 145);
-            this.E1_BigTrashFirst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_BigTrashFirst.Margin = new System.Windows.Forms.Padding(4);
             this.E1_BigTrashFirst.Name = "E1_BigTrashFirst";
             this.E1_BigTrashFirst.Size = new System.Drawing.Size(239, 46);
             this.E1_BigTrashFirst.TabIndex = 241;
@@ -205,7 +229,7 @@
             this.p1icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p1;
             this.p1icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.p1icon.Location = new System.Drawing.Point(556, 113);
-            this.p1icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.p1icon.Margin = new System.Windows.Forms.Padding(4);
             this.p1icon.Name = "p1icon";
             this.p1icon.Size = new System.Drawing.Size(100, 92);
             this.p1icon.TabIndex = 235;
@@ -215,7 +239,7 @@
             // E1_Closest
             // 
             this.E1_Closest.Location = new System.Drawing.Point(8, 145);
-            this.E1_Closest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_Closest.Margin = new System.Windows.Forms.Padding(4);
             this.E1_Closest.Name = "E1_Closest";
             this.E1_Closest.Size = new System.Drawing.Size(239, 46);
             this.E1_Closest.TabIndex = 2;
@@ -226,7 +250,7 @@
             // E1_ShortestDist
             // 
             this.E1_ShortestDist.Location = new System.Drawing.Point(276, 72);
-            this.E1_ShortestDist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_ShortestDist.Margin = new System.Windows.Forms.Padding(4);
             this.E1_ShortestDist.Name = "E1_ShortestDist";
             this.E1_ShortestDist.Size = new System.Drawing.Size(239, 46);
             this.E1_ShortestDist.TabIndex = 1;
@@ -237,7 +261,7 @@
             // E1_User
             // 
             this.E1_User.Location = new System.Drawing.Point(8, 72);
-            this.E1_User.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_User.Margin = new System.Windows.Forms.Padding(4);
             this.E1_User.Name = "E1_User";
             this.E1_User.Size = new System.Drawing.Size(239, 46);
             this.E1_User.TabIndex = 0;
@@ -259,9 +283,9 @@
             this.groupBox_E2.Controls.Add(this.label8);
             this.groupBox_E2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_E2.Location = new System.Drawing.Point(16, 405);
-            this.groupBox_E2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox_E2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox_E2.Name = "groupBox_E2";
-            this.groupBox_E2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox_E2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox_E2.Size = new System.Drawing.Size(916, 283);
             this.groupBox_E2.TabIndex = 5;
             this.groupBox_E2.TabStop = false;
@@ -270,7 +294,7 @@
             // E2_BigTrashFirst
             // 
             this.E2_BigTrashFirst.Location = new System.Drawing.Point(276, 138);
-            this.E2_BigTrashFirst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_BigTrashFirst.Margin = new System.Windows.Forms.Padding(4);
             this.E2_BigTrashFirst.Name = "E2_BigTrashFirst";
             this.E2_BigTrashFirst.Size = new System.Drawing.Size(239, 46);
             this.E2_BigTrashFirst.TabIndex = 242;
@@ -281,7 +305,7 @@
             // E2_User
             // 
             this.E2_User.Location = new System.Drawing.Point(8, 69);
-            this.E2_User.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_User.Margin = new System.Windows.Forms.Padding(4);
             this.E2_User.Name = "E2_User";
             this.E2_User.Size = new System.Drawing.Size(239, 46);
             this.E2_User.TabIndex = 241;
@@ -306,7 +330,7 @@
             this.p2icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p2;
             this.p2icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.p2icon.Location = new System.Drawing.Point(556, 95);
-            this.p2icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.p2icon.Margin = new System.Windows.Forms.Padding(4);
             this.p2icon.Name = "p2icon";
             this.p2icon.Size = new System.Drawing.Size(100, 92);
             this.p2icon.TabIndex = 236;
@@ -326,7 +350,7 @@
             // E2_Closest
             // 
             this.E2_Closest.Location = new System.Drawing.Point(5, 138);
-            this.E2_Closest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_Closest.Margin = new System.Windows.Forms.Padding(4);
             this.E2_Closest.Name = "E2_Closest";
             this.E2_Closest.Size = new System.Drawing.Size(239, 46);
             this.E2_Closest.TabIndex = 4;
@@ -359,7 +383,7 @@
             // E2_ShortestDist
             // 
             this.E2_ShortestDist.Location = new System.Drawing.Point(276, 69);
-            this.E2_ShortestDist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_ShortestDist.Margin = new System.Windows.Forms.Padding(4);
             this.E2_ShortestDist.Name = "E2_ShortestDist";
             this.E2_ShortestDist.Size = new System.Drawing.Size(239, 46);
             this.E2_ShortestDist.TabIndex = 3;
@@ -382,7 +406,7 @@
             // 
             this.button_Backward.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Backward.Location = new System.Drawing.Point(43, 731);
-            this.button_Backward.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Backward.Margin = new System.Windows.Forms.Padding(4);
             this.button_Backward.Name = "button_Backward";
             this.button_Backward.Size = new System.Drawing.Size(300, 46);
             this.button_Backward.TabIndex = 5;
@@ -393,7 +417,7 @@
             // 
             this.button_Forward.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Forward.Location = new System.Drawing.Point(416, 731);
-            this.button_Forward.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Forward.Margin = new System.Windows.Forms.Padding(4);
             this.button_Forward.Name = "button_Forward";
             this.button_Forward.Size = new System.Drawing.Size(300, 46);
             this.button_Forward.TabIndex = 6;
@@ -405,7 +429,7 @@
             this.button_Start.Enabled = false;
             this.button_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Start.Location = new System.Drawing.Point(416, 818);
-            this.button_Start.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Start.Margin = new System.Windows.Forms.Padding(4);
             this.button_Start.Name = "button_Start";
             this.button_Start.Size = new System.Drawing.Size(300, 46);
             this.button_Start.TabIndex = 7;
@@ -417,7 +441,7 @@
             // 
             this.button_Reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_Reset.Location = new System.Drawing.Point(43, 818);
-            this.button_Reset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Reset.Margin = new System.Windows.Forms.Padding(4);
             this.button_Reset.Name = "button_Reset";
             this.button_Reset.Size = new System.Drawing.Size(300, 46);
             this.button_Reset.TabIndex = 8;
@@ -436,6 +460,10 @@
             this.imageList1.Images.SetKeyName(4, "trash 2.png");
             this.imageList1.Images.SetKeyName(5, "trash 3.png");
             // 
+            // E1_openFileDialog
+            // 
+            this.E1_openFileDialog.FileName = "openFileDialog1";
+            // 
             // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -452,7 +480,7 @@
             this.Controls.Add(this.label_Timer);
             this.Controls.Add(this.label_TimeLimit);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GameBoard";
             this.Text = "Cat Cleaners";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -499,6 +527,9 @@
         private System.Windows.Forms.Button E2_User;
         private System.Windows.Forms.Button E1_BigTrashFirst;
         private System.Windows.Forms.Button E2_BigTrashFirst;
+        private System.Windows.Forms.Button E1_FileSelectButton;
+        private System.Windows.Forms.OpenFileDialog E1_openFileDialog;
+        private System.Windows.Forms.Label E1_file_label;
     }
 }
 
