@@ -856,18 +856,17 @@ namespace _438_IntelliBros
 
         }
 
-        static public string stateString()
+        public string stateString()
         {
             string tmp = "Turn: " + numTurns + "\n";
             tmp += "Player 1 Score: " + P1.score + "\n";
             tmp += "Player 1 Capacity: " + P1.capacity + "\n";
             tmp += "Player 2 Score: " + P2.score + "\n";
             tmp += "Player 2 Capacity: " + P2.capacity + "\n";
-            tmp += "Trash Remaining: " + trashRemaining + "\n";
             tmp += "Board:\n";
-            for (int i = 0; i < BOARDSIZE; ++i)
+            for (int i = 0; i < BOARDSIZE; i++)
             {
-                for (int j = 0; j < BOARDSIZE; ++j)
+                for (int j = 0; j < BOARDSIZE; j++)
                 {
                     if ((string)spaces[i, j].Tag == "player")
                     {
@@ -904,8 +903,90 @@ namespace _438_IntelliBros
                 tmp += "\n";
             }
             tmp += "\n";
+
             return tmp;
         }
 
+        public void outBoardState(int turn)
+        {
+            string tmp = "";
+
+            for (int i = 0; i < BOARDSIZE; i++)
+            {
+                for (int j = 0; j < BOARDSIZE; j++)
+                {
+                    if ((string)spaces[i, j].Tag == "player")
+                    {
+                        if (P1.row == i && P1.col == j && turn == 1)
+                        {
+                            tmp += "A";
+                        }
+                        else
+                        {
+                            tmp += "B";
+                        }
+                    }
+                    else if ((string)spaces[i, j].Tag == "mouse")
+                    {
+                        tmp += "M";
+                    }
+                    else if ((string)spaces[i, j].Tag == SMALL_TRASH_TAG)
+                    {
+                        tmp += "1";
+                    }
+                    else if ((string)spaces[i, j].Tag == MEDIUM_TRASH_TAG)
+                    {
+                        tmp += "2";
+                    }
+                    else if ((string)spaces[i, j].Tag == LARGE_TRASH_TAG)
+                    {
+                        tmp += "3";
+                    }
+                    else
+                    {
+                        tmp += "_";
+                    }
+                }
+            }
+
+            File.WriteAllText(@"./boardstate.txt", tmp);
+        }
+
+        public void getAIMove(ref int newRow, ref int newCol)
+        {
+            try
+            {
+                string tmp = File.ReadAllText(@"./move.txt");
+                string[] coords = tmp.Split(' ');
+                newRow = int.Parse(coords[0]);
+                newCol = int.Parse(coords[1]);
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show("Error Opening File. Please try again");
+            }
+        }
+
+        private void E1_FileSelectButton_Click(object sender, EventArgs e)
+        {
+            if (E1_openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                E1_FileSelectButton.Text = E1_openFileDialog.FileName;
+                P1.type = 5;
+                if (P2.type != -1 && !game_started) button_Start.Enabled = true;
+                E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
+            }
+        }
+
+        private void E2_FileSelectButton_Click(object sender, EventArgs e)
+        {
+            if (E2_openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                E2_FileSelectButton.Text = E2_openFileDialog.FileName;
+                P2.type = 5;
+                if (P1.type != -1 && !game_started) button_Start.Enabled = true;
+                E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
+            }
+        }
     }
 }
