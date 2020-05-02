@@ -592,9 +592,10 @@ namespace _438_IntelliBros
 
             while (finished == false && maxTicks <= 5*ticks)
             {
-                ++maxTicks; Console.WriteLine("Sleeping\n"); Thread.Sleep(200);
+                ++maxTicks; Thread.Sleep(200); //Console.WriteLine(maxTicks + "\n");
             }
             //time is up or player is finished
+            if(finished == false) { currentTurnIsP1 = !currentTurnIsP1; }
             cancelSource.Cancel();
         }
 
