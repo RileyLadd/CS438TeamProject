@@ -282,6 +282,13 @@ namespace _438_IntelliBros
                         return greedy(cancelToken);
                     case 4:
                         return BigTrashFirst(cancelToken);
+                    /*case 5:
+                        int ExtRow = -1, ExtCol = -1;
+                        outBoardState(currentTurn);
+                        System.Diagnostics.Process.Start(E1_openFileDialog.FileName);
+                        getAIMove(ref ExtRow, ref ExtCol);
+                        verifyMove(ExtRow, ExtCol);
+                        */
                     default:
                         return true;
                 }
