@@ -239,12 +239,19 @@ namespace _438_IntelliBros
                 type = -1;
             }
 
-            public bool TryMoveTo(int newRow, int newCol)
+            public bool TryMoveTo(int newRow, int newCol, CancellationToken cancelToken = default(CancellationToken))
             {
                 int prevRow = row;
                 int prevCol = col;
                 //hold info before moving
                 string tag = (string)spaces[newRow, newCol].Tag;
+
+                //check if time ran out
+                if (cancelToken.IsCancellationRequested)
+                {
+                    return false;
+                }
+
                 if (base.TryMoveTo(newRow, newCol)) //if true, player has moved to new spot
                 {
                     //manage tag
@@ -263,23 +270,20 @@ namespace _438_IntelliBros
                 return false;
             }
 
-            public void decide()
+            public bool decide(CancellationToken cancelToken)
             {
                 switch (type)
                 {
                     case 1:
-                        break;
+                        return true;
                     case 2:
-
-                        break;
+                        return true;
                     case 3:
-                        greedy();
-                        break;
+                        return greedy(cancelToken);
                     case 4:
-                        BigTrashFirst();
-                        break;
+                        return BigTrashFirst(cancelToken);
                     default:
-                        break;
+                        return true;
                 }
             }
             //private Player methods
@@ -362,7 +366,7 @@ namespace _438_IntelliBros
                 }
             }
 
-            private void greedy()
+            private bool greedy(CancellationToken cancelToken)
             {
                 int currRow = row, currCol = col, newRow = -1, newCol = -1, dist = 100;
                 for (int i = 0; i < BOARDSIZE; ++i)
@@ -379,38 +383,38 @@ namespace _438_IntelliBros
                 }
                 string msg = "Found nearest trash at row " + newRow.ToString() + ", col " + newCol.ToString();
                 //MessageBox.Show(msg, "Next Move");
-                if (isNeighbor(newRow, newCol)) TryMoveTo(newRow, newCol);
+                if (isNeighbor(newRow, newCol)) return TryMoveTo(newRow, newCol, cancelToken);
                 else
                 {
                     if (newRow < currRow)
                     {
-                        if ((string)spaces[currRow - 1, currCol].Tag != "player") TryMoveTo(currRow - 1, currCol);
-                        else if (currCol > 0) TryMoveTo(currRow - 1, currCol - 1);
-                        else TryMoveTo(currRow - 1, currCol + 1);
+                        if ((string)spaces[currRow - 1, currCol].Tag != "player") return TryMoveTo(currRow - 1, currCol, cancelToken);
+                        else if (currCol > 0) return TryMoveTo(currRow - 1, currCol - 1, cancelToken);
+                        else return TryMoveTo(currRow - 1, currCol + 1, cancelToken);
                     }
                     else if (newRow > currRow)
                     {
-                        if ((string)spaces[currRow + 1, currCol].Tag != "player") TryMoveTo(currRow + 1, currCol);
-                        else if (currCol > 0) TryMoveTo(currRow + 1, currCol - 1);
-                        else TryMoveTo(currRow + 1, currCol + 1);
+                        if ((string)spaces[currRow + 1, currCol].Tag != "player") return TryMoveTo(currRow + 1, currCol, cancelToken);
+                        else if (currCol > 0) return TryMoveTo(currRow + 1, currCol - 1, cancelToken);
+                        else return TryMoveTo(currRow + 1, currCol + 1, cancelToken);
                     }
 
                     else if (newCol < currCol)
                     {
-                        if ((string)spaces[currRow, currCol - 1].Tag != "player") TryMoveTo(currRow, currCol - 1);
-                        else if (currRow > 0) TryMoveTo(currRow - 1, currCol - 1);
-                        else TryMoveTo(currRow + 1, currCol - 1);
+                        if ((string)spaces[currRow, currCol - 1].Tag != "player") return TryMoveTo(currRow, currCol - 1, cancelToken);
+                        else if (currRow > 0) return TryMoveTo(currRow - 1, currCol - 1, cancelToken);
+                        else return TryMoveTo(currRow + 1, currCol - 1, cancelToken);
                     }
                     else
                     {
-                        if ((string)spaces[currRow, currCol + 1].Tag != "player") TryMoveTo(currRow, currCol + 1);
-                        else if (currRow > 0) TryMoveTo(currRow - 1, currCol + 1);
-                        else TryMoveTo(currRow + 1, currCol + 1);
+                        if ((string)spaces[currRow, currCol + 1].Tag != "player") return TryMoveTo(currRow, currCol + 1, cancelToken);
+                        else if (currRow > 0) return TryMoveTo(currRow - 1, currCol + 1, cancelToken);
+                        else return TryMoveTo(currRow + 1, currCol + 1, cancelToken);
                     }
                 }
             }
 
-            public void BigTrashFirst() // determines where to move next; utilizes Priority Queue
+            private bool BigTrashFirst(CancellationToken cancelToken) // determines where to move next; utilizes Priority Queue
             {
                 PriorityQueue<PossibleMove> pq = new PriorityQueue<PossibleMove>();
                 PossibleMove[] move = new PossibleMove[10];
@@ -428,15 +432,15 @@ namespace _438_IntelliBros
                         else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
                         else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG || (string)spaces[r, c].Tag == "mouse")
                         {
-                            if (TryMoveTo(r, c)) { return; }
+                            if (TryMoveTo(r, c)) { return true; }
                         }
                         else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
                         {
-                            if (TryMoveTo(r, c)) { return; }
+                            if (TryMoveTo(r, c)) { return true; }
                         }
                         else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
                         {
-                            if (TryMoveTo(r, c)) { return; }
+                            if (TryMoveTo(r, c)) { return true; }
                         }
                         else
                         {
@@ -450,7 +454,7 @@ namespace _438_IntelliBros
                 }
                 PossibleMove move2 = pq.Dequeue();
                 string msg = "moving to row " + move2.nextRow + ", col " + move2.nextColumn;
-                TryMoveTo(move2.nextRow, move2.nextColumn);
+                return TryMoveTo(move2.nextRow, move2.nextColumn, cancelToken);
                 //MessageBox.Show(msg, "move");
             }
         }
@@ -549,7 +553,7 @@ namespace _438_IntelliBros
                 {
                     if (P1.type != 1)
                     {
-                        P1.decide();
+                        AI_decide(P1);
                         P1_updateLabels();
                         P1_Set_Colors();
                         determineNextMove();
@@ -557,7 +561,7 @@ namespace _438_IntelliBros
                 }
                 else if (P2.type != 1)
                 {
-                    P2.decide();
+                    AI_decide(P2);
                     P2_updateLabels();
                     P2_Set_Colors();
                     determineNextMove();
@@ -567,6 +571,31 @@ namespace _438_IntelliBros
             {
                 determineWinner();
             }
+        }
+
+        private void AI_decide(Player p)
+        {
+            CancellationTokenSource cancelSource = new CancellationTokenSource();
+            int maxTicks = 0;
+            bool finished = false;
+            new Thread(() =>
+            {
+                try
+                {
+                    finished = p.decide(cancelSource.Token); //).Start();
+                }
+                catch (OperationCanceledException)
+                {
+                    Console.WriteLine("Canceled!");
+                }
+            }).Start();
+
+            while (finished == false && maxTicks < 4*(ticks + 1))
+            {
+                ++maxTicks; Console.WriteLine("Sleeping\n"); Thread.Sleep(250);
+            }
+            //time is up or player is finished
+            cancelSource.Cancel();
         }
 
         //buttons
@@ -687,16 +716,6 @@ namespace _438_IntelliBros
         {
             if (ticks > 1) { --ticks; }
             label_Timer.Text = ticks.ToString();
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (ticks == 0) { currentTurnIsP1 = !currentTurnIsP1; }
-            else
-            {
-                --ticks;
-                label_Timer.Text = ticks.ToString();
-            }
         }
         //buttons
 

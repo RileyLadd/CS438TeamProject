@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameBoard));
             this.label_TimeLimit = new System.Windows.Forms.Label();
             this.label_Timer = new System.Windows.Forms.Label();
@@ -60,7 +59,6 @@
             this.button_Forward = new System.Windows.Forms.Button();
             this.button_Start = new System.Windows.Forms.Button();
             this.button_Reset = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -389,11 +387,6 @@
             this.button_Reset.UseVisualStyleBackColor = true;
             this.button_Reset.Click += new System.EventHandler(this.button_Reset_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -452,7 +445,6 @@
         private System.Windows.Forms.Button E2_User;
         private System.Windows.Forms.Button E1_BigTrashFirst;
         private System.Windows.Forms.Button E2_BigTrashFirst;
-        private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.Button p2icon;
         public System.Windows.Forms.Button p1icon;
     }
