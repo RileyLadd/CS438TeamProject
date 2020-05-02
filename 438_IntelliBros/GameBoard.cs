@@ -590,9 +590,9 @@ namespace _438_IntelliBros
                 }
             }).Start();
 
-            while (finished == false && maxTicks < 4*(ticks + 1))
+            while (finished == false && maxTicks <= 5*ticks)
             {
-                ++maxTicks; Console.WriteLine("Sleeping\n"); Thread.Sleep(250);
+                ++maxTicks; Console.WriteLine("Sleeping\n"); Thread.Sleep(200);
             }
             //time is up or player is finished
             cancelSource.Cancel();
