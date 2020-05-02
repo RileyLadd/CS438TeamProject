@@ -1142,10 +1142,17 @@ namespace _438_IntelliBros
 
         public void getAIMove(ref int newRow, ref int newCol)
         {
-            string tmp = File.ReadAllText(@"./move.txt");
-            string[] coords = tmp.Split(' ');
-            newRow = int.Parse(coords[0]);
-            newCol = int.Parse(coords[1]);
+            try
+            {
+                string tmp = File.ReadAllText(@"./move.txt");
+                string[] coords = tmp.Split(' ');
+                newRow = int.Parse(coords[0]);
+                newCol = int.Parse(coords[1]);
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show("Error Opening File. Please try again");
+            }
         }
 
         public void button_Start_Click(object sender, EventArgs e)
