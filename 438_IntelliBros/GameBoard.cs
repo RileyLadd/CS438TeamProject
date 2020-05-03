@@ -251,7 +251,9 @@ namespace _438_IntelliBros
                 //check if time ran out
                 if (cancelToken.IsCancellationRequested)
                 {
+                    MessageBox.Show("timer expired");
                     return false;
+
                 }
 
                 if (base.TryMoveTo(newRow, newCol)) //if true, player has moved to new spot
@@ -469,6 +471,7 @@ namespace _438_IntelliBros
                 if (currentTurnIsP1) { System.Diagnostics.Process.Start(E1_openFileDialog.FileName); }
                 else                 { System.Diagnostics.Process.Start(E2_openFileDialog.FileName); }
                 getAIMove(ref ExtRow, ref ExtCol);
+                MessageBox.Show("Moving to row " + ExtRow + ", col " + ExtCol);
                 return TryMoveTo(ExtRow, ExtCol, cancelToken);
             }
 
@@ -525,6 +528,7 @@ namespace _438_IntelliBros
                     string[] coords = tmp.Split(' ');
                     newRow = int.Parse(coords[0]);
                     newCol = int.Parse(coords[1]);
+                    //MessageBox.Show("Moving to row " + newRow + ", col " + newCol);
                 }
                 catch (IOException e)
                 {
