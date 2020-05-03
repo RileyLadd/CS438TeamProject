@@ -69,10 +69,9 @@
             // 
             this.label_TimeLimit.AutoSize = true;
             this.label_TimeLimit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TimeLimit.Location = new System.Drawing.Point(16, 11);
-            this.label_TimeLimit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_TimeLimit.Location = new System.Drawing.Point(12, 9);
             this.label_TimeLimit.Name = "label_TimeLimit";
-            this.label_TimeLimit.Size = new System.Drawing.Size(239, 29);
+            this.label_TimeLimit.Size = new System.Drawing.Size(185, 24);
             this.label_TimeLimit.TabIndex = 0;
             this.label_TimeLimit.Text = "Time Limit (seconds)";
             // 
@@ -80,20 +79,18 @@
             // 
             this.label_Timer.AutoSize = true;
             this.label_Timer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Timer.Location = new System.Drawing.Point(16, 53);
-            this.label_Timer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_Timer.Location = new System.Drawing.Point(12, 43);
             this.label_Timer.Name = "label_Timer";
-            this.label_Timer.Size = new System.Drawing.Size(34, 25);
+            this.label_Timer.Size = new System.Drawing.Size(18, 20);
             this.label_Timer.TabIndex = 1;
-            this.label_Timer.Text = "30";
+            this.label_Timer.Text = "5";
             // 
             // button_IncTimer
             // 
             this.button_IncTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_IncTimer.Location = new System.Drawing.Point(181, 49);
-            this.button_IncTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_IncTimer.Location = new System.Drawing.Point(136, 40);
             this.button_IncTimer.Name = "button_IncTimer";
-            this.button_IncTimer.Size = new System.Drawing.Size(100, 28);
+            this.button_IncTimer.Size = new System.Drawing.Size(75, 23);
             this.button_IncTimer.TabIndex = 2;
             this.button_IncTimer.Text = "+";
             this.button_IncTimer.UseVisualStyleBackColor = true;
@@ -102,10 +99,9 @@
             // buttonDecTimer
             // 
             this.buttonDecTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonDecTimer.Location = new System.Drawing.Point(73, 49);
-            this.buttonDecTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonDecTimer.Location = new System.Drawing.Point(55, 40);
             this.buttonDecTimer.Name = "buttonDecTimer";
-            this.buttonDecTimer.Size = new System.Drawing.Size(100, 28);
+            this.buttonDecTimer.Size = new System.Drawing.Size(75, 23);
             this.buttonDecTimer.TabIndex = 3;
             this.buttonDecTimer.Text = "-";
             this.buttonDecTimer.UseVisualStyleBackColor = true;
@@ -124,21 +120,18 @@
             this.groupBox_E1.Controls.Add(this.E1_ShortestDist);
             this.groupBox_E1.Controls.Add(this.E1_User);
             this.groupBox_E1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox_E1.Location = new System.Drawing.Point(16, 114);
-            this.groupBox_E1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox_E1.Location = new System.Drawing.Point(12, 93);
             this.groupBox_E1.Name = "groupBox_E1";
-            this.groupBox_E1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox_E1.Size = new System.Drawing.Size(916, 283);
+            this.groupBox_E1.Size = new System.Drawing.Size(687, 230);
             this.groupBox_E1.TabIndex = 4;
             this.groupBox_E1.TabStop = false;
             this.groupBox_E1.Text = "Entity 1:";
             // 
             // E1_BigTrashFirst
             // 
-            this.E1_BigTrashFirst.Location = new System.Drawing.Point(276, 145);
-            this.E1_BigTrashFirst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_BigTrashFirst.Location = new System.Drawing.Point(207, 118);
             this.E1_BigTrashFirst.Name = "E1_BigTrashFirst";
-            this.E1_BigTrashFirst.Size = new System.Drawing.Size(239, 46);
+            this.E1_BigTrashFirst.Size = new System.Drawing.Size(179, 37);
             this.E1_BigTrashFirst.TabIndex = 241;
             this.E1_BigTrashFirst.Text = "Big Trash First";
             this.E1_BigTrashFirst.UseVisualStyleBackColor = true;
@@ -148,10 +141,9 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(743, 220);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(557, 179);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 20);
+            this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 240;
             this.label5.Text = "(out of 200)";
             // 
@@ -159,10 +151,9 @@
             // 
             this.p1capacity_label.AutoSize = true;
             this.p1capacity_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p1capacity_label.Location = new System.Drawing.Point(783, 191);
-            this.p1capacity_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.p1capacity_label.Location = new System.Drawing.Point(587, 155);
             this.p1capacity_label.Name = "p1capacity_label";
-            this.p1capacity_label.Size = new System.Drawing.Size(26, 29);
+            this.p1capacity_label.Size = new System.Drawing.Size(20, 24);
             this.p1capacity_label.TabIndex = 239;
             this.p1capacity_label.Text = "0";
             // 
@@ -170,10 +161,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(677, 145);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(508, 118);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(212, 36);
+            this.label3.Size = new System.Drawing.Size(173, 29);
             this.label3.TabIndex = 238;
             this.label3.Text = "Bag Capacity:";
             // 
@@ -181,10 +171,9 @@
             // 
             this.p1points_label.AutoSize = true;
             this.p1points_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p1points_label.Location = new System.Drawing.Point(783, 89);
-            this.p1points_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.p1points_label.Location = new System.Drawing.Point(587, 72);
             this.p1points_label.Name = "p1points_label";
-            this.p1points_label.Size = new System.Drawing.Size(26, 29);
+            this.p1points_label.Size = new System.Drawing.Size(20, 24);
             this.p1points_label.TabIndex = 237;
             this.p1points_label.Text = "0";
             // 
@@ -192,10 +181,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(740, 49);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(555, 40);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 36);
+            this.label1.Size = new System.Drawing.Size(93, 29);
             this.label1.TabIndex = 236;
             this.label1.Text = "Points:";
             // 
@@ -204,20 +192,18 @@
             this.p1icon.BackColor = System.Drawing.Color.White;
             this.p1icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p1;
             this.p1icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.p1icon.Location = new System.Drawing.Point(556, 113);
-            this.p1icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.p1icon.Location = new System.Drawing.Point(417, 92);
             this.p1icon.Name = "p1icon";
-            this.p1icon.Size = new System.Drawing.Size(100, 92);
+            this.p1icon.Size = new System.Drawing.Size(75, 75);
             this.p1icon.TabIndex = 235;
             this.p1icon.UseVisualStyleBackColor = false;
             this.p1icon.Click += new System.EventHandler(this.button_Click);
             // 
             // E1_Closest
             // 
-            this.E1_Closest.Location = new System.Drawing.Point(8, 145);
-            this.E1_Closest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_Closest.Location = new System.Drawing.Point(6, 118);
             this.E1_Closest.Name = "E1_Closest";
-            this.E1_Closest.Size = new System.Drawing.Size(239, 46);
+            this.E1_Closest.Size = new System.Drawing.Size(179, 37);
             this.E1_Closest.TabIndex = 2;
             this.E1_Closest.Text = "Closest";
             this.E1_Closest.UseVisualStyleBackColor = true;
@@ -225,10 +211,9 @@
             // 
             // E1_ShortestDist
             // 
-            this.E1_ShortestDist.Location = new System.Drawing.Point(276, 72);
-            this.E1_ShortestDist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_ShortestDist.Location = new System.Drawing.Point(207, 58);
             this.E1_ShortestDist.Name = "E1_ShortestDist";
-            this.E1_ShortestDist.Size = new System.Drawing.Size(239, 46);
+            this.E1_ShortestDist.Size = new System.Drawing.Size(179, 37);
             this.E1_ShortestDist.TabIndex = 1;
             this.E1_ShortestDist.Text = "Short Dist(in prog)";
             this.E1_ShortestDist.UseVisualStyleBackColor = true;
@@ -236,10 +221,9 @@
             // 
             // E1_User
             // 
-            this.E1_User.Location = new System.Drawing.Point(8, 72);
-            this.E1_User.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E1_User.Location = new System.Drawing.Point(6, 58);
             this.E1_User.Name = "E1_User";
-            this.E1_User.Size = new System.Drawing.Size(239, 46);
+            this.E1_User.Size = new System.Drawing.Size(179, 37);
             this.E1_User.TabIndex = 0;
             this.E1_User.Text = "Human";
             this.E1_User.UseVisualStyleBackColor = true;
@@ -258,21 +242,18 @@
             this.groupBox_E2.Controls.Add(this.E2_ShortestDist);
             this.groupBox_E2.Controls.Add(this.label8);
             this.groupBox_E2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox_E2.Location = new System.Drawing.Point(16, 405);
-            this.groupBox_E2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox_E2.Location = new System.Drawing.Point(12, 329);
             this.groupBox_E2.Name = "groupBox_E2";
-            this.groupBox_E2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox_E2.Size = new System.Drawing.Size(916, 283);
+            this.groupBox_E2.Size = new System.Drawing.Size(687, 230);
             this.groupBox_E2.TabIndex = 5;
             this.groupBox_E2.TabStop = false;
             this.groupBox_E2.Text = "Entity 2:";
             // 
             // E2_BigTrashFirst
             // 
-            this.E2_BigTrashFirst.Location = new System.Drawing.Point(276, 138);
-            this.E2_BigTrashFirst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_BigTrashFirst.Location = new System.Drawing.Point(207, 112);
             this.E2_BigTrashFirst.Name = "E2_BigTrashFirst";
-            this.E2_BigTrashFirst.Size = new System.Drawing.Size(239, 46);
+            this.E2_BigTrashFirst.Size = new System.Drawing.Size(179, 37);
             this.E2_BigTrashFirst.TabIndex = 242;
             this.E2_BigTrashFirst.Text = "Big Trash First";
             this.E2_BigTrashFirst.UseVisualStyleBackColor = true;
@@ -280,10 +261,9 @@
             // 
             // E2_User
             // 
-            this.E2_User.Location = new System.Drawing.Point(8, 69);
-            this.E2_User.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_User.Location = new System.Drawing.Point(6, 56);
             this.E2_User.Name = "E2_User";
-            this.E2_User.Size = new System.Drawing.Size(239, 46);
+            this.E2_User.Size = new System.Drawing.Size(179, 37);
             this.E2_User.TabIndex = 241;
             this.E2_User.Text = "Human";
             this.E2_User.UseVisualStyleBackColor = true;
@@ -293,10 +273,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(743, 226);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(557, 184);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 20);
+            this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 245;
             this.label2.Text = "(out of 200)";
             // 
@@ -305,10 +284,9 @@
             this.p2icon.BackColor = System.Drawing.Color.White;
             this.p2icon.BackgroundImage = global::_438_IntelliBros.Properties.Resources.p2;
             this.p2icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.p2icon.Location = new System.Drawing.Point(556, 95);
-            this.p2icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.p2icon.Location = new System.Drawing.Point(417, 77);
             this.p2icon.Name = "p2icon";
-            this.p2icon.Size = new System.Drawing.Size(100, 92);
+            this.p2icon.Size = new System.Drawing.Size(75, 75);
             this.p2icon.TabIndex = 236;
             this.p2icon.UseVisualStyleBackColor = false;
             // 
@@ -316,19 +294,17 @@
             // 
             this.p2capacity_label.AutoSize = true;
             this.p2capacity_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p2capacity_label.Location = new System.Drawing.Point(783, 197);
-            this.p2capacity_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.p2capacity_label.Location = new System.Drawing.Point(587, 160);
             this.p2capacity_label.Name = "p2capacity_label";
-            this.p2capacity_label.Size = new System.Drawing.Size(26, 29);
+            this.p2capacity_label.Size = new System.Drawing.Size(20, 24);
             this.p2capacity_label.TabIndex = 244;
             this.p2capacity_label.Text = "0";
             // 
             // E2_Closest
             // 
-            this.E2_Closest.Location = new System.Drawing.Point(5, 138);
-            this.E2_Closest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_Closest.Location = new System.Drawing.Point(4, 112);
             this.E2_Closest.Name = "E2_Closest";
-            this.E2_Closest.Size = new System.Drawing.Size(239, 46);
+            this.E2_Closest.Size = new System.Drawing.Size(179, 37);
             this.E2_Closest.TabIndex = 4;
             this.E2_Closest.Text = "Closest";
             this.E2_Closest.UseVisualStyleBackColor = true;
@@ -338,10 +314,9 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(677, 151);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(508, 123);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(212, 36);
+            this.label6.Size = new System.Drawing.Size(173, 29);
             this.label6.TabIndex = 243;
             this.label6.Text = "Bag Capacity:";
             // 
@@ -349,19 +324,17 @@
             // 
             this.p2points_label.AutoSize = true;
             this.p2points_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.p2points_label.Location = new System.Drawing.Point(783, 95);
-            this.p2points_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.p2points_label.Location = new System.Drawing.Point(587, 77);
             this.p2points_label.Name = "p2points_label";
-            this.p2points_label.Size = new System.Drawing.Size(26, 29);
+            this.p2points_label.Size = new System.Drawing.Size(20, 24);
             this.p2points_label.TabIndex = 242;
             this.p2points_label.Text = "0";
             // 
             // E2_ShortestDist
             // 
-            this.E2_ShortestDist.Location = new System.Drawing.Point(276, 69);
-            this.E2_ShortestDist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.E2_ShortestDist.Location = new System.Drawing.Point(207, 56);
             this.E2_ShortestDist.Name = "E2_ShortestDist";
-            this.E2_ShortestDist.Size = new System.Drawing.Size(239, 46);
+            this.E2_ShortestDist.Size = new System.Drawing.Size(179, 37);
             this.E2_ShortestDist.TabIndex = 3;
             this.E2_ShortestDist.Text = "Short Dist(in prog)";
             this.E2_ShortestDist.UseVisualStyleBackColor = true;
@@ -371,20 +344,18 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(740, 55);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(555, 45);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(114, 36);
+            this.label8.Size = new System.Drawing.Size(93, 29);
             this.label8.TabIndex = 241;
             this.label8.Text = "Points:";
             // 
             // button_Backward
             // 
             this.button_Backward.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Backward.Location = new System.Drawing.Point(43, 731);
-            this.button_Backward.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Backward.Location = new System.Drawing.Point(32, 594);
             this.button_Backward.Name = "button_Backward";
-            this.button_Backward.Size = new System.Drawing.Size(300, 46);
+            this.button_Backward.Size = new System.Drawing.Size(225, 37);
             this.button_Backward.TabIndex = 5;
             this.button_Backward.Text = "Step backward in Log";
             this.button_Backward.UseVisualStyleBackColor = true;
@@ -392,10 +363,9 @@
             // button_Forward
             // 
             this.button_Forward.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Forward.Location = new System.Drawing.Point(416, 731);
-            this.button_Forward.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Forward.Location = new System.Drawing.Point(312, 594);
             this.button_Forward.Name = "button_Forward";
-            this.button_Forward.Size = new System.Drawing.Size(300, 46);
+            this.button_Forward.Size = new System.Drawing.Size(225, 37);
             this.button_Forward.TabIndex = 6;
             this.button_Forward.Text = "Step forward in Log";
             this.button_Forward.UseVisualStyleBackColor = true;
@@ -404,10 +374,9 @@
             // 
             this.button_Start.Enabled = false;
             this.button_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Start.Location = new System.Drawing.Point(416, 818);
-            this.button_Start.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Start.Location = new System.Drawing.Point(312, 665);
             this.button_Start.Name = "button_Start";
-            this.button_Start.Size = new System.Drawing.Size(300, 46);
+            this.button_Start.Size = new System.Drawing.Size(225, 37);
             this.button_Start.TabIndex = 7;
             this.button_Start.Text = "Start";
             this.button_Start.UseVisualStyleBackColor = true;
@@ -416,10 +385,9 @@
             // button_Reset
             // 
             this.button_Reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Reset.Location = new System.Drawing.Point(43, 818);
-            this.button_Reset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button_Reset.Location = new System.Drawing.Point(32, 665);
             this.button_Reset.Name = "button_Reset";
-            this.button_Reset.Size = new System.Drawing.Size(300, 46);
+            this.button_Reset.Size = new System.Drawing.Size(225, 37);
             this.button_Reset.TabIndex = 8;
             this.button_Reset.Text = "Reset";
             this.button_Reset.UseVisualStyleBackColor = true;
@@ -438,9 +406,9 @@
             // 
             // GameBoard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 1040);
+            this.ClientSize = new System.Drawing.Size(1155, 687);
             this.Controls.Add(this.button_Reset);
             this.Controls.Add(this.button_Start);
             this.Controls.Add(this.button_Forward);
@@ -452,7 +420,6 @@
             this.Controls.Add(this.label_Timer);
             this.Controls.Add(this.label_TimeLimit);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "GameBoard";
             this.Text = "Cat Cleaners";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

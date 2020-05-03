@@ -1158,12 +1158,21 @@ namespace _438_IntelliBros
 
         private void button_IncTimer_Click(object sender, EventArgs e)
         {
-
+            //int timer = button_IncTimer.Text.
+            if(label_Timer.Text == "5") { }
+            if (label_Timer.Text == "4") { label_Timer.Text = "5"; }
+            if (label_Timer.Text == "3") { label_Timer.Text = "4"; }
+            if (label_Timer.Text == "2") { label_Timer.Text = "3"; }
+            if (label_Timer.Text == "1") { label_Timer.Text = "2"; }
         }
 
         private void buttonDecTimer_Click(object sender, EventArgs e)
         {
-
+            if (label_Timer.Text == "1") { }
+            if (label_Timer.Text == "5") { label_Timer.Text = "4"; }
+            if (label_Timer.Text == "4") { label_Timer.Text = "3"; }
+            if (label_Timer.Text == "3") { label_Timer.Text = "2"; }
+            if (label_Timer.Text == "2") { label_Timer.Text = "1"; }
         }
 
         public void button_Click(object sender, EventArgs e)
