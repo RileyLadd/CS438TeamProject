@@ -237,6 +237,7 @@ namespace _438_IntelliBros
 
             public void reset()
             {
+                row = col = -1;
                 score = capacity = 0;
                 type = -1;
             }
@@ -704,10 +705,11 @@ namespace _438_IntelliBros
             gameOver = mouseInGame = game_started = false;
             numTurns = 0;
 
-            P1.TryMoveTo(p1_start_row, p1_start_col);
-            P2.TryMoveTo(p2_start_row, p2_start_col);
+            currentTurnIsP1 = true;
             P1.reset();
             P2.reset();
+            P1.TryMoveTo(p1_start_row, p1_start_col);
+            P2.TryMoveTo(p2_start_row, p2_start_col);
             P1_updateLabels();
             P2_updateLabels();
 
