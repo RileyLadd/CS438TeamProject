@@ -34,6 +34,7 @@
             this.button_IncTimer = new System.Windows.Forms.Button();
             this.button_DecTimer = new System.Windows.Forms.Button();
             this.groupBox_E1 = new System.Windows.Forms.GroupBox();
+            this.E1_FileSelectButton = new System.Windows.Forms.Button();
             this.E1_BigTrashFirst = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.p1capacity_label = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@
             this.E1_ShortestDist = new System.Windows.Forms.Button();
             this.E1_User = new System.Windows.Forms.Button();
             this.groupBox_E2 = new System.Windows.Forms.GroupBox();
+            this.E2_FileSelectButton = new System.Windows.Forms.Button();
             this.E2_BigTrashFirst = new System.Windows.Forms.Button();
             this.E2_User = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,10 +61,6 @@
             this.button_Forward = new System.Windows.Forms.Button();
             this.button_Start = new System.Windows.Forms.Button();
             this.button_Reset = new System.Windows.Forms.Button();
-            this.E1_FileSelectButton = new System.Windows.Forms.Button();
-            this.E2_FileSelectButton = new System.Windows.Forms.Button();
-            this.E1_openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.E2_openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.SuspendLayout();
@@ -128,6 +126,16 @@
             this.groupBox_E1.TabIndex = 4;
             this.groupBox_E1.TabStop = false;
             this.groupBox_E1.Text = "Entity 1:";
+            // 
+            // E1_FileSelectButton
+            // 
+            this.E1_FileSelectButton.Location = new System.Drawing.Point(6, 167);
+            this.E1_FileSelectButton.Name = "E1_FileSelectButton";
+            this.E1_FileSelectButton.Size = new System.Drawing.Size(177, 37);
+            this.E1_FileSelectButton.TabIndex = 9;
+            this.E1_FileSelectButton.Text = "Select File";
+            this.E1_FileSelectButton.UseVisualStyleBackColor = true;
+            this.E1_FileSelectButton.Click += new System.EventHandler(this.E1_FileSelectButton_Click);
             // 
             // E1_BigTrashFirst
             // 
@@ -249,6 +257,16 @@
             this.groupBox_E2.TabIndex = 5;
             this.groupBox_E2.TabStop = false;
             this.groupBox_E2.Text = "Entity 2:";
+            // 
+            // E2_FileSelectButton
+            // 
+            this.E2_FileSelectButton.Location = new System.Drawing.Point(6, 160);
+            this.E2_FileSelectButton.Name = "E2_FileSelectButton";
+            this.E2_FileSelectButton.Size = new System.Drawing.Size(177, 37);
+            this.E2_FileSelectButton.TabIndex = 242;
+            this.E2_FileSelectButton.Text = "Select File";
+            this.E2_FileSelectButton.UseVisualStyleBackColor = true;
+            this.E2_FileSelectButton.Click += new System.EventHandler(this.E2_FileSelectButton_Click);
             // 
             // E2_BigTrashFirst
             // 
@@ -393,34 +411,6 @@
             this.button_Reset.UseVisualStyleBackColor = true;
             this.button_Reset.Click += new System.EventHandler(this.button_Reset_Click);
             // 
-            // E1_FileSelectButton
-            // 
-            this.E1_FileSelectButton.Location = new System.Drawing.Point(6, 167);
-            this.E1_FileSelectButton.Name = "E1_FileSelectButton";
-            this.E1_FileSelectButton.Size = new System.Drawing.Size(177, 37);
-            this.E1_FileSelectButton.TabIndex = 9;
-            this.E1_FileSelectButton.Text = "Select File";
-            this.E1_FileSelectButton.UseVisualStyleBackColor = true;
-            this.E1_FileSelectButton.Click += new System.EventHandler(this.E1_FileSelectButton_Click);
-            // 
-            // E2_FileSelectButton
-            // 
-            this.E2_FileSelectButton.Location = new System.Drawing.Point(6, 160);
-            this.E2_FileSelectButton.Name = "E2_FileSelectButton";
-            this.E2_FileSelectButton.Size = new System.Drawing.Size(177, 37);
-            this.E2_FileSelectButton.TabIndex = 242;
-            this.E2_FileSelectButton.Text = "Select File";
-            this.E2_FileSelectButton.UseVisualStyleBackColor = true;
-            this.E2_FileSelectButton.Click += new System.EventHandler(this.E2_FileSelectButton_Click);
-            // 
-            // E1_openFileDialog
-            // 
-            this.E1_openFileDialog.FileName = "openFileDialog1";
-            // 
-            // E2_openFileDialog
-            // 
-            this.E2_openFileDialog.FileName = "openFileDialog1";
-            // 
             // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -483,8 +473,6 @@
         public System.Windows.Forms.Button p1icon;
         private System.Windows.Forms.Button E1_FileSelectButton;
         private System.Windows.Forms.Button E2_FileSelectButton;
-        private System.Windows.Forms.OpenFileDialog E1_openFileDialog;
-        private System.Windows.Forms.OpenFileDialog E2_openFileDialog;
     }
 }
 

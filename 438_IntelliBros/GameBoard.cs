@@ -15,6 +15,8 @@ namespace _438_IntelliBros
 {
     public partial class GameBoard : Form
     {
+        static public OpenFileDialog E1_openFileDialog = new OpenFileDialog();
+        static public OpenFileDialog E2_openFileDialog = new OpenFileDialog();
         static public ImageList imageList1 = new ImageList();
         /*
          * 0 P1
