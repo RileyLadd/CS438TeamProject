@@ -235,11 +235,11 @@ namespace _438_IntelliBros
                 type = -1; //default user before selecting the actual type
             }
 
-            public void reset()
+            public void reset(bool resetType = true)
             {
+                if (resetType) { type = -1; }
                 row = col = -1;
                 score = capacity = 0;
-                type = -1;
             }
 
             public bool TryMoveTo(int newRow, int newCol, CancellationToken cancelToken = default(CancellationToken))
@@ -684,17 +684,19 @@ namespace _438_IntelliBros
             button_IncTimer.Enabled = false;
             button_DecTimer.Enabled = false;
             button_Start.Enabled = false;
-            clearBoard();
             gameOver = mouseInGame = false;
             currentTurnIsP1 = true;
-            numTurns = 0;
+            numTurns = -2;
 
+            clearBoard();
+            P1.reset(false);
+            P2.reset(false);
             P1.TryMoveTo(p1_start_row, p1_start_col);
             P2.TryMoveTo(p2_start_row, p2_start_col);
-            P2_Set_Colors();
-
             P1_updateLabels();
             P2_updateLabels();
+            P2_Set_Colors();
+
             generateTrash();
             Refresh();
             game_started = true;
