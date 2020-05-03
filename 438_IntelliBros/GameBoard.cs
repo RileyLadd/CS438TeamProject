@@ -282,13 +282,8 @@ namespace _438_IntelliBros
                         return greedy(cancelToken);
                     case 4:
                         return BigTrashFirst(cancelToken);
-                    /*case 5:
-                        int ExtRow = -1, ExtCol = -1;
-                        outBoardState(currentTurn);
-                        System.Diagnostics.Process.Start(E1_openFileDialog.FileName);
-                        getAIMove(ref ExtRow, ref ExtCol);
-                        verifyMove(ExtRow, ExtCol);
-                        */
+                    case 5:
+                        return externalAI(cancelToken);
                     default:
                         return true;
                 }
@@ -463,6 +458,76 @@ namespace _438_IntelliBros
                 string msg = "moving to row " + move2.nextRow + ", col " + move2.nextColumn;
                 return TryMoveTo(move2.nextRow, move2.nextColumn, cancelToken);
                 //MessageBox.Show(msg, "move");
+            }
+
+            private bool externalAI(CancellationToken cancelToken)
+            {
+                int ExtRow = -1, ExtCol = -1;
+                outBoardState();
+                if (currentTurnIsP1) { System.Diagnostics.Process.Start(E1_openFileDialog.FileName); }
+                else                 { System.Diagnostics.Process.Start(E2_openFileDialog.FileName); }
+                getAIMove(ref ExtRow, ref ExtCol);
+                return TryMoveTo(ExtRow, ExtCol, cancelToken);
+            }
+
+            private void outBoardState()
+            {
+                string tmp = "";
+
+                for (int i = 0; i < BOARDSIZE; i++)
+                {
+                    for (int j = 0; j < BOARDSIZE; j++)
+                    {
+                        if ((string)spaces[i, j].Tag == "player")
+                        {
+                            if (P1.row == i && P1.col == j && currentTurnIsP1)
+                            {
+                                tmp += "A";
+                            }
+                            else
+                            {
+                                tmp += "B";
+                            }
+                        }
+                        else if ((string)spaces[i, j].Tag == "mouse")
+                        {
+                            tmp += "M";
+                        }
+                        else if ((string)spaces[i, j].Tag == SMALL_TRASH_TAG)
+                        {
+                            tmp += "1";
+                        }
+                        else if ((string)spaces[i, j].Tag == MEDIUM_TRASH_TAG)
+                        {
+                            tmp += "2";
+                        }
+                        else if ((string)spaces[i, j].Tag == LARGE_TRASH_TAG)
+                        {
+                            tmp += "3";
+                        }
+                        else
+                        {
+                            tmp += "_";
+                        }
+                    }
+                }
+
+                File.WriteAllText(@"./boardstate.txt", tmp);
+            }
+
+            private void getAIMove(ref int newRow, ref int newCol)
+            {
+                try
+                {
+                    string tmp = File.ReadAllText(@"./move.txt");
+                    string[] coords = tmp.Split(' ');
+                    newRow = int.Parse(coords[0]);
+                    newCol = int.Parse(coords[1]);
+                }
+                catch (IOException e)
+                {
+                    MessageBox.Show("Error Opening File. Please try again");
+                }
             }
         }
 
@@ -912,66 +977,6 @@ namespace _438_IntelliBros
             tmp += "\n";
 
             return tmp;
-        }
-
-        public void outBoardState(int turn)
-        {
-            string tmp = "";
-
-            for (int i = 0; i < BOARDSIZE; i++)
-            {
-                for (int j = 0; j < BOARDSIZE; j++)
-                {
-                    if ((string)spaces[i, j].Tag == "player")
-                    {
-                        if (P1.row == i && P1.col == j && turn == 1)
-                        {
-                            tmp += "A";
-                        }
-                        else
-                        {
-                            tmp += "B";
-                        }
-                    }
-                    else if ((string)spaces[i, j].Tag == "mouse")
-                    {
-                        tmp += "M";
-                    }
-                    else if ((string)spaces[i, j].Tag == SMALL_TRASH_TAG)
-                    {
-                        tmp += "1";
-                    }
-                    else if ((string)spaces[i, j].Tag == MEDIUM_TRASH_TAG)
-                    {
-                        tmp += "2";
-                    }
-                    else if ((string)spaces[i, j].Tag == LARGE_TRASH_TAG)
-                    {
-                        tmp += "3";
-                    }
-                    else
-                    {
-                        tmp += "_";
-                    }
-                }
-            }
-
-            File.WriteAllText(@"./boardstate.txt", tmp);
-        }
-
-        public void getAIMove(ref int newRow, ref int newCol)
-        {
-            try
-            {
-                string tmp = File.ReadAllText(@"./move.txt");
-                string[] coords = tmp.Split(' ');
-                newRow = int.Parse(coords[0]);
-                newCol = int.Parse(coords[1]);
-            }
-            catch (IOException e)
-            {
-                MessageBox.Show("Error Opening File. Please try again");
-            }
         }
 
         private void E1_FileSelectButton_Click(object sender, EventArgs e)
