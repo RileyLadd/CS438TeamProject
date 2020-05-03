@@ -704,6 +704,8 @@ namespace _438_IntelliBros
             gameOver = mouseInGame = game_started = false;
             numTurns = 0;
 
+            P1.TryMoveTo(p1_start_row, p1_start_col);
+            P2.TryMoveTo(p2_start_row, p2_start_col);
             P1.reset();
             P2.reset();
             P1_updateLabels();
