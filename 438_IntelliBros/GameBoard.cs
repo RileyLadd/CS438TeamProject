@@ -477,13 +477,17 @@ namespace _438_IntelliBros
             {
                 string tmp = "";
 
-                for (int i = 0; i < BOARDSIZE; i++)
+                for (int i = 0; i < BOARDSIZE; ++i)
                 {
-                    for (int j = 0; j < BOARDSIZE; j++)
+                    for (int j = 0; j < BOARDSIZE; ++j)
                     {
                         if ((string)spaces[i, j].Tag == "player")
                         {
                             if (P1.row == i && P1.col == j && currentTurnIsP1)
+                            {
+                                tmp += "A";
+                            }
+                            else if (P2.row == i && P2.col == j && !currentTurnIsP1)
                             {
                                 tmp += "A";
                             }
