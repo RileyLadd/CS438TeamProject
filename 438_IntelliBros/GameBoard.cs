@@ -830,7 +830,7 @@ namespace _438_IntelliBros
             File.WriteAllText(@"./end.log", log);
 
             gameOver = true;
-            Application.Exit();
+            //Application.Exit();
         }
 
         static public void clearBoard() //removes images, colors, tags
