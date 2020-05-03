@@ -686,7 +686,7 @@ namespace _438_IntelliBros
 
             P1.TryMoveTo(p1_start_row, p1_start_col);
             P2.TryMoveTo(p2_start_row, p2_start_col);
-            P1_Set_Colors();
+            P2_Set_Colors();
 
             P1_updateLabels();
             P2_updateLabels();
@@ -830,7 +830,6 @@ namespace _438_IntelliBros
             File.WriteAllText(@"./end.log", log);
 
             gameOver = true;
-            //Application.Exit();
         }
 
         static public void clearBoard() //removes images, colors, tags
