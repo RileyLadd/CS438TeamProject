@@ -235,10 +235,11 @@ namespace _438_IntelliBros
                 type = -1; //default user before selecting the actual type
             }
 
-            public void reset()
+            public void reset(bool resetType = true)
             {
+                if (resetType) { type = -1; }
+                row = col = -1;
                 score = capacity = 0;
-                type = -1;
             }
 
             public bool TryMoveTo(int newRow, int newCol, CancellationToken cancelToken = default(CancellationToken))
@@ -479,13 +480,17 @@ namespace _438_IntelliBros
             {
                 string tmp = "";
 
-                for (int i = 0; i < BOARDSIZE; i++)
+                for (int i = 0; i < BOARDSIZE; ++i)
                 {
-                    for (int j = 0; j < BOARDSIZE; j++)
+                    for (int j = 0; j < BOARDSIZE; ++j)
                     {
                         if ((string)spaces[i, j].Tag == "player")
                         {
                             if (P1.row == i && P1.col == j && currentTurnIsP1)
+                            {
+                                tmp += "A";
+                            }
+                            else if (P2.row == i && P2.col == j && !currentTurnIsP1)
                             {
                                 tmp += "A";
                             }
@@ -683,17 +688,19 @@ namespace _438_IntelliBros
             button_IncTimer.Enabled = false;
             button_DecTimer.Enabled = false;
             button_Start.Enabled = false;
-            clearBoard();
             gameOver = mouseInGame = false;
             currentTurnIsP1 = true;
-            numTurns = 0;
+            numTurns = -2;
 
+            clearBoard();
+            P1.reset(false);
+            P2.reset(false);
             P1.TryMoveTo(p1_start_row, p1_start_col);
             P2.TryMoveTo(p2_start_row, p2_start_col);
-            P2_Set_Colors();
-
             P1_updateLabels();
             P2_updateLabels();
+            P2_Set_Colors();
+
             generateTrash();
             Refresh();
             game_started = true;
@@ -708,8 +715,11 @@ namespace _438_IntelliBros
             gameOver = mouseInGame = game_started = false;
             numTurns = 0;
 
+            currentTurnIsP1 = true;
             P1.reset();
             P2.reset();
+            P1.TryMoveTo(p1_start_row, p1_start_col);
+            P2.TryMoveTo(p2_start_row, p2_start_col);
             P1_updateLabels();
             P2_updateLabels();
 
