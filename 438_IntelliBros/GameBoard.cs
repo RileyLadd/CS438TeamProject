@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
-using System.Linq;
+using System.Runtime.InteropServices;
 //using "PriorityQueuesProgram.cs";
 
 namespace _438_IntelliBros
@@ -43,6 +43,7 @@ namespace _438_IntelliBros
         static bool currentTurnIsP1 = true;
         static bool gameOver = true;
         static bool invalidMove = false;
+        static bool displayConsole = false;
         static string log = "";
 
         const int BOARDSIZE = 15; // The height/width of the board
@@ -196,7 +197,7 @@ namespace _438_IntelliBros
                 else trashType = 5; //large trash
 
                 ++trashRemaining;
-                Console.WriteLine("                                 Mouse generated trash: " + trashRemaining);
+                Console.WriteLine("                                 Mouse generated trash: " + trashRemaining + " trash still remaining.");
                 spaces[prevRow, prevCol].BackgroundImage = imageList1.Images[trashType];
                 if (trashType == 3) spaces[prevRow, prevCol].Tag = SMALL_TRASH_TAG;
                 else if (trashType == 4) spaces[prevRow, prevCol].Tag = MEDIUM_TRASH_TAG;
@@ -247,6 +248,15 @@ namespace _438_IntelliBros
 
             public bool TryMoveTo(int newRow, int newCol, CancellationToken cancelToken = default(CancellationToken))
             {
+                if (row != -1 && col != -1 && type != 1)
+                {
+                    try
+                    {
+                        if (currentTurnIsP1) Console.WriteLine("AI 1 is trying to move to row " + newRow + ", col " + newCol);
+                        else Console.WriteLine("AI 2 is trying to move to row " + newRow + ", col " + newCol);
+                    }
+                    catch { }
+                }
                 int prevRow = row;
                 int prevCol = col;
                 //hold info before moving
@@ -344,7 +354,7 @@ namespace _438_IntelliBros
             private bool addCapacity_returns_PlayerHasMaxCap(int type = 0) //small / med / large
             {
                 --trashRemaining;
-                Console.WriteLine("Player cleaned Trash: " + trashRemaining);
+                Console.WriteLine("Player cleaned Trash: " + trashRemaining + " trash still remaining.");
                 int addingCap;
                 switch (type)
                 {
@@ -442,7 +452,7 @@ namespace _438_IntelliBros
                         else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
                         else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG || (string)spaces[r, c].Tag == "mouse")
                         {
-                            if (TryMoveTo(r, c)) { return true; }
+                            if (TryMoveTo(r, c, cancelToken)) { return true; }
                         }                        
                         else
                         {
@@ -462,7 +472,7 @@ namespace _438_IntelliBros
                         else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                        
                         else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
                         {
-                            if (TryMoveTo(r, c)) { return true; }
+                            if (TryMoveTo(r, c, cancelToken)) { return true; }
                         }                       
                         else
                         {
@@ -482,7 +492,7 @@ namespace _438_IntelliBros
                         else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
                         else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
                         {
-                            if (TryMoveTo(r, c)) { return true; }
+                            if (TryMoveTo(r, c, cancelToken)) { return true; }
                         }
                         else
                         {
@@ -643,6 +653,7 @@ namespace _438_IntelliBros
         public GameBoard()
         {
             InitializeComponent();
+            
             //deal with images
             string cwd = Directory.GetCurrentDirectory();
             imageList1.ImageSize = new Size(256, 256);
@@ -729,6 +740,7 @@ namespace _438_IntelliBros
                     catch (OperationCanceledException)
                     {
                         Console.WriteLine("Canceled!");
+                        
                     }
                 }).Start();
 
@@ -744,7 +756,9 @@ namespace _438_IntelliBros
                 bool success = p.decide();
                 if (!success)
                 {
-                    //MessageBox.Show("The provided AI may have made an invalid move or taken too long.", "Error");
+                    Console.WriteLine("The provided AI may have made an invalid move or taken too long.");
+                    //Refresh();
+                    //MyConsoleHandler("oops");
                     //Refresh();
                     invalidMove = true;
                 }
@@ -759,7 +773,15 @@ namespace _438_IntelliBros
             button_Start.Enabled = false;
             gameOver = mouseInGame = false;
             currentTurnIsP1 = true;
+            Debug_Checkbox.Enabled = false;
             numTurns = -2;
+            if (Debug_Checkbox.Checked)
+            {
+                AllocConsole();
+                //Console.Error.WriteLine("Welcome to the Cat Cleaners Debug Console");
+                //Console.Out.WriteLine("test2");
+                Console.WriteLine("Welcome to the Cat Cleaners Debug Console");
+            }
 
             clearBoard();
             P1.reset(false);
@@ -773,18 +795,24 @@ namespace _438_IntelliBros
             generateTrash();
             Refresh();
             game_started = true;
+            
+            
 
             determineNextMove();
         }
 
         public void button_Reset_Click(object sender, EventArgs e)
         {
+            Console.WriteLine();
+            Console.WriteLine("The game has been reset.");
+            Console.WriteLine();
             clearBoard();
             button_IncTimer.Enabled = button_DecTimer.Enabled = true;
             gameOver = invalidMove = false;
             gameOver = mouseInGame = game_started = false;
             numTurns = 0;
             gameOver = true;
+            //Debug_Checkbox.Enabled = true;
 
             p1icon.BackColor = p2icon.BackColor = Color.LightGray;
 
@@ -816,6 +844,12 @@ namespace _438_IntelliBros
 
             int row = (newY - 29) / BUTTON_SIZE;
             int col = (newX - 731) / BUTTON_SIZE;
+            try
+            {
+                if (currentTurnIsP1) Console.WriteLine("Player 1 clicked on row " + row + ", col " + col);
+                else Console.WriteLine("Player 2 clicked on row " + row + ", col " + col);
+            } catch { }
+
 
             if (currentTurnIsP1) { if (P1.TryMoveTo(row, col)) { P1_updateLabels(); P1_Set_Colors(); } }
             else                 { if (P2.TryMoveTo(row, col)) { P2_updateLabels(); P2_Set_Colors(); } }
@@ -974,6 +1008,8 @@ namespace _438_IntelliBros
                 }
             }
             Console.WriteLine("Trash generated: " + trashRemaining);
+            Console.WriteLine();
+            //MyConsoleHandler("Trash generated: " + trashRemaining);
         }
         static public double BTF_heuristic(int nextRow, int nextCol)
         {
@@ -1099,7 +1135,33 @@ namespace _438_IntelliBros
                 P2.type = 5;
                 if (P1.type != -1 && !game_started) button_Start.Enabled = true;
                 E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
+                
             }
+        }
+        void MyConsoleHandler(string msg)
+        {
+           // if (displayConsole)
+            //{
+                //Console.Out.WriteLine(msg);
+                //Console.WriteLine(msg);
+                //Console.Error.WriteLine(msg);
+                //string UserInput = Console.In.ReadLine();
+
+                //FreeConsole();
+            //}
+        }
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool FreeConsole();
+
+        private void Debug_Checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Debug_Checkbox.Checked) displayConsole = true;
+            else                        displayConsole = false;
         }
     }
 }
