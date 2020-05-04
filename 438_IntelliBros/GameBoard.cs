@@ -812,6 +812,7 @@ namespace _438_IntelliBros
             gameOver = mouseInGame = game_started = false;
             numTurns = 0;
             gameOver = true;
+            Debug_Checkbox.Enabled = false;
             //Debug_Checkbox.Enabled = true;
 
             p1icon.BackColor = p2icon.BackColor = Color.LightGray;
