@@ -103,6 +103,12 @@
     <None Include="trash 3.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="timer.png" />
+    <None Include="info icon.png" />
+    <None Include="bin\Release\trash 1.png" />
+    <None Include="bin\Release\rat.png" />
+    <None Include="bin\Release\trash 2.png" />
+    <None Include="bin\Release\trash 3.png" />
     <Content Include="gamecomm.h" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

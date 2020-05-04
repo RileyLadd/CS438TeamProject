@@ -56,7 +56,7 @@ namespace _438_IntelliBros
         const int SMALL_TRASH_CAPACITY_VAL = 1;
         const int MEDIUM_TRASH_CAPACITY_VAL = 2;
         const int LARGE_TRASH_CAPACITY_VAL = 3;
-        const int MOUSE_CAPACITY_VAL = 10;
+        const int MOUSE_CAPACITY_VAL = 5;
         const string SMALL_TRASH_TAG = "SMALL";
         const string MEDIUM_TRASH_TAG = "MEDIUM";
         const string LARGE_TRASH_TAG = "LARGE";
@@ -138,7 +138,7 @@ namespace _438_IntelliBros
 
                 if (!mouseInGame)
                 {
-                    if (rand == 0) // 20% chance of generating mouse
+                    if (rand == 0) // 4% chance of generating mouse on each turn
                     {
                         generateMouse();
                     }
@@ -1162,6 +1162,20 @@ namespace _438_IntelliBros
         {
             if (Debug_Checkbox.Checked) displayConsole = true;
             else                        displayConsole = false;
+        }
+
+        private void Closest_InfoIcon_Click(object sender, EventArgs e)
+        {
+            string msg = "";
+            msg += "Closest:\n";
+            msg += "Player moves to the trash which is closest to it, regardless of trash size. It does not pay any attention to the mouse.\n\n";
+            msg += "Big Trash First:\n";
+            msg += "Player moves to the largest piece of neighboring trash (within one space of the player).\n";
+            msg += "If there is no neighboring trash, the closest of each type of trash is located";
+            msg += " and weighted based on priority (larger trash/mouse is weighted highest).\n";
+            msg += "The player then moves in the most \"optimal\" direction.";
+            msg += " This AI pays attention to the mouse and will try to catch it.";
+            MessageBox.Show(msg, "AI Behavior Info");
         }
     }
 }
