@@ -41,7 +41,7 @@ namespace _438_IntelliBros
         static bool mouseInGame = false;
         static bool game_started = false;
         static bool currentTurnIsP1 = true;
-        static bool gameOver = false;
+        static bool gameOver = true;
         static bool invalidMove = false;
         static string log = "";
 
@@ -784,6 +784,7 @@ namespace _438_IntelliBros
             gameOver = invalidMove = false;
             gameOver = mouseInGame = game_started = false;
             numTurns = 0;
+            gameOver = true;
 
             p1icon.BackColor = p2icon.BackColor = Color.LightGray;
 
