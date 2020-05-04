@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Diagnostics;
+using System.Linq;
 //using "PriorityQueuesProgram.cs";
 
 namespace _438_IntelliBros
@@ -275,7 +277,7 @@ namespace _438_IntelliBros
                 return false;
             }
 
-            public bool decide(CancellationToken cancelToken)
+            public bool decide(CancellationToken cancelToken = default(CancellationToken))
             {
                 switch (type)
                 {
@@ -469,10 +471,31 @@ namespace _438_IntelliBros
             {
                 int ExtRow = -1, ExtCol = -1;
                 outBoardState();
-                if (currentTurnIsP1) { System.Diagnostics.Process.Start(E1_openFileDialog.FileName); }
-                else                 { System.Diagnostics.Process.Start(E2_openFileDialog.FileName); }
+                
+                ProcessStartInfo info = new ProcessStartInfo();
+                info.CreateNoWindow = true;
+                info.WindowStyle = ProcessWindowStyle.Hidden;
+                if (currentTurnIsP1) { info.FileName = E1_openFileDialog.FileName; }
+                else                 { info.FileName = E2_openFileDialog.FileName; }
+                
+                Process p = Process.Start(info);
+                p.WaitForExit(ticks*1000);
+                if (!p.HasExited)
+                {
+                    if (p.Responding)
+                    {
+                        p.CloseMainWindow();
+                    }
+                    else
+                    {
+                        p.Kill();
+                    }
+                    currentTurnIsP1 = !currentTurnIsP1;
+                    return false;
+                }
+                
                 getAIMove(ref ExtRow, ref ExtCol);
-                MessageBox.Show("Moving to row " + ExtRow + ", col " + ExtCol);
+                Console.WriteLine("Moving to row " + ExtRow + ", col " + ExtCol);
                 return TryMoveTo(ExtRow, ExtCol, cancelToken);
             }
 
@@ -658,28 +681,31 @@ namespace _438_IntelliBros
 
         private void AI_decide(Player p)
         {
-            CancellationTokenSource cancelSource = new CancellationTokenSource();
-            int maxTicks = 0;
-            bool finished = false;
-            new Thread(() =>
+            if (p.type != 5)
             {
-                try
+                CancellationTokenSource cancelSource = new CancellationTokenSource();
+                int maxTicks = 0;
+                bool finished = false;
+                new Thread(() =>
                 {
-                    finished = p.decide(cancelSource.Token); //).Start();
+                    try
+                    {
+                        finished = p.decide(cancelSource.Token); //).Start();
                 }
-                catch (OperationCanceledException)
-                {
-                    Console.WriteLine("Canceled!");
-                }
-            }).Start();
+                    catch (OperationCanceledException)
+                    {
+                        Console.WriteLine("Canceled!");
+                    }
+                }).Start();
 
-            while (finished == false && maxTicks <= 5*ticks)
-            {
-                ++maxTicks; Thread.Sleep(200); //Console.WriteLine(maxTicks + "\n");
+                while (finished == false && maxTicks <= 5 * ticks)
+                {
+                    ++maxTicks; Thread.Sleep(200); //Console.WriteLine(maxTicks + "\n");
+                }
+                //time is up or player is finished
+                if (finished == false) { cancelSource.Cancel(); currentTurnIsP1 = !currentTurnIsP1; }
             }
-            //time is up or player is finished
-            if(finished == false) { currentTurnIsP1 = !currentTurnIsP1; }
-            cancelSource.Cancel();
+            else { p.decide(); }
         }
 
         //buttons
@@ -723,8 +749,8 @@ namespace _438_IntelliBros
             P1_updateLabels();
             P2_updateLabels();
 
-            E1_Closest.Enabled = E1_ShortestDist.Enabled = E1_User.Enabled = E1_BigTrashFirst.Enabled = true; // reset option buttons to be enabled
-            E2_Closest.Enabled = E2_ShortestDist.Enabled = E2_User.Enabled = E2_BigTrashFirst.Enabled = true;
+            E1_Closest.Enabled = E1_User.Enabled = E1_BigTrashFirst.Enabled = true; // reset option buttons to be enabled
+            E2_Closest.Enabled = E2_User.Enabled = E2_BigTrashFirst.Enabled = true;
             button_Start.Enabled = false;
         }
 
@@ -750,49 +776,37 @@ namespace _438_IntelliBros
         {
             P1.type = 1;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
         }
         private void E2_User_Click(object sender, EventArgs e)
         {
             P2.type = 1;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
-        }
-        private void E1_ShortestDist_Click(object sender, EventArgs e)
-        {
-            P1.type = 2;
-            if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
-        }
-        private void E2_ShortestDist_Click(object sender, EventArgs e)
-        {
-            P2.type = 2;
-            if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
         }
         private void E1_Closest_Click(object sender, EventArgs e)
         {
             P1.type = 3;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_ShortestDist.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_User.Enabled = E1_BigTrashFirst.Enabled = false;
         }
         private void E2_Closest_Click(object sender, EventArgs e)
         {
             P2.type = 3;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_ShortestDist.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_User.Enabled = E2_BigTrashFirst.Enabled = false;
         }
         private void E1_BigTrashFirst_Click(object sender, EventArgs e)
         {
             P1.type = 4;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_ShortestDist.Enabled = E1_Closest.Enabled = false;
+            E1_User.Enabled = E1_Closest.Enabled = false;
         }
         private void E2_BigTrashFirst_Click(object sender, EventArgs e)
         {
             P2.type = 4;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_ShortestDist.Enabled = E2_Closest.Enabled = false;
+            E2_User.Enabled = E2_Closest.Enabled = false;
         }
 
         private void button_IncTimer_Click(object sender, EventArgs e)
@@ -1001,7 +1015,7 @@ namespace _438_IntelliBros
                 E1_FileSelectButton.Text = E1_openFileDialog.FileName;
                 P1.type = 5;
                 if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-                E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
+                E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
             }
         }
 
@@ -1012,7 +1026,7 @@ namespace _438_IntelliBros
                 E2_FileSelectButton.Text = E2_openFileDialog.FileName;
                 P2.type = 5;
                 if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-                E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
+                E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
             }
         }
     }
