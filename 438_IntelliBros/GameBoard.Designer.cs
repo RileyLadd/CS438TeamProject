@@ -43,7 +43,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.p1icon = new System.Windows.Forms.Button();
             this.E1_Closest = new System.Windows.Forms.Button();
-            this.E1_ShortestDist = new System.Windows.Forms.Button();
             this.E1_User = new System.Windows.Forms.Button();
             this.groupBox_E2 = new System.Windows.Forms.GroupBox();
             this.E2_FileSelectButton = new System.Windows.Forms.Button();
@@ -55,10 +54,7 @@
             this.E2_Closest = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.p2points_label = new System.Windows.Forms.Label();
-            this.E2_ShortestDist = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.button_Backward = new System.Windows.Forms.Button();
-            this.button_Forward = new System.Windows.Forms.Button();
             this.button_Start = new System.Windows.Forms.Button();
             this.button_Reset = new System.Windows.Forms.Button();
             this.groupBox_E1.SuspendLayout();
@@ -117,7 +113,6 @@
             this.groupBox_E1.Controls.Add(this.label1);
             this.groupBox_E1.Controls.Add(this.p1icon);
             this.groupBox_E1.Controls.Add(this.E1_Closest);
-            this.groupBox_E1.Controls.Add(this.E1_ShortestDist);
             this.groupBox_E1.Controls.Add(this.E1_User);
             this.groupBox_E1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_E1.Location = new System.Drawing.Point(12, 93);
@@ -217,16 +212,6 @@
             this.E1_Closest.UseVisualStyleBackColor = true;
             this.E1_Closest.Click += new System.EventHandler(this.E1_Closest_Click);
             // 
-            // E1_ShortestDist
-            // 
-            this.E1_ShortestDist.Location = new System.Drawing.Point(207, 58);
-            this.E1_ShortestDist.Name = "E1_ShortestDist";
-            this.E1_ShortestDist.Size = new System.Drawing.Size(179, 37);
-            this.E1_ShortestDist.TabIndex = 1;
-            this.E1_ShortestDist.Text = "Short Dist(in prog)";
-            this.E1_ShortestDist.UseVisualStyleBackColor = true;
-            this.E1_ShortestDist.Click += new System.EventHandler(this.E1_ShortestDist_Click);
-            // 
             // E1_User
             // 
             this.E1_User.Location = new System.Drawing.Point(6, 58);
@@ -248,7 +233,6 @@
             this.groupBox_E2.Controls.Add(this.E2_Closest);
             this.groupBox_E2.Controls.Add(this.label6);
             this.groupBox_E2.Controls.Add(this.p2points_label);
-            this.groupBox_E2.Controls.Add(this.E2_ShortestDist);
             this.groupBox_E2.Controls.Add(this.label8);
             this.groupBox_E2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_E2.Location = new System.Drawing.Point(12, 329);
@@ -348,16 +332,6 @@
             this.p2points_label.TabIndex = 242;
             this.p2points_label.Text = "0";
             // 
-            // E2_ShortestDist
-            // 
-            this.E2_ShortestDist.Location = new System.Drawing.Point(207, 56);
-            this.E2_ShortestDist.Name = "E2_ShortestDist";
-            this.E2_ShortestDist.Size = new System.Drawing.Size(179, 37);
-            this.E2_ShortestDist.TabIndex = 3;
-            this.E2_ShortestDist.Text = "Short Dist(in prog)";
-            this.E2_ShortestDist.UseVisualStyleBackColor = true;
-            this.E2_ShortestDist.Click += new System.EventHandler(this.E2_ShortestDist_Click);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -367,26 +341,6 @@
             this.label8.Size = new System.Drawing.Size(93, 29);
             this.label8.TabIndex = 241;
             this.label8.Text = "Points:";
-            // 
-            // button_Backward
-            // 
-            this.button_Backward.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Backward.Location = new System.Drawing.Point(32, 594);
-            this.button_Backward.Name = "button_Backward";
-            this.button_Backward.Size = new System.Drawing.Size(225, 37);
-            this.button_Backward.TabIndex = 5;
-            this.button_Backward.Text = "Step backward in Log";
-            this.button_Backward.UseVisualStyleBackColor = true;
-            // 
-            // button_Forward
-            // 
-            this.button_Forward.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Forward.Location = new System.Drawing.Point(312, 594);
-            this.button_Forward.Name = "button_Forward";
-            this.button_Forward.Size = new System.Drawing.Size(225, 37);
-            this.button_Forward.TabIndex = 6;
-            this.button_Forward.Text = "Step forward in Log";
-            this.button_Forward.UseVisualStyleBackColor = true;
             // 
             // button_Start
             // 
@@ -418,8 +372,6 @@
             this.ClientSize = new System.Drawing.Size(1443, 845);
             this.Controls.Add(this.button_Reset);
             this.Controls.Add(this.button_Start);
-            this.Controls.Add(this.button_Forward);
-            this.Controls.Add(this.button_Backward);
             this.Controls.Add(this.groupBox_E2);
             this.Controls.Add(this.groupBox_E1);
             this.Controls.Add(this.button_DecTimer);
@@ -448,12 +400,8 @@
         private System.Windows.Forms.GroupBox groupBox_E1;
         private System.Windows.Forms.GroupBox groupBox_E2;
         private System.Windows.Forms.Button E1_Closest;
-        private System.Windows.Forms.Button E1_ShortestDist;
         private System.Windows.Forms.Button E1_User;
         private System.Windows.Forms.Button E2_Closest;
-        private System.Windows.Forms.Button E2_ShortestDist;
-        private System.Windows.Forms.Button button_Backward;
-        private System.Windows.Forms.Button button_Forward;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.Button button_Reset;
         private System.Windows.Forms.Label label3;

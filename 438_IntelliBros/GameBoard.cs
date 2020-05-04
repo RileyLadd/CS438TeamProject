@@ -490,6 +490,7 @@ namespace _438_IntelliBros
                     {
                         p.Kill();
                     }
+                    currentTurnIsP1 = !currentTurnIsP1;
                     return false;
                 }
                 
@@ -748,8 +749,8 @@ namespace _438_IntelliBros
             P1_updateLabels();
             P2_updateLabels();
 
-            E1_Closest.Enabled = E1_ShortestDist.Enabled = E1_User.Enabled = E1_BigTrashFirst.Enabled = true; // reset option buttons to be enabled
-            E2_Closest.Enabled = E2_ShortestDist.Enabled = E2_User.Enabled = E2_BigTrashFirst.Enabled = true;
+            E1_Closest.Enabled = E1_User.Enabled = E1_BigTrashFirst.Enabled = true; // reset option buttons to be enabled
+            E2_Closest.Enabled = E2_User.Enabled = E2_BigTrashFirst.Enabled = true;
             button_Start.Enabled = false;
         }
 
@@ -775,49 +776,37 @@ namespace _438_IntelliBros
         {
             P1.type = 1;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
         }
         private void E2_User_Click(object sender, EventArgs e)
         {
             P2.type = 1;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
-        }
-        private void E1_ShortestDist_Click(object sender, EventArgs e)
-        {
-            P1.type = 2;
-            if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
-        }
-        private void E2_ShortestDist_Click(object sender, EventArgs e)
-        {
-            P2.type = 2;
-            if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
         }
         private void E1_Closest_Click(object sender, EventArgs e)
         {
             P1.type = 3;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_ShortestDist.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_User.Enabled = E1_BigTrashFirst.Enabled = false;
         }
         private void E2_Closest_Click(object sender, EventArgs e)
         {
             P2.type = 3;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_ShortestDist.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_User.Enabled = E2_BigTrashFirst.Enabled = false;
         }
         private void E1_BigTrashFirst_Click(object sender, EventArgs e)
         {
             P1.type = 4;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_ShortestDist.Enabled = E1_Closest.Enabled = false;
+            E1_User.Enabled = E1_Closest.Enabled = false;
         }
         private void E2_BigTrashFirst_Click(object sender, EventArgs e)
         {
             P2.type = 4;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_ShortestDist.Enabled = E2_Closest.Enabled = false;
+            E2_User.Enabled = E2_Closest.Enabled = false;
         }
 
         private void button_IncTimer_Click(object sender, EventArgs e)
@@ -1026,7 +1015,7 @@ namespace _438_IntelliBros
                 E1_FileSelectButton.Text = E1_openFileDialog.FileName;
                 P1.type = 5;
                 if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-                E1_ShortestDist.Enabled = E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
+                E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
             }
         }
 
@@ -1037,7 +1026,7 @@ namespace _438_IntelliBros
                 E2_FileSelectButton.Text = E2_openFileDialog.FileName;
                 P2.type = 5;
                 if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-                E2_ShortestDist.Enabled = E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
+                E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
             }
         }
     }
