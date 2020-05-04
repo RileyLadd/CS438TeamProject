@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Diagnostics;
+using System.Linq;
 //using "PriorityQueuesProgram.cs";
 
 namespace _438_IntelliBros
@@ -275,7 +277,7 @@ namespace _438_IntelliBros
                 return false;
             }
 
-            public bool decide(CancellationToken cancelToken)
+            public bool decide(CancellationToken cancelToken = default(CancellationToken))
             {
                 switch (type)
                 {
@@ -469,10 +471,30 @@ namespace _438_IntelliBros
             {
                 int ExtRow = -1, ExtCol = -1;
                 outBoardState();
-                if (currentTurnIsP1) { System.Diagnostics.Process.Start(E1_openFileDialog.FileName); }
-                else                 { System.Diagnostics.Process.Start(E2_openFileDialog.FileName); }
+                
+                ProcessStartInfo info = new ProcessStartInfo();
+                info.CreateNoWindow = true;
+                info.WindowStyle = ProcessWindowStyle.Hidden;
+                if (currentTurnIsP1) { info.FileName = E1_openFileDialog.FileName; }
+                else                 { info.FileName = E2_openFileDialog.FileName; }
+                
+                Process p = Process.Start(info);
+                p.WaitForExit(ticks*1000);
+                if (!p.HasExited)
+                {
+                    if (p.Responding)
+                    {
+                        p.CloseMainWindow();
+                    }
+                    else
+                    {
+                        p.Kill();
+                    }
+                    return false;
+                }
+                
                 getAIMove(ref ExtRow, ref ExtCol);
-                MessageBox.Show("Moving to row " + ExtRow + ", col " + ExtCol);
+                Console.WriteLine("Moving to row " + ExtRow + ", col " + ExtCol);
                 return TryMoveTo(ExtRow, ExtCol, cancelToken);
             }
 
@@ -658,28 +680,31 @@ namespace _438_IntelliBros
 
         private void AI_decide(Player p)
         {
-            CancellationTokenSource cancelSource = new CancellationTokenSource();
-            int maxTicks = 0;
-            bool finished = false;
-            new Thread(() =>
+            if (p.type != 5)
             {
-                try
+                CancellationTokenSource cancelSource = new CancellationTokenSource();
+                int maxTicks = 0;
+                bool finished = false;
+                new Thread(() =>
                 {
-                    finished = p.decide(cancelSource.Token); //).Start();
+                    try
+                    {
+                        finished = p.decide(cancelSource.Token); //).Start();
                 }
-                catch (OperationCanceledException)
-                {
-                    Console.WriteLine("Canceled!");
-                }
-            }).Start();
+                    catch (OperationCanceledException)
+                    {
+                        Console.WriteLine("Canceled!");
+                    }
+                }).Start();
 
-            while (finished == false && maxTicks <= 5*ticks)
-            {
-                ++maxTicks; Thread.Sleep(200); //Console.WriteLine(maxTicks + "\n");
+                while (finished == false && maxTicks <= 5 * ticks)
+                {
+                    ++maxTicks; Thread.Sleep(200); //Console.WriteLine(maxTicks + "\n");
+                }
+                //time is up or player is finished
+                if (finished == false) { cancelSource.Cancel(); currentTurnIsP1 = !currentTurnIsP1; }
             }
-            //time is up or player is finished
-            if(finished == false) { currentTurnIsP1 = !currentTurnIsP1; }
-            cancelSource.Cancel();
+            else { p.decide(); }
         }
 
         //buttons
