@@ -26,7 +26,7 @@ namespace _438_IntelliBros
          * 2 rat
          * 3 small trash
          * 4 med trash
-         * 6 large trash
+         * 5 large trash
          * */
 
         const int p1_start_row = 7;
@@ -42,6 +42,7 @@ namespace _438_IntelliBros
         static bool game_started = false;
         static bool currentTurnIsP1 = true;
         static bool gameOver = false;
+        static bool invalidMove = false;
         static string log = "";
 
         const int BOARDSIZE = 15; // The height/width of the board
@@ -143,7 +144,7 @@ namespace _438_IntelliBros
                 }
                 else // there's a mouse in the game, need to move it and add trash where it was
                 {
-                    if (rand_num.Next(0, 2) == 0) // 50% chance of moving on this player's turn
+                    if (rand_num.Next(0, 3) == 0) // 33% chance of moving on this player's turn
                         moveMouse();
                 }
             }
@@ -151,7 +152,7 @@ namespace _438_IntelliBros
             private void generateMouse()
             {
                 Random rand_num = new Random();
-                int rand = rand_num.Next(0, 2);
+                int rand = rand_num.Next(0, 3);
                 if (rand == 0) row = 0; //only generate mouse on top or bottom of board
                 else row = 14;
 
@@ -189,7 +190,7 @@ namespace _438_IntelliBros
 
                 spaces[row, col].BackgroundImage = imageList1.Images[2]; //put mouse icon on new spot
                 spaces[row, col].Tag = "mouse";
-
+                rand = rand_num.Next(0,6);
                 if (rand == 0 || rand == 1 || rand == 2) trashType = 3; //small trash
                 else if (rand == 3 || rand == 4) trashType = 4; //medium trash
                 else trashType = 5; //large trash
@@ -426,7 +427,7 @@ namespace _438_IntelliBros
             private bool BigTrashFirst(CancellationToken cancelToken) // determines where to move next; utilizes Priority Queue
             {
                 PriorityQueue<PossibleMove> pq = new PriorityQueue<PossibleMove>();
-                PossibleMove[] move = new PossibleMove[10];
+                PossibleMove[] move = new PossibleMove[30];
                 int i = 0;
                 int otherPlayer_row;
                 int otherPlayer_col;
@@ -437,16 +438,48 @@ namespace _438_IntelliBros
                 {
                     for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
                     {
-                        if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { }
+                        if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { } // Can't land on a player
                         else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board
                         else if ((string)spaces[r, c].Tag == LARGE_TRASH_TAG || (string)spaces[r, c].Tag == "mouse")
                         {
                             if (TryMoveTo(r, c)) { return true; }
+                        }                        
+                        else
+                        {
+                            move[i] = new PossibleMove(r, c, BTF_heuristic(r, c));
+                            //move[i].priority = BTF_heuristic(r, c);
+                            //move[i].nextRow = r; move[i].nextColumn = c;
+                            pq.Enqueue(move[i]);
+                            ++i;
                         }
+                    }
+                }
+                for (int r = row - 1; r <= row + 1; ++r)
+                {
+                    for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { } // Can't land on a player
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                        
                         else if ((string)spaces[r, c].Tag == MEDIUM_TRASH_TAG)
                         {
                             if (TryMoveTo(r, c)) { return true; }
+                        }                       
+                        else
+                        {
+                            move[i] = new PossibleMove(r, c, BTF_heuristic(r, c));
+                            //move[i].priority = BTF_heuristic(r, c);
+                            //move[i].nextRow = r; move[i].nextColumn = c;
+                            pq.Enqueue(move[i]);
+                            ++i;
                         }
+                    }
+                }
+                for (int r = row - 1; r <= row + 1; ++r)
+                {
+                    for (int c = col - 1; c <= col + 1; ++c) //only consider moving to a neighboring space
+                    {
+                        if (row == r && col == c || otherPlayer_row == r && otherPlayer_col == c) { } // Can't land on a player
+                        else if (r < 0 || c < 0 || r >= BOARDSIZE || c >= BOARDSIZE) { } //out of bounds of board                       
                         else if ((string)spaces[r, c].Tag == SMALL_TRASH_TAG)
                         {
                             if (TryMoveTo(r, c)) { return true; }
@@ -491,11 +524,12 @@ namespace _438_IntelliBros
                         p.Kill();
                     }
                     currentTurnIsP1 = !currentTurnIsP1;
+                    Console.WriteLine("The provided AI file ran out of time.");
                     return false;
                 }
                 
                 getAIMove(ref ExtRow, ref ExtCol);
-                Console.WriteLine("Moving to row " + ExtRow + ", col " + ExtCol);
+                Console.WriteLine("User-provided AI file is trying to move to row " + ExtRow + ", col " + ExtCol);
                 return TryMoveTo(ExtRow, ExtCol, cancelToken);
             }
 
@@ -652,7 +686,7 @@ namespace _438_IntelliBros
         {
             log += stateString();
             Refresh();
-            if (trashRemaining > 0)
+            if (trashRemaining > 0 && !invalidMove)
             {
                 Mouse1.move_Or_Generate();
                 if (currentTurnIsP1)
@@ -698,14 +732,23 @@ namespace _438_IntelliBros
                     }
                 }).Start();
 
-                while (finished == false && maxTicks <= 5 * ticks)
+                while (finished == false && maxTicks <= 10 * ticks)
                 {
-                    ++maxTicks; Thread.Sleep(200); //Console.WriteLine(maxTicks + "\n");
+                    ++maxTicks; Thread.Sleep(100); //Console.WriteLine(maxTicks + "\n");
                 }
                 //time is up or player is finished
                 if (finished == false) { cancelSource.Cancel(); currentTurnIsP1 = !currentTurnIsP1; }
             }
-            else { p.decide(); }
+            else 
+            { 
+                bool success = p.decide();
+                if (!success)
+                {
+                    //MessageBox.Show("The provided AI may have made an invalid move or taken too long.", "Error");
+                    //Refresh();
+                    invalidMove = true;
+                }
+            }
         }
 
         //buttons
@@ -737,9 +780,12 @@ namespace _438_IntelliBros
         public void button_Reset_Click(object sender, EventArgs e)
         {
             clearBoard();
-            gameOver = false;
+            button_IncTimer.Enabled = button_DecTimer.Enabled = true;
+            gameOver = invalidMove = false;
             gameOver = mouseInGame = game_started = false;
             numTurns = 0;
+
+            p1icon.BackColor = p2icon.BackColor = Color.LightGray;
 
             currentTurnIsP1 = true;
             P1.reset();
@@ -749,13 +795,16 @@ namespace _438_IntelliBros
             P1_updateLabels();
             P2_updateLabels();
 
-            E1_Closest.Enabled = E1_User.Enabled = E1_BigTrashFirst.Enabled = true; // reset option buttons to be enabled
-            E2_Closest.Enabled = E2_User.Enabled = E2_BigTrashFirst.Enabled = true;
+            E1_Closest.Enabled = E1_User.Enabled = E1_BigTrashFirst.Enabled = E1_FileSelectButton.Enabled = true; // reset option buttons to be enabled
+            E2_Closest.Enabled = E2_User.Enabled = E2_BigTrashFirst.Enabled = E2_FileSelectButton.Enabled = true;
+            E1_FileSelectButton.Text = E2_FileSelectButton.Text = "Select File ...";
             button_Start.Enabled = false;
         }
 
         public void button_Click(object sender, EventArgs e)
         {
+            if (gameOver) return; // Don't respond to button clicks if game is over!
+
             Button b = (Button)sender;
             //find the button based on its location
             //row = 731 + (col * BUTTON_SIZE)
@@ -776,37 +825,37 @@ namespace _438_IntelliBros
         {
             P1.type = 1;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_Closest.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_FileSelectButton.Enabled = false;
         }
         private void E2_User_Click(object sender, EventArgs e)
         {
             P2.type = 1;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_Closest.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_FileSelectButton.Enabled = false;
         }
         private void E1_Closest_Click(object sender, EventArgs e)
         {
             P1.type = 3;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_BigTrashFirst.Enabled = false;
+            E1_User.Enabled = E1_BigTrashFirst.Enabled = E1_FileSelectButton.Enabled = false;
         }
         private void E2_Closest_Click(object sender, EventArgs e)
         {
             P2.type = 3;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_BigTrashFirst.Enabled = false;
+            E2_User.Enabled = E2_BigTrashFirst.Enabled = E2_FileSelectButton.Enabled = false;
         }
         private void E1_BigTrashFirst_Click(object sender, EventArgs e)
         {
             P1.type = 4;
             if (P2.type != -1 && !game_started) button_Start.Enabled = true;
-            E1_User.Enabled = E1_Closest.Enabled = false;
+            E1_User.Enabled = E1_Closest.Enabled = E1_FileSelectButton.Enabled = false;
         }
         private void E2_BigTrashFirst_Click(object sender, EventArgs e)
         {
             P2.type = 4;
             if (P1.type != -1 && !game_started) button_Start.Enabled = true;
-            E2_User.Enabled = E2_Closest.Enabled = false;
+            E2_User.Enabled = E2_Closest.Enabled = E2_FileSelectButton.Enabled = false;
         }
 
         private void button_IncTimer_Click(object sender, EventArgs e)
@@ -830,7 +879,12 @@ namespace _438_IntelliBros
 
         static public void determineWinner()    //rm picons because static allows player to call determineWinner()
         {
-            if (P1.score > P2.score)
+            if(invalidMove)
+            {
+                if(!currentTurnIsP1) MessageBox.Show("Player 2 wins because Player 1 made a bad move or took too long.", "Winner");
+                else                 MessageBox.Show("Player 1 wins because Player 2 made a bad move or took too long.", "Winner");
+            }
+            else if (P1.score > P2.score)
             {
                 //p1icon.BackColor = Color.Gold;
                 spaces[P1.row, P1.col].BackColor = Color.Gold;
@@ -892,7 +946,7 @@ namespace _438_IntelliBros
                 {
                     if (!(i == P1.row && j == P1.col) && !(i == P2.row && j == P2.col)) // Don't spawn trash on players
                     {
-                        rand = rand_num.Next(0, 30); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
+                        rand = rand_num.Next(0, 4); // generates num between 0 and 3. only spawn trash if num is 3. 25% trash rate across board.
                                                     //spaces[i, j].BackColor = Color.LightGray;
                                                     //Console.WriteLine(rand);
                         if (rand == 3)
@@ -1012,7 +1066,16 @@ namespace _438_IntelliBros
         {
             if (E1_openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                E1_FileSelectButton.Text = E1_openFileDialog.FileName;
+                int fnameLength = E1_openFileDialog.FileName.Length;
+                if(fnameLength > 40) 
+                {
+                    E1_FileSelectButton.Text = "..." + E1_openFileDialog.FileName.Substring(fnameLength - 37);
+                }
+                else
+                {
+                    E1_FileSelectButton.Text = E1_openFileDialog.FileName;
+                }
+                
                 P1.type = 5;
                 if (P2.type != -1 && !game_started) button_Start.Enabled = true;
                 E1_Closest.Enabled = E1_BigTrashFirst.Enabled = E1_User.Enabled = false;
@@ -1023,7 +1086,15 @@ namespace _438_IntelliBros
         {
             if (E2_openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                E2_FileSelectButton.Text = E2_openFileDialog.FileName;
+                int fnameLength = E2_openFileDialog.FileName.Length;
+                if (fnameLength > 40)
+                {
+                    E2_FileSelectButton.Text = "..." + E2_openFileDialog.FileName.Substring(fnameLength - 37);
+                }
+                else
+                {
+                    E2_FileSelectButton.Text = E2_openFileDialog.FileName;
+                }
                 P2.type = 5;
                 if (P1.type != -1 && !game_started) button_Start.Enabled = true;
                 E2_Closest.Enabled = E2_BigTrashFirst.Enabled = E2_User.Enabled = false;
