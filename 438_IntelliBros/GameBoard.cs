@@ -376,7 +376,9 @@ namespace _438_IntelliBros
                 }
                 if (capacity + addingCap >= MAX_CAPACITY)
                 { // check to verify that player still has capacity space
-                    determineWinner();
+                    gameOver = true;
+                    //determineWinner();
+                    MessageBox.Show("A player has attempted to exceed their maximum capacity. The winner will now be determined based on number of points.", "Capacity Exceeded");
                     return true;
                 }
                 else
@@ -697,7 +699,7 @@ namespace _438_IntelliBros
         {
             log += stateString();
             Refresh();
-            if (trashRemaining > 0 && !invalidMove)
+            if (trashRemaining > 0 && !invalidMove && !gameOver)
             {
                 Mouse1.move_Or_Generate();
                 if (currentTurnIsP1)
