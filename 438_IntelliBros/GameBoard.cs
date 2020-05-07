@@ -17,6 +17,8 @@ namespace _438_IntelliBros
 {
     public partial class GameBoard : Form
     {
+        static Process p1_proc;
+        static Process p2_proc;
         static public OpenFileDialog E1_openFileDialog = new OpenFileDialog();
         static public OpenFileDialog E2_openFileDialog = new OpenFileDialog();
         static public ImageList imageList1 = new ImageList();
@@ -520,26 +522,48 @@ namespace _438_IntelliBros
                 ProcessStartInfo info = new ProcessStartInfo();
                 info.CreateNoWindow = true;
                 info.WindowStyle = ProcessWindowStyle.Hidden;
-                if (currentTurnIsP1) { info.FileName = E1_openFileDialog.FileName; }
-                else                 { info.FileName = E2_openFileDialog.FileName; }
-                
-                Process p = Process.Start(info);
-                p.WaitForExit(ticks*1000);
-                if (!p.HasExited)
+                if (currentTurnIsP1)
                 {
-                    if (p.Responding)
+                    info.FileName = E1_openFileDialog.FileName;
+                    p1_proc = Process.Start(info);
+                    p1_proc.WaitForExit(ticks * 1000);
+                    if (!p1_proc.HasExited)
                     {
-                        p.CloseMainWindow();
+                        if (p1_proc.Responding)
+                        {
+                            p1_proc.CloseMainWindow();
+                        }
+                        else
+                        {
+                            p1_proc.Kill();
+                        }
+                        currentTurnIsP1 = !currentTurnIsP1;
+                        Console.WriteLine("The provided AI file ran out of time.");
+                        return false;
                     }
-                    else
-                    {
-                        p.Kill();
-                    }
-                    currentTurnIsP1 = !currentTurnIsP1;
-                    Console.WriteLine("The provided AI file ran out of time.");
-                    return false;
                 }
-                
+
+                else
+                {
+                    info.FileName = E2_openFileDialog.FileName;
+                    p2_proc = Process.Start(info);
+                    p2_proc.WaitForExit(ticks * 1000);
+                    if (!p2_proc.HasExited)
+                    {
+                        if (p2_proc.Responding)
+                        {
+                            p2_proc.CloseMainWindow();
+                        }
+                        else
+                        {
+                            p2_proc.Kill();
+                        }
+                        currentTurnIsP1 = !currentTurnIsP1;
+                        Console.WriteLine("The provided AI file ran out of time.");
+                        return false;
+                    }
+                }
+
                 getAIMove(ref ExtRow, ref ExtCol);
                 Console.WriteLine("User-provided AI file is trying to move to row " + ExtRow + ", col " + ExtCol);
                 return TryMoveTo(ExtRow, ExtCol, cancelToken);
@@ -1179,6 +1203,13 @@ namespace _438_IntelliBros
             msg += "The player then moves in the most \"optimal\" direction.";
             msg += " This AI pays attention to the mouse and will try to catch it.";
             MessageBox.Show(msg, "AI Behavior Info");
+        }
+
+        private void button_Exit_Click(object sender, EventArgs e)
+        {
+            if (p1_proc != null && !p1_proc.HasExited) { p1_proc.Kill(); }
+            if (p2_proc != null && !p2_proc.HasExited) { p2_proc.Kill(); }
+            Application.Exit();
         }
     }
 }

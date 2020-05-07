@@ -69,12 +69,13 @@
             this.label15 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.Closest_InfoIcon = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.Closest_InfoIcon = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button_Exit = new System.Windows.Forms.Button();
             this.groupBox_E1.SuspendLayout();
             this.groupBox_E2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -517,6 +518,20 @@
             this.label16.Text = "AI behavior";
             this.label16.Click += new System.EventHandler(this.Closest_InfoIcon_Click);
             // 
+            // Closest_InfoIcon
+            // 
+            this.Closest_InfoIcon.BackColor = System.Drawing.Color.Transparent;
+            this.Closest_InfoIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Closest_InfoIcon.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Closest_InfoIcon.Image = global::_438_IntelliBros.Properties.Resources.info_icon;
+            this.Closest_InfoIcon.Location = new System.Drawing.Point(30, 35);
+            this.Closest_InfoIcon.Name = "Closest_InfoIcon";
+            this.Closest_InfoIcon.Size = new System.Drawing.Size(25, 25);
+            this.Closest_InfoIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Closest_InfoIcon.TabIndex = 258;
+            this.Closest_InfoIcon.TabStop = false;
+            this.Closest_InfoIcon.Click += new System.EventHandler(this.Closest_InfoIcon_Click);
+            // 
             // button4
             // 
             this.button4.BackgroundImage = global::_438_IntelliBros.Properties.Resources.rat;
@@ -565,20 +580,6 @@
             this.button1.TabIndex = 247;
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // Closest_InfoIcon
-            // 
-            this.Closest_InfoIcon.BackColor = System.Drawing.Color.Transparent;
-            this.Closest_InfoIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Closest_InfoIcon.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Closest_InfoIcon.Image = global::_438_IntelliBros.Properties.Resources.info_icon;
-            this.Closest_InfoIcon.Location = new System.Drawing.Point(30, 35);
-            this.Closest_InfoIcon.Name = "Closest_InfoIcon";
-            this.Closest_InfoIcon.Size = new System.Drawing.Size(25, 25);
-            this.Closest_InfoIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Closest_InfoIcon.TabIndex = 258;
-            this.Closest_InfoIcon.TabStop = false;
-            this.Closest_InfoIcon.Click += new System.EventHandler(this.Closest_InfoIcon_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
@@ -592,11 +593,23 @@
             this.pictureBox1.TabIndex = 261;
             this.pictureBox1.TabStop = false;
             // 
+            // button_Exit
+            // 
+            this.button_Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Exit.Location = new System.Drawing.Point(602, 623);
+            this.button_Exit.Name = "button_Exit";
+            this.button_Exit.Size = new System.Drawing.Size(80, 37);
+            this.button_Exit.TabIndex = 262;
+            this.button_Exit.Text = "Exit";
+            this.button_Exit.UseVisualStyleBackColor = true;
+            this.button_Exit.Click += new System.EventHandler(this.button_Exit_Click);
+            // 
             // GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1540, 845);
+            this.Controls.Add(this.button_Exit);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label15);
@@ -685,6 +698,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button_Exit;
     }
 }
 
